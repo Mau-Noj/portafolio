@@ -11,9 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci && npm run build
+      # CORRECCIÓN: Entrar a la carpeta antes de instalar y construir
+      - run: cd mi-portafolio && npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          # CORRECCIÓN: Indicar a Firebase dónde está el proyecto
+          entryPoint: mi-portafolio
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MY_FOLDER_A77A3 }}
           channelId: live
