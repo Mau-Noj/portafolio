@@ -1,25 +1,71 @@
-.portfolio-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-family: system-ui, sans-serif;
+/* src/App.css */
+:root {
+  --bg-color: #f0f2f5;
+  --text-color: #333;
+  --accent-color: #2563eb;
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--text-color);
 }
 
-.project-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
+.coming-soon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   text-align: center;
+  padding: 20px;
 }
 
-.project-card img {
-  max-width: 100%;
-  border-radius: 4px;
+.content-box {
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  max-width: 500px;
+  width: 100%;
+  animation: fadeIn 1s ease-in;
+}
+
+.avatar-wrapper {
+  margin: 2rem 0;
+}
+
+/* En src/App.css */
+
+.avatar-media {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center 1%; 
+  border-radius: 50%;
+  border: 4px solid var(--accent-color);
+  box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: normal;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+p {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
