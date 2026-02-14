@@ -1,34 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// src/App.jsx
 import './App.css'
+import { useProjectsController } from './controllers/useProjectsController'; // Importamos Controlador
+import { ProjectCard } from './views/ProjectCard'; // Importamos Vista
 
 function App() {
-  const [count, setCount] = useState(0)
+  // 1. Invocamos al Controlador
+  const { projects, loading } = useProjectsController();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="portfolio-container">
+      <header>
+        <h1>Mi Portafolio MVC</h1>
+      </header>
+
+      <main>
+        {/* 2. Lógica de UI basada en el estado del controlador */}
+        {loading ? (
+          <p>Cargando proyectos...</p>
+        ) : (
+          <div className="projects-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+            {/* 3. Renderizamos la Vista */}
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        )}
+      </main>
+    </div>
   )
 }
 
