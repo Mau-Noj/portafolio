@@ -1,0 +1,185 @@
+/* --- LAYOUT GENERAL --- */
+.materials-container {
+  margin-top: 100px; 
+  height: calc(100vh - 80px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; 
+  padding-bottom: 50px; /* Ajuste para centrar visualmente */
+  box-sizing: border-box;
+}
+
+.materials-header {
+  text-align: center;
+  margin-bottom: -20px;
+}
+
+.materials-header h2 { font-size: 2rem; color: #1e293b; margin: 0; }
+.materials-header p { color: #64748b; margin-top: 5px; }
+
+/* --- CARRUSEL --- */
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.cards-scroll-container {
+  display: flex;
+  gap: 30px; /* Más espacio entre cartas */
+  overflow-x: auto; 
+  padding: 30px 10px; 
+  width: 100%;
+  scrollbar-width: none;
+  perspective: 1000px; /* Clave para el 3D */
+}
+.cards-scroll-container::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  background: white; border: 1px solid #cbd5e1; border-radius: 50%;
+  width: 45px; height: 45px; cursor: pointer; z-index: 10;
+  display: flex; justify-content: center; align-items: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+.nav-btn:hover { transform: scale(1.1); color: #2563eb; }
+
+
+/* =========================================
+   ESTILOS FLIP CARD (PÓKER)
+========================================= */
+
+.material-card-flip {
+  background-color: transparent;
+  min-width: 260px; /* Ancho carta */
+  max-width: 260px;
+  height: 380px;    /* Alto carta */
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 15px;
+}
+
+/* Efecto al pasar el mouse: VOLTEAR */
+.material-card-flip:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* --- CARA 1: DISEÑO PÓKER (Frente) --- */
+.card-front-poker {
+  background: #0f172a; /* Azul oscuro elegante */
+  color: #f1f5f9;
+  border: 8px solid #f8fafc; /* Borde blanco grueso típico de cartas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.poker-pattern {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.05;
+  background-image: radial-gradient(#fff 1px, transparent 1px);
+  background-size: 10px 10px;
+}
+
+.poker-border {
+  border: 2px solid #94a3b8; /* Marco interno fino */
+  width: 85%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 10px;
+}
+
+.palmer-title {
+  font-family: 'Great Vibes', cursive; /* Fuente Palmer */
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.1;
+  color: #e2e8f0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  z-index: 2;
+}
+
+.corner-symbol {
+  position: absolute;
+  font-size: 1.5rem;
+  color: #64748b;
+}
+.corner-symbol:first-child { top: 5px; left: 10px; }
+.corner-symbol.bottom { bottom: 5px; right: 10px; transform: rotate(180deg); }
+
+
+/* --- CARA 2: CONTENIDO (Atrás) --- */
+.card-back-content {
+  background: white;
+  transform: rotateY(180deg); /* Inicia volteada */
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.card-image img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.inner-title {
+  font-size: 1.1rem;
+  color: #1e293b;
+  margin: 10px 0;
+}
+
+.tags-container { display: flex; gap: 5px; flex-wrap: wrap; }
+.tag-badge { 
+  background: #eff6ff; color: #2563eb; 
+  font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; 
+}
+
+.action-btn {
+  width: 100%; padding: 10px; border-radius: 8px; border: none;
+  font-weight: 600; cursor: pointer; text-align: center; 
+  text-decoration: none; display: block; margin-top: auto;
+}
+.read-btn { background: #2563eb; color: white; }
+.read-btn:hover { background: #1d4ed8; }
+.download-btn { background: #f1f5f9; color: #334155; }

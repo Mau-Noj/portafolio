@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Navbar.css';
 import { BiHomeAlt, BiGridAlt, BiNews, BiLibrary, BiUser, BiEnvelope } from "react-icons/bi";
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,10 +11,9 @@ export const Navbar = () => {
       <div className="navbar-container">
         
         {/* Logo */}
-        <a href="#" className="navbar-logo">
-          <img src="/logo.png" alt="Logo" className="logo-image" />
-          Mauricio<span className="logo-accent">.dev</span>
-        </a>
+        <Link to="/" className="nav-item">
+            <img src="/logo.png" alt="Logo" className="logo-image" />Mauricio<span className="logo-accent">.dev</span>
+          </Link>
 
         {/* Menú de escritorio */}
         <div className={`nav-menu ${isOpen ? 'active' : ''}`}>
@@ -30,9 +30,9 @@ export const Navbar = () => {
             <BiNews className="nav-icon" /> Artículos
           </a>
 
-          <a href="#materiales" className="nav-item">
+          <Link to="/materiales" className="nav-item">
             <BiLibrary className="nav-icon" /> Materiales de Apoyo
-          </a>
+          </Link>
           
           <a href="#sobre-mi" className="nav-item">
             <BiUser className="nav-icon" /> Sobre mí

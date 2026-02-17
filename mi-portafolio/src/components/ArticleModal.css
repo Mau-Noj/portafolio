@@ -1,0 +1,127 @@
+/* src/components/ArticleModal.css */
+
+/* El fondo oscuro semitransparente */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px); /* Efecto vidrio borroso detrás */
+  z-index: 2000; /* Por encima del Navbar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* La tarjeta blanca del artículo */
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 800px; /* Ancho máximo de lectura cómodo */
+  height: 85vh; /* Ocupa el 85% de la altura de la pantalla */
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.3s ease;
+  overflow: hidden; /* Importante para que el scroll sea interno */
+}
+
+/* Botón de cerrar */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f3f4f6;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #374151;
+  transition: 0.2s;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  background: #e5e7eb;
+  transform: rotate(90deg);
+}
+
+/* Cabecera del artículo */
+.article-header-modal {
+  padding: 3rem 3rem 1.5rem 3rem;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.article-category {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--primary-color);
+}
+
+.article-header-modal h2 {
+  font-size: 2rem;
+  margin: 10px 0;
+  color: #111;
+  line-height: 1.2;
+}
+
+.article-meta {
+  display: flex;
+  gap: 20px;
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Cuerpo del artículo con Scroll */
+.article-body-scroll {
+  padding: 2rem 3rem;
+  overflow-y: auto; /* Aquí está el truco del scroll */
+  line-height: 1.8;
+  color: #374151;
+  font-size: 1.1rem;
+}
+
+.article-body-scroll h3 {
+  color: #111;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.article-highlight {
+  background: #eff6ff;
+  border-left: 4px solid var(--primary-color);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Animaciones */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* Móvil */
+@media (max-width: 768px) {
+  .article-header-modal, .article-body-scroll { padding: 1.5rem; }
+  .article-header-modal h2 { font-size: 1.5rem; }
+}

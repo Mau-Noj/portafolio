@@ -1,4 +1,8 @@
-/* src/App.css */
+html {
+  scroll-behavior: smooth; /* Esto hace que baje deslizándose suavemente */
+}
+/* -------------------------------- */
+
 :root {
   --bg-color: #f0f2f5;
   --text-color: #333;
