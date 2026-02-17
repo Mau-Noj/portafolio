@@ -1,11 +1,14 @@
 // src/App.jsx
 import './App.css'
 import { ComingSoon } from './views/ComingSoon';
+import { Navbar } from './components/Navbar';
 
 function App() {
   return (
-    // Simplemente renderizamos la vista de construcción
-    <ComingSoon />
+    <>
+      <Navbar /> 
+      <ComingSoon />
+    </>
   )
 }
 
