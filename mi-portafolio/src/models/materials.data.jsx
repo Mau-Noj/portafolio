@@ -6,7 +6,15 @@ export const materials = [
     id: 1,
     type: "article",
     title: "Entendiendo los Casos de Uso",
-    description: "Aprende a identificar actores, escenarios y relaciones en un sistema real.",
+    description: (
+      <>
+        Antes de programar… 
+        <br /> 
+        ¡respira y analiza!
+        <br /> 
+        Domina los casos de uso y evita el clásico “eso no era lo que quería el cliente”.
+      </>
+    ),
     thumbnail: "/modela_comportamiento.png", 
     tags: ["Análisis", "UML", "Ingeniería"],
     content: (
