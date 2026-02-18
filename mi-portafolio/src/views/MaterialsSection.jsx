@@ -5,6 +5,7 @@ import { ArticleModal } from '../components/ArticleModal';
 import { BiChevronLeft, BiChevronRight, BiShow, BiHide } from "react-icons/bi";
 
 // --- COMPONENTE INTERNO PARA CADA CARTA ---
+// --- COMPONENTE INTERNO PARA CADA CARTA ---
 const MaterialCard = ({ item, onRead }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -25,35 +26,34 @@ const MaterialCard = ({ item, onRead }) => {
         {/* CARA TRASERA (CONTENIDO) */}
         <div className="card-face card-back-content">
           
-          {/* La imagen desaparece si está expandido */}
-          {!isExpanded && (
-            <div className="card-image">
-              <img src={item.thumbnail} alt={item.title} />
-            </div>
-          )}
+          {/* CORRECCIÓN: Usamos clase CSS en vez de eliminar el nodo */}
+          <div className={`card-image ${isExpanded ? 'hidden-content' : ''}`}>
+            <img src={item.thumbnail} alt={item.title} />
+          </div>
           
           <div className="card-content">
-            {!isExpanded && (
-              <div className="tags-container">
-                {item.tags.map((tag, idx) => (
-                  <span key={idx} className="tag-badge">{tag}</span>
-                ))}
-              </div>
-            )}
+            {/* CORRECCIÓN: Usamos clase CSS aquí también */}
+            <div className={`tags-container ${isExpanded ? 'hidden-content' : ''}`}>
+              {item.tags.map((tag, idx) => (
+                <span key={idx} className="tag-badge">{tag}</span>
+              ))}
+            </div>
             
             <h4 className="inner-title">{item.title}</h4>
             
-            {/* Descripción con clase dinámica */}
             <div className={`card-description ${isExpanded ? 'full-text' : 'clamped-text'}`}>
               {item.description}
             </div>
 
-            {/* BOTÓN VER MÁS / VER MENOS */}
             <button 
               className="toggle-text-btn"
               onClick={(e) => {
-                e.stopPropagation(); // Evita clics fantasma
+                e.stopPropagation(); 
                 setIsExpanded(!isExpanded);
+              }}
+              /* Agregamos esto para mejorar la respuesta táctil en móvil */
+              onTouchEnd={(e) => {
+                e.stopPropagation();
               }}
             >
               {isExpanded ? (
@@ -63,7 +63,6 @@ const MaterialCard = ({ item, onRead }) => {
               )}
             </button>
             
-            {/* BOTONES DE ACCIÓN (Siempre abajo) */}
             <div className="action-area">
               {item.type === 'article' ? (
                 <button 

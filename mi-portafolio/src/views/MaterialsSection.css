@@ -238,3 +238,7 @@
 .read-btn { background: #2563eb; color: white; }
 .read-btn:hover { background: #1d4ed8; }
 .download-btn { background: #f1f5f9; color: #334155; }
+
+.hidden-content {
+  display: none !important;
+}
