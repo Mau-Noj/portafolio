@@ -1,127 +1,130 @@
-/* src/components/ArticleModal.css */
-
-/* El fondo oscuro semitransparente */
+/* --- FONDO OSCURO (Overlay) --- */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(5px); /* Efecto vidrio borroso detrás */
-  z-index: 2000; /* Por encima del Navbar */
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  animation: fadeIn 0.3s ease;
+  z-index: 1000;
+  padding: 10px; /* Espacio para que no pegue a los bordes en celular */
+  backdrop-filter: blur(5px);
 }
 
-/* La tarjeta blanca del artículo */
+/* --- CAJA BLANCA PRINCIPAL --- */
 .modal-content {
   background: white;
+  padding: 30px;
+  border-radius: 16px;
   width: 100%;
-  max-width: 800px; /* Ancho máximo de lectura cómodo */
-  height: 85vh; /* Ocupa el 85% de la altura de la pantalla */
-  border-radius: 20px;
+  max-width: 800px; /* En PC mide esto máximo */
+  max-height: 90vh; /* Altura máxima del 90% de la pantalla */
+  overflow-y: auto; /* Scroll interno si es muy alto */
   position: relative;
-  display: flex;
-  flex-direction: column;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  animation: slideUp 0.3s ease;
-  overflow: hidden; /* Importante para que el scroll sea interno */
+  animation: slideIn 0.3s ease-out;
 }
 
-/* Botón de cerrar */
+/* Animación de entrada */
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Botón de cerrar (X) */
 .close-btn {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: #f3f4f6;
+  background: #f1f5f9;
   border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #64748b;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #374151;
-  transition: 0.2s;
+  transition: all 0.2s;
   z-index: 10;
 }
+.close-btn:hover { background: #e2e8f0; color: #ef4444; transform: rotate(90deg); }
 
-.close-btn:hover {
-  background: #e5e7eb;
-  transform: rotate(90deg);
+/* --- ESTILOS DEL CONTENIDO INTERNO (El artículo) --- */
+
+.article-container {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #334155;
+  line-height: 1.6;
 }
 
-/* Cabecera del artículo */
-.article-header-modal {
-  padding: 3rem 3rem 1.5rem 3rem;
-  border-bottom: 1px solid #f0f0f0;
-  background: #fafafa;
+/* La caja azul del inicio */
+.article-hero {
+  background: linear-gradient(to right, #eff6ff, #dbeafe);
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 5px solid #2563eb;
+  margin-bottom: 25px;
+}
+.article-hero h2 { margin-top: 0; color: #1e40af; font-size: 1.5rem; }
+
+/* Grid de tarjetas (Conceptos) */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Automático */
+  gap: 15px;
+  margin: 20px 0;
 }
 
-.article-category {
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: var(--primary-color);
+.concept-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  border-top: 4px solid #94a3b8;
+}
+.concept-card.purple { border-top-color: #8b5cf6; }
+.concept-card.pink { border-top-color: #ec4899; }
+.concept-card.green { border-top-color: #10b981; }
+
+.card-icon { font-size: 2rem; display: block; margin-bottom: 10px; }
+
+/* Imágenes responsivas */
+img {
+  max-width: 100%; /* CLAVE: Para que no se salgan en el celular */
+  height: auto;
+  border-radius: 8px;
 }
 
-.article-header-modal h2 {
-  font-size: 2rem;
-  margin: 10px 0;
-  color: #111;
-  line-height: 1.2;
+/* Cajas de relaciones */
+.relation-box {
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 15px;
 }
+.visual-line { font-family: monospace; color: #2563eb; margin-top: 5px; display: block; }
 
-.article-meta {
-  display: flex;
-  gap: 20px;
-  color: #666;
-  font-size: 0.9rem;
-  margin-top: 10px;
-}
+/* =========================================
+   📱 AJUSTES PARA CELULAR (Media Query)
+========================================= */
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 15px; /* Menos relleno */
+    max-height: 95vh;
+    width: 95%; /* Ocupa casi todo el ancho */
+  }
 
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-/* Cuerpo del artículo con Scroll */
-.article-body-scroll {
-  padding: 2rem 3rem;
-  overflow-y: auto; /* Aquí está el truco del scroll */
-  line-height: 1.8;
-  color: #374151;
-  font-size: 1.1rem;
-}
-
-.article-body-scroll h3 {
-  color: #111;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
-.article-highlight {
-  background: #eff6ff;
-  border-left: 4px solid var(--primary-color);
-  padding: 1.5rem;
-  margin: 1.5rem 0;
-  border-radius: 0 8px 8px 0;
-}
-
-/* Animaciones */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-/* Móvil */
-@media (max-width: 768px) {
-  .article-header-modal, .article-body-scroll { padding: 1.5rem; }
-  .article-header-modal h2 { font-size: 1.5rem; }
+  .article-hero h2 { font-size: 1.2rem; }
+  
+  .concept-grid {
+    grid-template-columns: 1fr; /* Una sola columna */
+  }
 }
