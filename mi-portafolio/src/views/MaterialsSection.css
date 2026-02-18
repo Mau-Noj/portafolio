@@ -1,4 +1,6 @@
-/* --- LAYOUT GENERAL (Sin Scroll en la página) --- */
+/* src/views/MaterialsSection.css */
+
+/* --- 1. LAYOUT GENERAL (Sin Scroll en la página) --- */
 .materials-container {
   /* MATEMÁTICA EXACTA: Si el Navbar mide 80px, bajamos 80px */
   margin-top: 80px; 
@@ -23,7 +25,7 @@
 .materials-header h2 { font-size: 2rem; color: #1e293b; margin: 0; }
 .materials-header p { color: #64748b; margin-top: 5px; font-size: 0.95rem; }
 
-/* --- CARRUSEL --- */
+/* --- 2. CARRUSEL --- */
 .carousel-wrapper {
   position: relative;
   display: flex;
@@ -56,9 +58,7 @@
 }
 .nav-btn:hover { transform: scale(1.1); color: #2563eb; }
 
-/* =========================================
-   FLIP CARD & VER MÁS LÓGICA
-========================================= */
+/* --- 3. FLIP CARD (EFECTO 3D) --- */
 
 .material-card-flip {
   background-color: transparent;
@@ -68,33 +68,51 @@
   perspective: 1000px;
 }
 
+/* CONTENEDOR QUE GIRA */
 .card-inner {
   position: relative;
   width: 100%;
   height: 100%;
   text-align: center;
   transition: transform 0.6s;
+  
+  /* FUERZA 3D ESTRICTO (Para Firefox y otros) */
   transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  
+  /* OPTIMIZACIÓN DE MEMORIA PARA MÓVIL */
+  will-change: transform;
+  
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   border-radius: 15px;
 }
 
+/* Efecto Hover: Girar */
 .material-card-flip:hover .card-inner {
   transform: rotateY(180deg);
 }
 
+/* CARAS COMUNES */
 .card-face {
   position: absolute;
   width: 100%;
   height: 100%;
+  
+  /* OCULTAR LA ESPALDA */
   -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
   backface-visibility: hidden;
+  
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  
+  /* Fix para bordes redondeados en 3D */
+  transform: translateZ(0);
+  background-color: white; /* Asegura fondo sólido en móviles */
 }
 
-/* --- CARA FRONTAL (Póker) --- */
+/* --- CARA FRONTAL (PÓKER) --- */
 .card-front-poker {
   background: #0f172a;
   color: #f1f5f9;
@@ -140,10 +158,13 @@
 .corner-symbol.bottom { bottom: 5px; right: 10px; transform: rotate(180deg); }
 
 
-/* --- CARA TRASERA (Contenido) --- */
+/* --- CARA TRASERA (CONTENIDO) --- */
 .card-back-content {
   background: white;
-  transform: rotateY(180deg);
+  
+  /* EL FIX PARA FIREFOX: translateZ(1px) separa las caras */
+  transform: rotateY(180deg) translateZ(1px);
+  
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -151,25 +172,25 @@
 
 .card-image img {
   width: 100%;
-  height: 140px;
+  height: 130px; /* AJUSTE: Altura reducida para que quepa todo */
   object-fit: cover;
-  transition: height 0.3s ease; /* Animación suave al desaparecer */
+  transition: all 0.3s ease; /* Transición suave */
 }
 
 .card-content {
-  padding: 15px;
+  padding: 10px 15px; /* AJUSTE: Menos padding arriba/abajo */
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  height: 100%; /* Ocupa todo el espacio */
+  height: 100%;
 }
 
 .inner-title {
   font-size: 1.1rem;
   color: #1e293b;
-  margin: 8px 0;
+  margin: 4px 0; /* AJUSTE: Margen reducido */
   font-weight: 700;
-  flex-shrink: 0; /* El título nunca se aplasta */
+  flex-shrink: 0;
 }
 
 .tags-container { 
@@ -202,7 +223,6 @@
   flex-grow: 1;
   overflow-y: auto;
   padding-right: 5px;
-  /* Scrollbar bonita */
   scrollbar-width: thin;
 }
 .full-text::-webkit-scrollbar { width: 4px; }
@@ -227,7 +247,7 @@
 
 /* Área de botones fija al fondo */
 .action-area {
-  margin-top: auto; /* Empuja siempre al fondo */
+  margin-top: auto;
 }
 
 .action-btn {
@@ -239,6 +259,13 @@
 .read-btn:hover { background: #1d4ed8; }
 .download-btn { background: #f1f5f9; color: #334155; }
 
+/* --- CORRECCIÓN DEFINITIVA PARA MÓVIL (EVITA PANTALLA BLANCA) --- */
 .hidden-content {
-  display: none !important;
+  /* TRUCO: Colapsar en lugar de eliminar del DOM */
+  max-height: 0 !important;
+  opacity: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none; /* Evita clics accidentales */
 }
