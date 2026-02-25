@@ -1,31 +1,128 @@
 /* src/views/MaterialsSection.css */
 
-/* --- 1. LAYOUT GENERAL (Sin Scroll en la página) --- */
+/* --- 1. LAYOUT GENERAL --- */
 .materials-container {
-  /* MATEMÁTICA EXACTA: Si el Navbar mide 80px, bajamos 80px */
-  margin-top: 80px; 
-  height: calc(100vh - 80px); /* El resto es 100% exacto */
-  
+  margin-top: 80px;
+  height: calc(100vh - 80px);
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Corta cualquier sobrante */
-  padding-bottom: 20px;
+  overflow: hidden;
+  padding: 16px 20px 12px;
   box-sizing: border-box;
 }
 
+/* --- 2. HEADER MEJORADO --- */
 .materials-header {
   text-align: center;
-  margin-bottom: -10px; /* Un poco más pegado a las cartas */
+  margin-bottom: 4px;
   z-index: 5;
+  width: 100%;
 }
 
-.materials-header h2 { font-size: 2rem; color: #1e293b; margin: 0; }
-.materials-header p { color: #64748b; margin-top: 5px; font-size: 0.95rem; }
+/* Badge animado */
+.materials-badge {
+  display: none;
+}
 
-/* --- 2. CARRUSEL --- */
+.materials-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2563eb;
+  flex-shrink: 0;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1;   transform: scale(1);   }
+  50%       { opacity: 0.3; transform: scale(0.6); }
+}
+
+/* Título principal */
+.materials-title {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #1e293b;
+  margin: 0 0 4px;
+  text-align: center;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  overflow: visible;
+}
+
+/* Línea 1: "Material de" — mismo gradiente que Apoyo */
+.materials-title-plain {
+  display: block;
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Línea 2: "Apoyo" con gradiente — misma altura, sin desborde */
+.materials-title-accent {
+  display: block;
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  padding-bottom: 4px;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtítulo */
+.materials-subtitle {
+  color: #64748b;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Línea decorativa */
+.materials-header-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.materials-header-line::before,
+.materials-header-line::after {
+  content: '';
+  height: 1px;
+  width: 50px;
+  background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.4));
+}
+.materials-header-line::after {
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0.4), transparent);
+}
+.materials-header-line-icon {
+  font-size: 1rem;
+  color: #2563eb;
+  opacity: 0.45;
+}
+
+/* Dark mode para el header */
+[data-theme="dark"] .materials-title        { color: #f1f5f9; }
+[data-theme="dark"] .materials-subtitle     { color: #94a3b8; }
+[data-theme="dark"] .materials-badge        { background: rgba(59,130,246,0.1); border-color: rgba(59,130,246,0.22); }
+
+/* --- 3. CARRUSEL --- */
 .carousel-wrapper {
   position: relative;
   display: flex;
@@ -33,18 +130,21 @@
   gap: 10px;
   width: 100%;
   max-width: 1100px;
-  height: 450px; /* Altura fija para el área de cartas */
+  height: 360px;
+  overflow: visible;
+  flex-shrink: 0;
 }
 
 .cards-scroll-container {
   display: flex;
-  gap: 30px;
-  overflow-x: auto; 
-  padding: 40px 10px; 
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 12px 16px;
   width: 100%;
   scrollbar-width: none;
   perspective: 1000px;
-  align-items: center; /* Centra las cartas verticalmente */
+  align-items: flex-start;
 }
 .cards-scroll-container::-webkit-scrollbar { display: none; }
 
@@ -58,58 +158,52 @@
 }
 .nav-btn:hover { transform: scale(1.1); color: #2563eb; }
 
-/* --- 3. FLIP CARD (EFECTO 3D) --- */
+/* Dark mode nav-btn */
+[data-theme="dark"] .nav-btn {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(148, 163, 184, 0.2);
+  color: #94a3b8;
+}
+[data-theme="dark"] .nav-btn:hover { color: #3b82f6; }
 
+/* --- 4. FLIP CARD (EFECTO 3D) --- */
 .material-card-flip {
   background-color: transparent;
-  min-width: 260px;
-  max-width: 260px;
-  height: 380px;    
+  min-width: 220px;
+  max-width: 220px;
+  height: 340px;
   perspective: 1000px;
 }
 
-/* CONTENEDOR QUE GIRA */
 .card-inner {
   position: relative;
   width: 100%;
   height: 100%;
   text-align: center;
   transition: transform 0.6s;
-  
-  /* FUERZA 3D ESTRICTO (Para Firefox y otros) */
   transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
-  
-  /* OPTIMIZACIÓN DE MEMORIA PARA MÓVIL */
   will-change: transform;
-  
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   border-radius: 15px;
 }
 
-/* Efecto Hover: Girar */
 .material-card-flip:hover .card-inner {
   transform: rotateY(180deg);
 }
 
-/* CARAS COMUNES */
 .card-face {
   position: absolute;
   width: 100%;
   height: 100%;
-  
-  /* OCULTAR LA ESPALDA */
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   backface-visibility: hidden;
-  
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-  
-  /* Fix para bordes redondeados en 3D */
   transform: translateZ(0);
-  background-color: white; /* Asegura fondo sólido en móviles */
+  background-color: white;
 }
 
 /* --- CARA FRONTAL (PÓKER) --- */
@@ -133,8 +227,7 @@
 
 .poker-border {
   border: 2px solid #94a3b8;
-  width: 85%;
-  height: 85%;
+  width: 85%; height: 85%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -145,7 +238,7 @@
 
 .palmer-title {
   font-family: 'Great Vibes', cursive;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 400;
   line-height: 1.1;
   color: #e2e8f0;
@@ -157,14 +250,10 @@
 .corner-symbol:first-child { top: 5px; left: 10px; }
 .corner-symbol.bottom { bottom: 5px; right: 10px; transform: rotate(180deg); }
 
-
 /* --- CARA TRASERA (CONTENIDO) --- */
 .card-back-content {
   background: white;
-  
-  /* EL FIX PARA FIREFOX: translateZ(1px) separa las caras */
   transform: rotateY(180deg) translateZ(1px);
-  
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -172,30 +261,30 @@
 
 .card-image img {
   width: 100%;
-  height: 130px; /* AJUSTE: Altura reducida para que quepa todo */
+  height: 80px;
   object-fit: cover;
-  transition: all 0.3s ease; /* Transición suave */
+  transition: all 0.3s ease;
 }
 
 .card-content {
-  padding: 10px 15px; /* AJUSTE: Menos padding arriba/abajo */
+  padding: 8px 12px 12px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   height: 100%;
+  overflow: hidden;
 }
 
 .inner-title {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   color: #1e293b;
-  margin: 4px 0; /* AJUSTE: Margen reducido */
+  margin: 3px 0 4px;
   font-weight: 700;
   flex-shrink: 0;
+  line-height: 1.3;
 }
 
-.tags-container { 
-  display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 5px;
-}
+.tags-container { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 5px; }
 .tag-badge { 
   background: #eff6ff; color: #2563eb; 
   font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; 
@@ -210,15 +299,13 @@
   transition: all 0.3s ease;
 }
 
-/* Estado Normal: Cortado a 3 líneas */
 .clamped-text {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Estado Expandido: Ocupa todo el espacio, con scroll si es necesario */
 .full-text {
   flex-grow: 1;
   overflow-y: auto;
@@ -228,44 +315,83 @@
 .full-text::-webkit-scrollbar { width: 4px; }
 .full-text::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
-/* Botón pequeñito "Ver más" */
 .toggle-text-btn {
-  background: none;
-  border: none;
-  color: #2563eb;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 0;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  background: none; border: none;
+  color: #2563eb; font-size: 0.8rem; font-weight: 600;
+  cursor: pointer; padding: 0; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 4px;
   align-self: flex-start;
 }
 .toggle-text-btn:hover { text-decoration: underline; }
 
-/* Área de botones fija al fondo */
 .action-area {
   margin-top: auto;
+  padding-top: 6px;
+  padding-bottom: 4px;
+  flex-shrink: 0;
 }
 
 .action-btn {
-  width: 100%; padding: 10px; border-radius: 8px; border: none;
-  font-weight: 600; cursor: pointer; text-align: center; 
-  text-decoration: none; display: block;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  letter-spacing: 0.01em;
 }
-.read-btn { background: #2563eb; color: white; }
-.read-btn:hover { background: #1d4ed8; }
-.download-btn { background: #f1f5f9; color: #334155; }
+.action-btn:hover  { transform: translateY(-1px); }
+.action-btn:active { transform: translateY(0); }
 
-/* --- CORRECCIÓN DEFINITIVA PARA MÓVIL (EVITA PANTALLA BLANCA) --- */
+/* Leer Artículo — azul sólido con gradiente sutil */
+.read-btn {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: white;
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.35);
+}
+.read-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  box-shadow: 0 5px 16px rgba(37, 99, 235, 0.45);
+}
+
+/* Descargar — outline elegante */
+.download-btn {
+  background: transparent;
+  color: #2563eb;
+  border: 1.5px solid #2563eb;
+  width: 86%;
+}
+.download-btn:hover {
+  background: rgba(37, 99, 235, 0.06);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+}
+
+/* Dark mode botones */
+[data-theme="dark"] .read-btn {
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.45);
+}
+[data-theme="dark"] .download-btn {
+  color: #60a5fa;
+  border-color: #3b82f6;
+}
+[data-theme="dark"] .download-btn:hover {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+/* --- CORRECCIÓN PARA MÓVIL --- */
 .hidden-content {
-  /* TRUCO: Colapsar en lugar de eliminar del DOM */
   max-height: 0 !important;
   opacity: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
   overflow: hidden !important;
-  pointer-events: none; /* Evita clics accidentales */
+  pointer-events: none;
 }

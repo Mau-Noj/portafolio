@@ -5,7 +5,6 @@ import { ArticleModal } from '../components/ArticleModal';
 import { BiChevronLeft, BiChevronRight, BiShow, BiHide } from "react-icons/bi";
 
 // --- COMPONENTE INTERNO PARA CADA CARTA ---
-// --- COMPONENTE INTERNO PARA CADA CARTA ---
 const MaterialCard = ({ item, onRead }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -26,13 +25,11 @@ const MaterialCard = ({ item, onRead }) => {
         {/* CARA TRASERA (CONTENIDO) */}
         <div className="card-face card-back-content">
           
-          {/* CORRECCIÓN: Usamos clase CSS en vez de eliminar el nodo */}
           <div className={`card-image ${isExpanded ? 'hidden-content' : ''}`}>
             <img src={item.thumbnail} alt={item.title} />
           </div>
           
           <div className="card-content">
-            {/* CORRECCIÓN: Usamos clase CSS aquí también */}
             <div className={`tags-container ${isExpanded ? 'hidden-content' : ''}`}>
               {item.tags.map((tag, idx) => (
                 <span key={idx} className="tag-badge">{tag}</span>
@@ -47,30 +44,17 @@ const MaterialCard = ({ item, onRead }) => {
 
             <button 
               className="toggle-text-btn"
-              onClick={(e) => {
-                e.stopPropagation(); 
-                setIsExpanded(!isExpanded);
-              }}
-              /* Agregamos esto para mejorar la respuesta táctil en móvil */
-              onTouchEnd={(e) => {
-                e.stopPropagation();
-              }}
+              onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }}
+              onTouchEnd={(e) => { e.stopPropagation(); }}
             >
-              {isExpanded ? (
-                <><BiHide /> Ocultar</>
-              ) : (
-                <><BiShow /> Ver más...</>
-              )}
+              {isExpanded ? <><BiHide /> Ocultar</> : <><BiShow /> Ver más...</>}
             </button>
             
             <div className="action-area">
               {item.type === 'article' ? (
                 <button 
                   className="action-btn read-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onRead(item);
-                  }}
+                  onClick={(e) => { e.stopPropagation(); onRead(item); }}
                 >
                   📖 Leer Artículo
                 </button>
@@ -96,18 +80,36 @@ export const MaterialsSection = () => {
   const scroll = (direction) => {
     const { current } = scrollRef;
     if (current) {
-      const scrollAmount = direction === 'left' ? -320 : 320;
-      current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      current.scrollBy({ left: direction === 'left' ? -320 : 320, behavior: 'smooth' });
     }
   };
 
   return (
     <div className="materials-container">
+
+      {/* ── HEADER MEJORADO ── */}
       <div className="materials-header">
-        <h2>📚 Material de Apoyo</h2>
-        <p>Descubre el contenido oculto en cada carta.</p>
+
+        {/* Título: dos líneas centradas */}
+        <h2 className="materials-title">
+          <span className="materials-title-plain">Material de</span>
+          <span className="materials-title-accent">Apoyo</span>
+        </h2>
+
+        {/* Subtítulo */}
+        <p className="materials-subtitle">
+          Recursos, plantillas y guías que uso en mis proyectos.
+          Descubre el contenido oculto en cada carta.
+        </p>
+
+        {/* Línea decorativa */}
+        <div className="materials-header-line">
+          <span className="materials-header-line-icon">✦</span>
+        </div>
+
       </div>
 
+      {/* ── CARRUSEL ── */}
       <div className="carousel-wrapper">
         <button className="nav-btn left" onClick={() => scroll('left')}>
           <BiChevronLeft size={30} />

@@ -33,15 +33,20 @@ export const materials = [
           boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
         }}>
           <h2 style={{ color: '#1e40af', margin: '0 0 10px 0', fontSize: '1.8rem', fontWeight: '800' }}>
-            8. Modelado de Comportamiento
+            Modelado de Comportamiento
           </h2>
           <p style={{ margin: 0, color: '#3b82f6', fontSize: '1.2rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span>🫀</span> La "Fisiología" del Sistema
           </p>
           <div style={{ marginTop: '15px', color: '#475569', fontSize: '0.95rem', lineHeight: '1.6' }}>
             <p>
-              Imagina el sistema como una caja negra. No nos importa los cables de adentro (código), 
-              sino <strong>quién la toca</strong> y <strong>qué hace</strong> la caja cuando la tocan.
+                Imagina el sistema como una partida de DOOM 🎮: 
+                no necesitamos ver el motor gráfico ni las líneas de código que corren detrás (eso queda oculto), 
+                sino <strong>lo que sucede en pantalla</strong> cuando el jugador se mueve, dispara o abre una puerta. 
+                Cada acción es un estímulo, y el juego responde con enemigos que atacan, 
+                puertas que se activan o niveles que cambian. 
+                Modelar el comportamiento es comprender <strong>esa relación entre acción y reacción</strong>, 
+                entre lo que el usuario hace y cómo el sistema responde en tiempo real.
             </p>
           </div>
         </div>
@@ -63,11 +68,13 @@ export const materials = [
             background: 'white', padding: '20px', borderRadius: '12px', 
             borderTop: '4px solid #8b5cf6', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' 
           }}>
-            <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🔄</div>
-            <h4 style={{ margin: '0 0 8px 0', color: '#1e293b' }}>Interacción Pura</h4>
+            <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🤝</div>
+            <h4 style={{ margin: '0 0 8px 0', color: '#1e293b' }}>Interacción Actor–Sistema</h4>
             <p style={{ fontSize: '0.9rem', color: '#64748b', lineHeight: '1.5' }}>
-              Ilustra cómo el sistema <strong>interactúa</strong> con entidades externas (actores) para lograr objetivos. 
-              Es un diagrama de <em>comportamiento</em>.
+              El diagrama muestra cómo entidades externas (personas, sistemas u organizaciones) interactúan con el sistema. 
+              No describe procesos internos, sino puntos de contacto. 
+              Es una representación de quién usa el sistema y para qué lo usa. 
+              Aquí no hablamos de algoritmos, hablamos de interacción observable.
             </p>
           </div>
 
@@ -76,11 +83,12 @@ export const materials = [
             background: 'white', padding: '20px', borderRadius: '12px', 
             borderTop: '4px solid #ec4899', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' 
           }}>
-            <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>📋</div>
-            <h4 style={{ margin: '0 0 8px 0', color: '#1e293b' }}>Requisitos Funcionales</h4>
+            <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>📌</div>
+            <h4 style={{ margin: '0 0 8px 0', color: '#1e293b' }}>Objetivos del Actor</h4>
             <p style={{ fontSize: '0.9rem', color: '#64748b', lineHeight: '1.5' }}>
-              Se usa para capturar y visualizar los <strong>requisitos funcionales</strong>. 
-              Es básicamente el contrato de "qué cosas debe hacer el software".
+              Cada caso de uso representa un objetivo concreto que el actor desea lograr. 
+              No son tareas técnicas, son resultados significativos para el usuario, como “registrar pedido”, 
+              “iniciar sesión” o “generar reporte”. El enfoque está en el propósito, no en la implementación.
             </p>
           </div>
 
@@ -89,22 +97,42 @@ export const materials = [
             background: 'white', padding: '20px', borderRadius: '12px', 
             borderTop: '4px solid #10b981', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' 
           }}>
-            <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🚧</div>
-            <h4 style={{ margin: '0 0 8px 0', color: '#1e293b' }}>Límites del Sistema</h4>
+            <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>📋</div>
+            <h4 style={{ margin: '0 0 8px 0', color: '#1e293b' }}>Vista Funcional del Sistema</h4>
             <p style={{ fontSize: '0.9rem', color: '#64748b', lineHeight: '1.5' }}>
-              Establece una frontera clara: 
-              <strong> Adentro</strong> está lo que programamos, 
-              <strong> Afuera</strong> están los actores que lo usan.
+              El diagrama ofrece una visión externa del sistema: 
+              qué servicios ofrece y qué debe ser capaz de hacer. 
+              Es una manera estructurada de capturar requerimientos funcionales desde la perspectiva del usuario, 
+              sin entrar en diseño ni arquitectura.
+            </p>
+          </div>
+
+          {/* TARJETA 4: Alcance y Frontera del Sistema */}
+          <div style={{ 
+            background: 'white', padding: '20px', borderRadius: '12px', 
+            borderTop: '4px solid #1075b9ff', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' 
+          }}>
+            <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🚧</div>
+            <h4 style={{ margin: '0 0 8px 0', color: '#1e293b' }}>Alcance y Frontera del Sistema</h4>
+            <p style={{ fontSize: '0.9rem', color: '#64748b', lineHeight: '1.5' }}>
+              Define claramente qué pertenece al sistema y qué no. 
+              La frontera visual separa el software de su entorno. 
+              Esto evita ambigüedades y ayuda a delimitar responsabilidades desde el inicio del análisis.
             </p>
           </div>
         </div>
+
+
+
+
+        
 
         {/* =================================================================
             2. CONTENIDO TÉCNICO DETALLADO (LO QUE YA TENÍAMOS)
            ================================================================= */}
         
         <h3 style={{ borderBottom: '1px solid #ddd', paddingBottom: '10px', color: '#333' }}>
-          Elementos Clave de los Casos de Uso
+          Elementos Clave sobre los Diagramas de Casos de Uso
         </h3>
 
         {/* 1. DEFINICIÓN DEL CASO DE USO */}

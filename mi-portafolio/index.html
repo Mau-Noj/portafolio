@@ -1,11 +1,55 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mauricio Noj</title>
+
+    <!-- ── Favicon ───────────────────────────────────────────── -->
+    <link rel="icon"             type="image/png"    href="/logo.png" />
+    <link rel="apple-touch-icon"                     href="/logo.png" />
+
+    <!-- ── Tema: evita flash blanco al cargar en modo oscuro ─── -->
+    <script>
+      (function () {
+        var saved  = localStorage.getItem('theme');
+        var prefer = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefer)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+
+    <!-- ── SEO base (useSEO.js lo sobreescribe por página) ───── -->
+    <title>Mauricio Noj · Desarrollador Web</title>
+    <meta name="description"  content="Portafolio personal de Mauricio Noj — desarrollador web full-stack apasionado por crear experiencias digitales." />
+    <meta name="author"       content="Mauricio Noj" />
+    <meta name="robots"       content="index,follow" />
+    <link rel="canonical"     href="https://mauricio.dev" />
+
+    <!-- ── Open Graph ─────────────────────────────────────────── -->
+    <meta property="og:type"         content="website" />
+    <meta property="og:site_name"    content="Mauricio.dev" />
+    <meta property="og:locale"       content="es_MX" />
+    <meta property="og:title"        content="Mauricio Noj · Desarrollador Web" />
+    <meta property="og:description"  content="Portafolio personal de Mauricio Noj — desarrollador web full-stack apasionado por crear experiencias digitales." />
+    <meta property="og:url"          content="https://mauricio.dev" />
+    <meta property="og:image"        content="https://mauricio.dev/og-cover.png" />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- ── Twitter Card ───────────────────────────────────────── -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="Mauricio Noj · Desarrollador Web" />
+    <meta name="twitter:description" content="Portafolio personal de Mauricio Noj — desarrollador web full-stack apasionado por crear experiencias digitales." />
+    <meta name="twitter:image"       content="https://mauricio.dev/og-cover.png" />
+
+    <!-- ── Fuentes (tus fuentes originales + Navbar) ─────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="root"></div>
