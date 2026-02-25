@@ -55,6 +55,7 @@ const MaterialCard = ({ item, onRead }) => {
                 <button 
                   className="action-btn read-btn"
                   onClick={(e) => { e.stopPropagation(); onRead(item); }}
+                  onTouchEnd={(e) => { e.stopPropagation(); onRead(item); }}
                 >
                   📖 Leer Artículo
                 </button>
