@@ -19,11 +19,6 @@ export const materials = [
     tags: ["Análisis", "UML", "Ingeniería"],
     content: (
       <>
-        {/* =================================================================
-            1. SECCIÓN VISUAL (NUEVO DISEÑO)
-           ================================================================= */}
-        
-        {/* HERO SECTION */}
         <div style={{ 
           background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)', 
           padding: '25px', 
@@ -36,17 +31,17 @@ export const materials = [
             Modelado de Comportamiento
           </h2>
           <p style={{ margin: 0, color: '#3b82f6', fontSize: '1.2rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span>🫀</span> La "Fisiología" del Sistema
+            Diagrama de Casos de Uso: Actores, límites del sistema y relaciones (include, extend, generalización)
           </p>
           <div style={{ marginTop: '15px', color: '#475569', fontSize: '0.95rem', lineHeight: '1.6' }}>
             <p>
-                Imagina el sistema como una partida de DOOM 🎮: 
-                no necesitamos ver el motor gráfico ni las líneas de código que corren detrás (eso queda oculto), 
-                sino <strong>lo que sucede en pantalla</strong> cuando el jugador se mueve, dispara o abre una puerta. 
-                Cada acción es un estímulo, y el juego responde con enemigos que atacan, 
-                puertas que se activan o niveles que cambian. 
-                Modelar el comportamiento es comprender <strong>esa relación entre acción y reacción</strong>, 
-                entre lo que el usuario hace y cómo el sistema responde en tiempo real.
+              Piensa en pedir comida en un restaurante: 
+              <strong>tú eres el cliente (actor)</strong>, el mesero y la cocina son el <strong>sistema con límites claros</strong>
+              (lo que pasa en la mesa, no la granja de vacas). 
+              Un caso de uso es "pedir hamburguesa": <strong>incluye siempre "tomar orden" (include)</strong>, 
+              puede extenderse con <strong>"agregar papas extras" (extend)</strong>, 
+              o generalizar a <strong>"pedir plato principal"</strong>. Este diagrama lista quién hace qué, 
+              marcando fronteras y conexiones como un <strong>menú bien organizado.</strong>
             </p>
           </div>
         </div>

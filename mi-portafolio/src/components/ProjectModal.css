@@ -1,0 +1,284 @@
+/* src/components/ProjectModal.css */
+
+/* ── Overlay ── */
+.pmodal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  animation: overlay-in 0.18s ease;
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Panel ── */
+.pmodal {
+  background: #090e18;
+  border: 1px solid #162438;
+  border-top: 3px solid var(--accent, #00ff9f);
+  max-width: 680px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 2.5rem 2.25rem;
+  position: relative;
+  box-shadow:
+    0 0 100px rgba(0, 0, 0, 0.95),
+    0 0 40px color-mix(in srgb, var(--accent, #00ff9f) 10%, transparent);
+  animation: modal-in 0.22s ease;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* Scrollbar */
+.pmodal::-webkit-scrollbar { width: 3px; }
+.pmodal::-webkit-scrollbar-track { background: transparent; }
+.pmodal::-webkit-scrollbar-thumb { background: var(--accent, #00ff9f); border-radius: 2px; }
+
+/* ── Barra de acento ── */
+.pmodal__topbar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent, #00ff9f);
+}
+
+/* ── Botón cerrar ── */
+.pmodal__close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #162438;
+  background: none;
+  color: #2d4a6a;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s;
+}
+.pmodal__close:hover {
+  border-color: #ff2d55;
+  color: #ff2d55;
+}
+
+/* ── Icono ── */
+.pmodal__icon {
+  font-size: 2.4rem;
+  margin-bottom: 0.85rem;
+  line-height: 1;
+}
+
+/* ── Eyebrow (cat + diff) ── */
+.pmodal__eye {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.65rem;
+}
+
+.pmodal__eye span:first-child {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.pmodal__diff {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.45rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid;
+}
+
+.diff-basico   { color: #00ff9f; border-color: rgba(0, 255, 159, 0.35); background: rgba(0, 255, 159, 0.05); }
+.diff-medio    { color: #facc15; border-color: rgba(250, 204, 21, 0.35); background: rgba(250, 204, 21, 0.05); }
+.diff-avanzado { color: #ff2d55; border-color: rgba(255, 45, 85, 0.35);  background: rgba(255, 45, 85, 0.05); }
+
+/* ── Título ── */
+.pmodal__title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  color: #cce4ff;
+  margin: 0 0 0.85rem;
+}
+
+/* ── Descripción ── */
+.pmodal__desc {
+  font-size: 0.84rem;
+  color: #2a5a80;
+  line-height: 1.8;
+  margin: 0 0 0.65rem;
+}
+
+/* ── Costo ── */
+.pmodal__cost {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--accent, #00ff9f) 28%, transparent);
+  color: var(--accent, #00ff9f);
+  margin-bottom: 1.2rem;
+}
+
+/* ── Section labels ── */
+.pmodal__section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.47rem;
+  letter-spacing: 3px;
+  color: var(--accent, #00ff9f);
+  text-transform: uppercase;
+  margin: 1.4rem 0 0.65rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #162438;
+}
+
+/* ── Pasos ── */
+.pmodal__steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pmodal__steps li {
+  font-size: 0.83rem;
+  color: #cce4ff;
+  padding-left: 1.2rem;
+  position: relative;
+  line-height: 1.55;
+}
+
+.pmodal__steps li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent, #00ff9f);
+  font-size: 0.6rem;
+  top: 0.2rem;
+}
+
+/* ── Skills ── */
+.pmodal__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.pmodal__skill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  padding: 0.2rem 0.6rem;
+  letter-spacing: 0.4px;
+  border: 1px solid color-mix(in srgb, var(--accent, #00ff9f) 30%, transparent);
+  color: var(--accent, #00ff9f);
+  background: color-mix(in srgb, var(--accent, #00ff9f) 6%, transparent);
+}
+
+/* ── Hardware ── */
+.pmodal__hw {
+  margin-top: 1.4rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid #162438;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.pmodal__hw-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.45rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #2d4a6a;
+  margin: 0 0 0.3rem;
+}
+
+.pmodal__hw-value {
+  font-size: 0.82rem;
+  color: #1e4a6a;
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ── Concepto clave ── */
+.pmodal__concept {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255, 224, 102, 0.2);
+  border-left: 3px solid #ffe066;
+  background: rgba(255, 224, 102, 0.03);
+}
+
+.pmodal__concept-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.45rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffe066;
+  margin: 0 0 0.4rem;
+}
+
+.pmodal__concept-value {
+  font-size: 0.8rem;
+  color: #806820;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Insight ── */
+.pmodal__insight {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-left: 3px solid #f59e0b;
+  background: rgba(245, 158, 11, 0.03);
+}
+
+.pmodal__insight-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.45rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #f59e0b;
+  margin: 0 0 0.4rem;
+}
+
+.pmodal__insight-value {
+  font-size: 0.8rem;
+  color: #806030;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .pmodal {
+    padding: 1.5rem 1.1rem;
+    max-height: 92vh;
+  }
+  .pmodal__title { font-size: 1.15rem; }
+}

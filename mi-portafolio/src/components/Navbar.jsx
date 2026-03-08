@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import {
-  BiHomeAlt, BiGridAlt, BiNews, BiLibrary,
+  BiGridAlt, BiNews, BiLibrary,
   BiUser, BiEnvelope, BiMoon, BiSun
 } from "react-icons/bi";
-import { BiLogoGithub, BiLogoYoutube } from "react-icons/bi";
+import { BiLogoGithub, BiLogoYoutube, BiLogoInstagram} from "react-icons/bi";
 import { Link, useLocation } from 'react-router-dom';
 
 /* ─── SEO / Open Graph helper ───────────────────────────────────────────────
@@ -71,12 +71,13 @@ export const updateSEO = ({
 /* ─── Constantes de configuración ──────────────────────────────────────── */
 const SOCIAL = {
   github:  'https://github.com/Mau-Noj',     
-  youtube: 'https://www.youtube.com/@programandoconpepito',      
+  youtube: 'https://www.youtube.com/@programandoconpepito',    
+  instagram: 'https://www.instagram.com/superpepitopro64/'  
 };
 
 const NAV_LINKS = [
-  { href: '#inicio',    label: 'Inicio',             icon: BiHomeAlt  },
-  { href: '#proyectos', label: 'Proyectos',           icon: BiGridAlt  },
+  { href: '#blog',      label: 'blog',                icon: BiNews     },
+  { href: '/proyectos', label: 'Proyectos',           icon: BiGridAlt  },
   { href: '#articulos', label: 'Artículos',           icon: BiNews     },
   { to: '/materiales',  label: 'Materiales de Apoyo', icon: BiLibrary  },
   { href: '#sobre-mi',  label: 'Sobre mí',            icon: BiUser     },
@@ -173,7 +174,6 @@ export const Navbar = () => {
               title="GitHub"
             >
               <BiLogoGithub className="social-icon" aria-hidden="true" />
-              <span className="social-label">GitHub</span>
             </a>
             <a
               href={SOCIAL.youtube}
@@ -184,7 +184,16 @@ export const Navbar = () => {
               title="YouTube"
             >
               <BiLogoYoutube className="social-icon" aria-hidden="true" />
-              <span className="social-label">YouTube</span>
+            </a>
+            <a
+              href={SOCIAL.instagram}
+              className="nav-social-btn nav-social-btn--instagram"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Ver perfil de Instagram"
+              title="Instagram"
+            >
+              <BiLogoInstagram className="social-icon" aria-hidden="true" />
             </a>
           </div>
 
@@ -213,15 +222,6 @@ export const Navbar = () => {
         {/* ── Acciones móvil (socials + dark + hamburguesa) ── */}
         <div className="mobile-actions">
           <a
-            href={SOCIAL.github}
-            className="nav-social-btn mobile-only"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            <BiLogoGithub className="social-icon" aria-hidden="true" />
-          </a>
-          <a
             href={SOCIAL.youtube}
             className="nav-social-btn nav-social-btn--youtube mobile-only"
             target="_blank"
@@ -230,7 +230,16 @@ export const Navbar = () => {
           >
             <BiLogoYoutube className="social-icon" aria-hidden="true" />
           </a>
-
+          <a
+            href={SOCIAL.instagram}
+            className="nav-social-btn nav-social-btn--instagram mobile-only"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Ver perfil de Instagram"
+            title="Instagram"
+          >
+            <BiLogoInstagram className="social-icon" aria-hidden="true" />
+          </a>
           <button
             className="nav-theme-toggle mobile-only"
             onClick={toggleDark}

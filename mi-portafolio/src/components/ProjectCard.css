@@ -1,0 +1,236 @@
+/* src/components/ProjectCard.css */
+
+/* ── Fuente mono — agrega al index.html si no la tienes:
+   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+── */
+
+.pcard {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.25rem 1.35rem;
+  cursor: pointer;
+
+  /* Apariencia */
+  background: #070a10;
+  border: 1px solid #162438;
+  position: relative;
+  overflow: hidden;
+
+  /* Transición suave */
+  transition: background 0.2s ease;
+}
+
+/* Barra de acento superior */
+.pcard__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent, #00ff9f);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.pcard:hover {
+  background: #090e18;
+}
+
+.pcard:hover .pcard__bar {
+  transform: scaleX(1);
+}
+
+.pcard:focus-visible {
+  outline: 2px solid var(--accent, #00ff9f);
+  outline-offset: 2px;
+}
+
+/* ── Cabecera ── */
+.pcard__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.pcard__icon {
+  font-size: 1.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Dificultad */
+.pcard__diff {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.45rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.diff-basico   { color: #00ff9f; border-color: rgba(0, 255, 159, 0.35); background: rgba(0, 255, 159, 0.05); }
+.diff-medio    { color: #facc15; border-color: rgba(250, 204, 21, 0.35); background: rgba(250, 204, 21, 0.05); }
+.diff-avanzado { color: #ff2d55; border-color: rgba(255, 45, 85, 0.35);  background: rgba(255, 45, 85, 0.05); }
+
+/* ── Categoría ── */
+.pcard__cat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* ── Título ── */
+.pcard__title {
+  font-size: 0.97rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+  color: #cce4ff;
+  margin: 0;
+}
+
+/* ── Descripción corta ── */
+.pcard__short {
+  font-size: 0.76rem;
+  color: #2a4a6a;
+  line-height: 1.65;
+  flex-grow: 1;
+  margin: 0;
+}
+
+/* ── Tags ── */
+.pcard__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.pcard__tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.45rem;
+  padding: 0.15rem 0.45rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: #2d4a6a;
+  letter-spacing: 0.3px;
+  border: 1px solid #162438;
+}
+
+.pcard__tag--more {
+  color: var(--accent, #00ff9f);
+  border-color: color-mix(in srgb, var(--accent, #00ff9f) 20%, transparent);
+  background: color-mix(in srgb, var(--accent, #00ff9f) 5%, transparent);
+}
+
+/* ── Footer ── */
+.pcard__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-top: 0.65rem;
+  margin-top: 0.15rem;
+  border-top: 1px solid #101c2c;
+}
+
+.pcard__hw {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.47rem;
+  color: #0e1e30;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #1e3a55;
+}
+
+.pcard__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+/* Costo */
+.pcard__cost {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 1px;
+  color: var(--accent, #00ff9f);
+  background: color-mix(in srgb, var(--accent, #00ff9f) 7%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent, #00ff9f) 20%, transparent);
+  padding: 0.15rem 0.5rem;
+}
+
+/* Status */
+.pcard__status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.45rem;
+  letter-spacing: 0.8px;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid;
+}
+
+.status-pendiente  { color: #2d4a6a; border-color: #162438; }
+.status-progreso   { color: #facc15; border-color: rgba(250, 204, 21, 0.35); background: rgba(250, 204, 21, 0.05); }
+.status-completado { color: #00ff9f; border-color: rgba(0, 255, 159, 0.35);  background: rgba(0, 255, 159, 0.05); }
+
+
+/* =========================================================
+   ✨ EFECTO NEÓN / GAMER PARA LAS TARJETAS (ProjectCard) ✨
+   ========================================================= */
+
+/* 1. Iluminar la tarjeta completa al pasar el mouse (Borde y resplandor) */
+.pcard:hover {
+  border-color: var(--accent, #00ff9f) !important;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent, #00ff9f) 15%, transparent),
+              inset 0 0 15px color-mix(in srgb, var(--accent, #00ff9f) 5%, transparent) !important;
+}
+
+/* 2. Categoría (El texto pequeñito arriba del título) */
+.pcard__cat {
+  color: var(--accent, #00ff9f) !important;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--accent, #00ff9f) 40%, transparent) !important;
+}
+
+/* 3. El Título de la tarjeta (Blanco brillante, y se vuelve neón al hacer hover) */
+.pcard__title {
+  color: #f1f5f9 !important; 
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.2) !important;
+  transition: all 0.3s ease;
+}
+.pcard:hover .pcard__title {
+  color: var(--accent, #00ff9f) !important;
+  text-shadow: 0 0 12px var(--accent, #00ff9f) !important;
+}
+
+/* 4. La descripción camuflada -> Ahora es un gris claro súper legible */
+.pcard__short {
+  color: #94a3b8 !important; 
+}
+
+/* 5. Etiquetas (Tags grises oscuros -> Ahora resaltan) */
+.pcard__tag {
+  color: #cbd5e1 !important; 
+  border-color: rgba(203, 213, 225, 0.2) !important;
+  transition: all 0.3s ease;
+}
+.pcard:hover .pcard__tag {
+  border-color: color-mix(in srgb, var(--accent, #00ff9f) 40%, transparent) !important;
+  color: #f1f5f9 !important;
+}
+
+/* 6. Hardware (El texto "Protoboard", etc. que no se veía) */
+.pcard__hw {
+  color: #64748b !important;
+}
+
+/* 7. Texto de Estado (Pendiente) */
+.status-pendiente {
+  color: #94a3b8 !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}

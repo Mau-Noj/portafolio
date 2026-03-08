@@ -309,3 +309,54 @@
   .article-header-modal { padding: 16px 16px 12px; }
   .article-body-scroll  { padding: 14px 16px 16px; }
 }
+
+/* =========================================================
+   ✨ MODO OSCURO: EFECTO NEÓN / GAMER PARA EL MODAL ✨
+   ========================================================= */
+
+/* 1. Fondo del modal oscuro con borde cyan brillante */
+[data-theme="dark"] .modal-content {
+  background: #0b1120 !important; /* Azul medianoche súper oscuro */
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.15) !important; 
+}
+
+/* 2. Títulos con efecto tubo de Neón (Cyan/Azul brillante) */
+[data-theme="dark"] .modal-content h2,
+[data-theme="dark"] .modal-content h3,
+[data-theme="dark"] .modal-content h4 {
+  color: #38bdf8 !important; 
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.8), 
+               0 0 16px rgba(56, 189, 248, 0.4) !important;
+}
+
+/* 3. Textos normales en color claro para que resalten */
+[data-theme="dark"] .modal-content p,
+[data-theme="dark"] .modal-content span,
+[data-theme="dark"] .modal-content li,
+[data-theme="dark"] .modal-content strong {
+  color: #f1f5f9 !important;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 4. Transformar las cajas blancas de tus tarjetas en paneles oscuros con borde láser */
+[data-theme="dark"] .modal-content div[style*="background"] {
+  background: rgba(15, 23, 42, 0.8) !important; 
+  border: 1px solid #38bdf8 !important;
+  box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.15) !important;
+}
+
+/* 5. Botón de cerrar: De normal a Neón Rojo/Rosa al pasar el mouse */
+[data-theme="dark"] .close-btn {
+  background: rgba(15, 23, 42, 0.8) !important;
+  color: #94a3b8 !important;
+  border: 1px solid transparent !important;
+}
+[data-theme="dark"] .close-btn:hover {
+  color: #f43f5e !important; 
+  border-color: rgba(244, 63, 94, 0.5) !important;
+  text-shadow: 0 0 10px rgba(244, 63, 94, 0.8) !important;
+  background: rgba(244, 63, 94, 0.1) !important;
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.2) !important;
+  transform: rotate(90deg) scale(1.1);
+}

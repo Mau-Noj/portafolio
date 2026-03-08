@@ -205,6 +205,13 @@
   box-shadow: 0 4px 14px var(--youtube-glow);
 }
 
+/* Instagram hover — magenta/rosado */
+.nav-social-btn--instagram:hover {
+  color: #e1306c; 
+  background: rgba(225, 48, 108, 0.12); 
+  border-color: rgba(225, 48, 108, 0.2);
+  box-shadow: 0 4px 14px rgba(225, 48, 108, 0.15);
+}
 /* ═══════════════════════════════════════════════════════════════
    DARK MODE TOGGLE
 ═══════════════════════════════════════════════════════════════ */
