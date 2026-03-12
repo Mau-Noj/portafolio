@@ -9,7 +9,7 @@ import './SoftwareApp.css';
 // ── Registro de apps ─────────────────────────────────────────────────────────
 // Agrega aquí cada nuevo proyecto con su componente lazy
 const APP_REGISTRY = {
-  'carta-novia':              lazy(() => import('../apps/CartaNovia')),
+  //'carta-novia':              lazy(() => import('../apps/CartaNovia')),
   'cumpleanos-amiga': lazy(() => import('../apps/CumpleañosAmiga')),
   //'sistema-inventario-usac':  lazy(() => import('../apps/SistemaInventario')),
   // 'mi-nuevo-proyecto':     lazy(() => import('../apps/MiNuevoProyecto')),

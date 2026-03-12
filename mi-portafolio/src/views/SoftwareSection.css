@@ -291,3 +291,82 @@
   .sw__header { flex-direction: column; }
   .sw__grid { grid-template-columns: 1fr; }
 }
+/* ── MOBILE FIXES ─────────────────────────────────────────────────────────── */
+
+/* Evitar desbordamiento horizontal global */
+.sw-wrap {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+
+  /* Contenedor */
+  .sw {
+    padding: calc(68px + 1.5rem) 1rem 4rem;
+    overflow-x: hidden;
+  }
+
+  /* Título — evitar que se salga */
+  .sw__title {
+    font-size: clamp(2rem, 12vw, 3.2rem);
+    letter-spacing: -1px;
+    word-break: break-word;
+  }
+
+  /* Header — apilado */
+  .sw__header {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .sw__header-left { width: 100%; }
+  .sw__header-right { width: 100%; }
+
+  /* Stats — scroll horizontal si no caben */
+  .sw__stats {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 1rem;
+    padding: 1rem 0;
+    scrollbar-width: none;
+  }
+  .sw__stats::-webkit-scrollbar { display: none; }
+  .sw__stat { min-width: 60px; }
+  .sw__stat-n { font-size: 1.3rem; }
+
+  /* Controles — apilados */
+  .sw__controls {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .sw__select {
+    width: 100%;
+    min-width: unset;
+  }
+
+  /* Tags — scroll horizontal */
+  .sw__tags {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+    gap: 0.35rem;
+  }
+  .sw__tags::-webkit-scrollbar { display: none; }
+  .sw__tag-btn { white-space: nowrap; flex-shrink: 0; }
+
+  /* Grid — 1 columna */
+  .sw__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .sw__title {
+    font-size: clamp(1.8rem, 10vw, 2.6rem);
+  }
+  .sw__subtitle {
+    font-size: 0.82rem;
+  }
+}
