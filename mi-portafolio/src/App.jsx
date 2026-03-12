@@ -1,19 +1,39 @@
 // src/App.jsx
 import './App.css'
-import { Navbar } from './components/Navbar';
-import { ComingSoon } from './views/ComingSoon';
+import { Navbar }           from './components/Navbar';
+import { ComingSoon }       from './views/ComingSoon';
 import { MaterialsSection } from './views/MaterialsSection';
-import { ProjectsSection } from './views/ProjectsSection';   // ← NUEVO
-import { Routes, Route } from 'react-router-dom';
+import { ProjectsSection }  from './views/ProjectsSection';
+import { ProjectDetail }    from './views/ProjectDetail';
+import { BlogSection }      from './views/BlogSection';
+import { BlogPost }         from './views/BlogPost';
+import { AboutSection }     from './views/AboutSection';
+import { ContactSection } from './views/ContactSection';
+import { ComponentsSection } from './views/ComponentsSection';
+import { ComponentDetail }   from './views/ComponentDetail';
+import { SoftwareSection } from './views/SoftwareSection';
+import { SoftwareDetail }  from './views/SoftwareDetail';
+import { SoftwareApp } from './views/SoftwareApp';
+import { Routes, Route }    from 'react-router-dom';
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/"            element={<ComingSoon />}      />
-        <Route path="/materiales"  element={<MaterialsSection />} />
-        <Route path="/proyectos"   element={<ProjectsSection />}  />  {/* ← NUEVO */}
+        <Route path="/"              element={<ComingSoon />}       />
+        <Route path="/blog"          element={<BlogSection />}      />
+        <Route path="/blog/:id"      element={<BlogPost />}         />
+        <Route path="/materiales"    element={<MaterialsSection />} />
+        <Route path="/proyectos"     element={<ProjectsSection />}  />
+        <Route path="/proyectos/:id" element={<ProjectDetail />}    />
+        <Route path="/sobre-mi"      element={<AboutSection />}     />
+        <Route path="/componentes"     element={<ComponentsSection />} />
+        <Route path="/componentes/:id" element={<ComponentDetail />} />
+        <Route path="/contacto" element={<ContactSection />} />
+        <Route path="/software"     element={<SoftwareSection />} />
+        <Route path="/software/:id" element={<SoftwareDetail />} />
+        <Route path="/software/:id/app" element={<SoftwareApp />} />
       </Routes>
     </>
   )

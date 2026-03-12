@@ -14,17 +14,18 @@ export const projectsData = [
     tags: ["Ley de Ohm", "V-I-R", "Multímetro", "Protoboard"],
     hw: "Protoboard + Resistencias surtidas + Multímetro + LM7805 (fuente 5V)",
     cost: "~$0",
-    status: "pendiente", // 'pendiente' | 'en-progreso' | 'completado'
+    status: "pendiente",
     steps: [
-      "TEÓRICO: Calcular I=V/R para R=100Ω, 220Ω, 470Ω, 1kΩ, 4.7kΩ a V=5V",
-      "TEÓRICO: Calcular potencia disipada P=V²/R para cada resistencia",
+      // 👇 MIRA CÓMO APLICAMOS LATEX AQUÍ 👇
+      "TEÓRICO: Calcular $I = \\frac{V}{R}$ para $R = 100\\Omega, 220\\Omega, 470\\Omega, 1k\\Omega, 4.7k\\Omega$ a $V = 5V$",
+      "TEÓRICO: Calcular potencia disipada $P = \\frac{V^2}{R}$ para cada resistencia",
       "Armar cada circuito en protoboard con fuente LM7805",
-      "Medir V y I con multímetro en cada combinación",
-      "Graficar curva V-I: la pendiente es 1/R",
+      "Medir V e I con multímetro en cada combinación",
+      "Graficar curva V-I: la pendiente es $m = \\frac{1}{R}$",
       "Analizar diferencia entre valor nominal y valor real medido",
     ],
     skills: ["Ley de Ohm", "Multímetro", "Circuitos básicos", "Análisis de errores", "Código de colores"],
-    concept: "La Ley de Ohm V=IR es válida para resistores lineales. Un resistor de 1kΩ puede medir 950Ω–1050Ω por tolerancia del 5%. La curva V-I de una resistencia es una línea recta cuya pendiente es exactamente 1/R.",
+    concept: "La Ley de Ohm $V=IR$ es válida para resistores lineales. Un resistor de $1k\\Omega$ puede medir $950\\Omega-1050\\Omega$ por tolerancia del $5\\%$. La curva V-I de una resistencia es una línea recta cuya pendiente es exactamente $\\frac{1}{R}$.",
     insight: "Los resistores tienen tolerancia del 5% o 1%. Medir la resistencia real con multímetro y comparar con el código de colores enseña más sobre incertidumbre de medición que cualquier libro.",
   },
   {
@@ -41,14 +42,15 @@ export const projectsData = [
     status: "pendiente",
     steps: [
       "Alimentar ICs a 5V con LM7805 + cap desacoplamiento 100nF en cada VCC",
-      "AND (74LS08): verificar A·B con las 4 combinaciones posibles (00,01,10,11)",
-      "OR (74LS32): verificar A+B — observar que solo 0,0→0",
-      "NOT (74LS04): verificar A' — el inversor más simple",
-      "NAND (74LS00): verificar (A·B)' — demostrar que NAND es universal",
-      "XOR (74LS86A): verificar A⊕B — suma sin acarreo, detector de diferencia",
+      // 👇 ÁLGEBRA DE BOOLE CON LATEX 👇
+      "AND (74LS08): verificar $Y = A \\cdot B$ con las 4 combinaciones posibles (00,01,10,11)",
+      "OR (74LS32): verificar $Y = A + B$ — observar que solo 0,0→0",
+      "NOT (74LS04): verificar $Y = \\overline{A}$ — el inversor más simple",
+      "NAND (74LS00): verificar $Y = \\overline{A \\cdot B}$ — demostrar que NAND es universal",
+      "XOR (74LS86A): verificar $Y = A \\oplus B$ — suma sin acarreo, detector de diferencia",
     ],
     skills: ["Álgebra de Boole", "TTL 74LS", "Tablas de verdad", "Electrónica digital"],
-    concept: "Las compuertas TTL operan con lógica positiva: 0V≈0 lógico, 5V≈1 lógico. En la práctica, cualquier voltaje <0.8V se lee como 0 y >2V se lee como 1. Este margen de ruido es la robustez del estándar TTL.",
+    concept: "Las compuertas TTL operan con lógica positiva: $0V \\approx 0$ lógico, $5V \\approx 1$ lógico. En la práctica, cualquier voltaje $<0.8V$ se lee como 0 y $>2V$ se lee como 1. Este margen de ruido es la robustez del estándar TTL.",
     insight: "La compuerta NAND es 'universal': puedes construir cualquier función lógica usando solo compuertas NAND. Los primeros microprocesadores estaban construidos casi exclusivamente con NANDs.",
   },
   {
@@ -64,15 +66,17 @@ export const projectsData = [
     cost: "~$6",
     status: "pendiente",
     steps: [
-      "TEÓRICO: Calcular a=g·sin(θ)-μ·g·cos(θ) para θ=10°,20°,30°,45°,60°",
-      "TEÓRICO: Estimar tiempo de recorrido con cinemática para d=0.5m",
+      // 👇 ESTA ES LA FÓRMULA QUE QUERÍAS ARREGLAR 👇
+      "TEÓRICO: Calcular $a = g \\sin(\\theta) - \\mu g \\cos(\\theta)$ para $\\theta = 10^\\circ, 20^\\circ, 30^\\circ, 45^\\circ, 60^\\circ$",
+      "TEÓRICO: Estimar tiempo de recorrido con cinemática para $d = 0.5m$",
       "Construir plano inclinado con bisagra ajustable y transportador",
       "HC-SR04 mide posición cada 50ms → calcular velocidad y aceleración real",
-      "Ajustar μ (coeficiente de rozamiento) con scipy.optimize",
+      "Ajustar $\\mu$ (coeficiente de rozamiento) con scipy.optimize",
       "Graficar: teoría vs medición, error %, efecto de rozamiento en cada ángulo",
     ],
     skills: ["Mecánica clásica", "NumPy", "HC-SR04", "scipy.optimize", "Matplotlib"],
-    concept: "La aceleración real es menor que g·sin(θ) por el rozamiento cinético. El coeficiente μk se puede extraer comparando la aceleración medida con la teórica sin rozamiento.",
+    // 👇 Y AQUÍ EN EL CONCEPTO TAMBIÉN 👇
+    concept: "La aceleración real es menor que $g \\sin(\\theta)$ por el rozamiento cinético. El coeficiente $\\mu_k$ se puede extraer comparando la aceleración medida con la teórica sin rozamiento.",
     insight: "Típicamente el error es 5-15% por rozamiento y error de medición. El proyecto enseña a modelar imperfecciones reales que los libros de texto suelen ignorar.",
   },
   {
@@ -120,7 +124,7 @@ export const projectsData = [
       "Calibrar pasos/mm y hacer pruebas con figuras geométricas básicas",
     ],
     skills: ["G-code", "GRBL", "Arduino", "Motores paso a paso", "Mecatrónica"],
-    concept: null,
+    concept: "La precisión de un motor paso a paso se define por sus pasos por revolución. Un motor de 20 pasos por vuelta acoplado a un tornillo sin fin de paso 3mm tiene una resolución teórica de $\\frac{3mm}{20} = 0.15mm$ por paso.",
     insight: "Los rieles de lectoras CD tienen precisión de ~0.01mm por paso — mayor que muchos CNC comerciales de bajo costo. La electrónica de precisión está literalmente en la basura.",
   },
 ];

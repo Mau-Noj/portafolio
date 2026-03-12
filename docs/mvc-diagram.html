@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arquitectura MVC — mi-portafolio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --model:      #00D4FF;
+      --controller: #FF6B35;
+      --view:       #B44FFF;
+      --bg:         #070B14;
+      --surface:    rgba(255,255,255,0.03);
+      --border:     rgba(255,255,255,0.07);
+      --text:       #E0E6F0;
+      --muted:      #556070;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+      min-height: 100vh;
+      padding: 48px 24px;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+
+    /* ── Header ── */
+    .header { text-align: center; margin-bottom: 56px; }
+    .header .badge {
+      display: inline-block;
+      border: 1px solid rgba(0,212,255,0.35);
+      padding: 4px 18px;
+      font-size: 10px;
+      color: var(--model);
+      letter-spacing: 4px;
+      margin-bottom: 14px;
+    }
+    .header h1 {
+      font-size: clamp(32px, 6vw, 56px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #fff 0%, #00D4FF 50%, #B44FFF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header p { color: var(--muted); font-size: 12px; margin-top: 8px; letter-spacing: 2px; }
+
+    /* ── Section labels ── */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    /* ── MVC Cards ── */
+    .mvc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      margin-bottom: 4px;
+    }
+
+    .mvc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 28px 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .mvc-card:hover { background: rgba(255,255,255,0.05); }
+    .mvc-card.active {
+      transform: translateY(-5px);
+    }
+    .mvc-card.model.active   { border-color: rgba(0,212,255,0.5);   background: rgba(0,212,255,0.07); box-shadow: 0 10px 40px rgba(0,212,255,0.1); }
+    .mvc-card.controller.active { border-color: rgba(255,107,53,0.5); background: rgba(255,107,53,0.07); box-shadow: 0 10px 40px rgba(255,107,53,0.1); }
+    .mvc-card.view.active    { border-color: rgba(180,79,255,0.5);  background: rgba(180,79,255,0.07); box-shadow: 0 10px 40px rgba(180,79,255,0.1); }
+
+    .card-index {
+      position: absolute;
+      top: 12px; right: 14px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      opacity: 0.4;
+    }
+    .model .card-index       { color: var(--model); }
+    .controller .card-index  { color: var(--controller); }
+    .view .card-index        { color: var(--view); }
+
+    .card-icon {
+      width: 48px; height: 48px;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .model .card-icon       { border: 1px solid var(--model);      background: rgba(0,212,255,0.08); }
+    .controller .card-icon  { border: 1px solid var(--controller); background: rgba(255,107,53,0.08); }
+    .view .card-icon        { border: 1px solid var(--view);       background: rgba(180,79,255,0.08); }
+
+    .card-tag {
+      font-size: 10px;
+      letter-spacing: 3px;
+      margin-bottom: 4px;
+    }
+    .model .card-tag       { color: var(--model); }
+    .controller .card-tag  { color: var(--controller); }
+    .view .card-tag        { color: var(--view); }
+
+    .card-title { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+
+    .file-list { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+    .file-item {
+      font-size: 11px;
+      color: var(--muted);
+      padding: 3px 8px;
+      background: rgba(255,255,255,0.025);
+      font-family: monospace;
+    }
+    .model .file-item       { border-left: 2px solid rgba(0,212,255,0.3); }
+    .controller .file-item  { border-left: 2px solid rgba(255,107,53,0.3); }
+    .view .file-item        { border-left: 2px solid rgba(180,79,255,0.3); }
+
+    .card-details { display: none; }
+    .mvc-card.active .card-details { display: block; }
+    .card-desc { font-size: 12px; color: #8898A8; line-height: 1.7; margin-bottom: 12px; }
+    .resp-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .resp-list li { font-size: 11px; color: #8898A8; padding-left: 14px; position: relative; line-height: 1.5; }
+    .resp-list li::before { content: '›'; position: absolute; left: 0; }
+    .model .resp-list li::before       { color: var(--model); }
+    .controller .resp-list li::before  { color: var(--controller); }
+    .view .resp-list li::before        { color: var(--view); }
+
+    .card-toggle { margin-top: 14px; font-size: 10px; letter-spacing: 1px; opacity: 0.6; }
+    .model .card-toggle       { color: var(--model); }
+    .controller .card-toggle  { color: var(--controller); }
+    .view .card-toggle        { color: var(--view); }
+
+    /* ── Arrows ── */
+    .arrows-row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 100px;
+      margin-bottom: 48px;
+    }
+    .arrow-group { display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center; }
+    .arrow-label { font-size: 10px; opacity: 0.6; white-space: nowrap; }
+    .arrow-line { flex: 1; position: relative; height: 24px; }
+    .arrow-line::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 1px;
+    }
+    .arrow-line::after {
+      content: '';
+      position: absolute;
+      top: 50%; right: 0;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+    }
+    .arrow-caption {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      font-size: 9px;
+      white-space: nowrap;
+      opacity: 0.65;
+    }
+    /* Model→Controller */
+    .arrow-mc .arrow-label { color: var(--model); }
+    .arrow-mc .arrow-line::before { background: linear-gradient(90deg, rgba(0,212,255,0.5), rgba(255,107,53,0.5)); }
+    .arrow-mc .arrow-line::after  { border-left: 6px solid rgba(255,107,53,0.7); }
+    .arrow-mc .arrow-caption      { color: var(--model); }
+    /* Controller→View */
+    .arrow-cv .arrow-label { color: var(--controller); }
+    .arrow-cv .arrow-line::before { background: linear-gradient(90deg, rgba(255,107,53,0.5), rgba(180,79,255,0.5)); }
+    .arrow-cv .arrow-line::after  { border-left: 6px solid rgba(180,79,255,0.7); }
+    .arrow-cv .arrow-caption      { color: var(--controller); }
+
+    /* ── Flow Section ── */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+      margin-bottom: 48px;
+    }
+    .flow-card {
+      padding: 18px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      position: relative;
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .flow-card:hover { background: rgba(255,255,255,0.05); }
+    .flow-card:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -4px; top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      z-index: 2;
+    }
+    .flow-card:nth-child(1):not(:last-child)::after { border-left: 6px solid rgba(255,215,0,0.4); }
+    .flow-card:nth-child(2):not(:last-child)::after { border-left: 6px solid rgba(255,107,53,0.4); }
+    .flow-card:nth-child(3):not(:last-child)::after { border-left: 6px solid rgba(0,212,255,0.4); }
+
+    .flow-icon { font-size: 20px; margin-bottom: 8px; }
+    .flow-step { font-size: 10px; letter-spacing: 1px; margin-bottom: 6px; }
+    .flow-card:nth-child(1) .flow-step { color: #FFD700; }
+    .flow-card:nth-child(2) .flow-step { color: var(--controller); }
+    .flow-card:nth-child(3) .flow-step { color: var(--model); }
+    .flow-card:nth-child(4) .flow-step { color: var(--view); }
+    .flow-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Stack Section ── */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      margin-bottom: 48px;
+    }
+    .stack-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 18px 16px;
+    }
+    .stack-title { font-size: 10px; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; }
+    .stack-item {
+      font-size: 12px;
+      color: #8898A8;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex;
+      justify-content: space-between;
+    }
+    .stack-item:last-child { border-bottom: none; }
+    .stack-item span { color: var(--muted); font-size: 10px; }
+
+    /* ── Routes Section ── */
+    .routes-list { 
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3px;
+      margin-bottom: 48px;
+    }
+    .route-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .route-path { font-size: 12px; color: var(--model); font-family: monospace; }
+    .route-view { font-size: 11px; color: var(--muted); }
+
+    /* ── Footer ── */
+    .footer {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .footer p { font-size: 11px; color: #2A3545; }
+
+    @media (max-width: 640px) {
+      .mvc-grid, .flow-grid, .stack-grid, .routes-list { grid-template-columns: 1fr; }
+      .arrows-row { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="badge">ARQUITECTURA</div>
+    <h1>MVC Pattern</h1>
+    <p>mi-portafolio &nbsp;/&nbsp; React + Vite + Firebase</p>
+  </div>
+
+  <!-- MVC Cards -->
+  <div class="section-label">CAPAS PRINCIPALES — haz click para expandir</div>
+  <div class="mvc-grid">
+
+    <div class="mvc-card model" onclick="toggle(this)">
+      <div class="card-index">01</div>
+      <div class="card-icon">🗄</div>
+      <div class="card-tag">MODEL</div>
+      <div class="card-title">Datos &amp; Estado</div>
+      <div class="file-list">
+        <div class="file-item">models/components.data.js</div>
+        <div class="file-item">models/components.model.js</div>
+        <div class="file-item">models/projects.data.js</div>
+        <div class="file-item">models/software.data.js</div>
+        <div class="file-item">models/software.model.js</div>
+        <div class="file-item">models/materials.data.js</div>
+        <div class="file-item">models/project-logs.data.js</div>
+      </div>
+      <div class="card-details">
+        <p class="card-desc">Gestiona todos los datos estáticos y estructuras del portafolio. Define cómo se forman los proyectos, componentes, artículos y software.</p>
+        <ul class="resp-list">
+          <li>Datos de proyectos, software, artículos</li>
+          <li>Modelos/esquemas de datos (*.model.js)</li>
+          <li>Fuentes de datos (*.data.js)</li>
+          <li>Conexión con Firebase / EmailJS</li>
+        </ul>
+      </div>
+      <div class="card-toggle">▼ DETALLES</div>
+    </div>
+
+    <div class="mvc-card controller" onclick="toggle(this)">
+      <div class="card-index">02</div>
+      <div class="card-icon">⚙️</div>
+      <div class="card-tag">CONTROLLER</div>
+      <div class="card-title">Lógica de Control</div>
+      <div class="file-list">
+        <div class="file-item">controllers/useProjectsController.js</div>
+        <div class="file-item">hooks/ (custom hooks)</div>
+        <div class="file-item">Navbar.jsx (NAV_LINKS, SOCIAL)</div>
+        <div class="file-item">SoftwareApp.jsx (updateSEO)</div>
+      </div>
+      <div class="card-details">
+        <p class="card-desc">Orquesta la lógica entre Model y View. Procesa acciones del usuario y decide qué datos enviar a qué vista.</p>
+        <ul class="resp-list">
+          <li>useProjectsController — filtra/ordena proyectos</li>
+          <li>Custom hooks — estado reutilizable</li>
+          <li>useDarkMode — tema oscuro/claro</li>
+          <li>updateSEO — SEO dinámico por ruta</li>
+          <li>Manejo de rutas (react-router-dom)</li>
+        </ul>
+      </div>
+      <div class="card-toggle">▼ DETALLES</div>
+    </div>
+
+    <div class="mvc-card view" onclick="toggle(this)">
+      <div class="card-index">03</div>
+      <div class="card-icon">🖥</div>
+      <div class="card-tag">VIEW</div>
+      <div class="card-title">Interfaz de Usuario</div>
+      <div class="file-list">
+        <div class="file-item">views/ (14 páginas)</div>
+        <div class="file-item">components/Navbar.jsx</div>
+        <div class="file-item">components/ProjectCard.jsx</div>
+        <div class="file-item">components/ArticleModal.jsx</div>
+        <div class="file-item">components/SearchModal.jsx</div>
+        <div class="file-item">apps/CartaNovia (micro-app)</div>
+      </div>
+      <div class="card-details">
+        <p class="card-desc">Todo lo que el usuario ve. Páginas completas en views/ y componentes reutilizables en components/. Incluye una micro-app independiente.</p>
+        <ul class="resp-list">
+          <li>14 rutas/páginas renderizadas</li>
+          <li>Componentes reutilizables UI</li>
+          <li>Estilos CSS por componente</li>
+          <li>apps/CartaNovia como micro-frontend</li>
+        </ul>
+      </div>
+      <div class="card-toggle">▼ DETALLES</div>
+    </div>
+
+  </div>
+
+  <!-- Arrows -->
+  <div class="arrows-row">
+    <div class="arrow-group arrow-mc">
+      <span class="arrow-label">MODEL</span>
+      <div class="arrow-line"><span class="arrow-caption">notifica estado</span></div>
+      <span class="arrow-label">CONTROLLER</span>
+    </div>
+    <div class="arrow-group arrow-cv">
+      <span class="arrow-label">CONTROLLER</span>
+      <div class="arrow-line"><span class="arrow-caption">actualiza datos</span></div>
+      <span class="arrow-label">VIEW</span>
+    </div>
+  </div>
+
+  <!-- Data Flow -->
+  <div class="section-label">FLUJO DE DATOS</div>
+  <div class="flow-grid">
+    <div class="flow-card">
+      <div class="flow-icon">👆</div>
+      <div class="flow-step">1. USER ACTION</div>
+      <div class="flow-desc">El usuario interactúa con la View — click, navegación, búsqueda, formulario de contacto.</div>
+    </div>
+    <div class="flow-card">
+      <div class="flow-icon">⚙️</div>
+      <div class="flow-step">2. CONTROLLER PROCESA</div>
+      <div class="flow-desc">El Controller recibe el evento, ejecuta hooks y lógica, y consulta o actualiza el Model.</div>
+    </div>
+    <div class="flow-card">
+      <div class="flow-icon">💾</div>
+      <div class="flow-step">3. MODEL ACTUALIZA</div>
+      <div class="flow-desc">El Model devuelve los datos actualizados — proyectos filtrados, nuevo tema, SEO meta tags.</div>
+    </div>
+    <div class="flow-card">
+      <div class="flow-icon">🔄</div>
+      <div class="flow-step">4. VIEW RE-RENDERIZA</div>
+      <div class="flow-desc">React re-renderiza la View con el nuevo estado. El usuario ve el resultado actualizado.</div>
+    </div>
+  </div>
+
+  <!-- Tech Stack -->
+  <div class="section-label">STACK TECNOLÓGICO</div>
+  <div class="stack-grid">
+    <div class="stack-card">
+      <div class="stack-title">CORE</div>
+      <div class="stack-item">React <span>^19.2.3</span></div>
+      <div class="stack-item">React DOM <span>^19.2.3</span></div>
+      <div class="stack-item">React Router DOM <span>^7.13.0</span></div>
+      <div class="stack-item">Vite <span>^7.2.4</span></div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-title">LIBRERÍAS</div>
+      <div class="stack-item">React Icons <span>^5.5.0</span></div>
+      <div class="stack-item">React KaTeX <span>^3.1.0</span></div>
+      <div class="stack-item">KaTeX <span>^0.16.37</span></div>
+      <div class="stack-item">EmailJS Browser <span>^4.4.1</span></div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-title">DEV TOOLS</div>
+      <div class="stack-item">ESLint <span>^9.39.1</span></div>
+      <div class="stack-item">Vite Plugin React <span>^5.1.1</span></div>
+      <div class="stack-item">eslint-plugin-react-hooks <span>^7.0.1</span></div>
+    </div>
+  </div>
+
+  <!-- Routes -->
+  <div class="section-label">RUTAS REGISTRADAS (App.jsx)</div>
+  <div class="routes-list">
+    <div class="route-item"><span class="route-path">/</span><span class="route-view">ComingSoon</span></div>
+    <div class="route-item"><span class="route-path">/blog</span><span class="route-view">BlogSection</span></div>
+    <div class="route-item"><span class="route-path">/blog/:id</span><span class="route-view">BlogPost</span></div>
+    <div class="route-item"><span class="route-path">/proyectos</span><span class="route-view">ProjectsSection</span></div>
+    <div class="route-item"><span class="route-path">/proyectos/:id</span><span class="route-view">ProjectDetail</span></div>
+    <div class="route-item"><span class="route-path">/materiales</span><span class="route-view">MaterialsSection</span></div>
+    <div class="route-item"><span class="route-path">/sobre-mi</span><span class="route-view">AboutSection</span></div>
+    <div class="route-item"><span class="route-path">/contacto</span><span class="route-view">ContactSection</span></div>
+    <div class="route-item"><span class="route-path">/componentes</span><span class="route-view">ComponentsSection</span></div>
+    <div class="route-item"><span class="route-path">/componentes/:id</span><span class="route-view">ComponentDetail</span></div>
+    <div class="route-item"><span class="route-path">/software</span><span class="route-view">SoftwareSection</span></div>
+    <div class="route-item"><span class="route-path">/software/:id</span><span class="route-view">SoftwareDetail</span></div>
+    <div class="route-item"><span class="route-path">/software/:id/app</span><span class="route-view">SoftwareApp</span></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>💡 Click en las capas MVC para expandir detalles</p>
+    <p>mi-portafolio · Mauricio_Noj · React + Vite · v0.0.0</p>
+  </div>
+
+</div>
+
+<script>
+  function toggle(card) {
+    const isActive = card.classList.contains('active');
+    document.querySelectorAll('.mvc-card').forEach(c => {
+      c.classList.remove('active');
+      c.querySelector('.card-toggle').textContent = '▼ DETALLES';
+    });
+    if (!isActive) {
+      card.classList.add('active');
+      card.querySelector('.card-toggle').textContent = '▲ CERRAR';
+    }
+  }
+</script>
+</body>
+</html>

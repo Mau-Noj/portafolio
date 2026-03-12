@@ -1,0 +1,486 @@
+/* src/apps/CumpleañosAmiga/CumpleañosAmiga.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap');
+
+/* ── Wrap ── */
+.ca__wrap {
+  min-height: 100vh;
+  background: #0d0a12;
+  color: #f0e6ff;
+  font-family: 'Lato', sans-serif;
+}
+
+/* ── Navbar ── */
+.ca__nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 2rem;
+  background: rgba(13, 10, 18, 0.92);
+  border-bottom: 1px solid rgba(167, 139, 250, 0.15);
+  backdrop-filter: blur(10px);
+}
+.ca__nav-logo { font-size: 1.4rem; }
+.ca__nav-links { display: flex; gap: 0.25rem; }
+.ca__nav-link {
+  padding: 0.4rem 1rem;
+  background: none;
+  border: 1px solid transparent;
+  color: rgba(240,230,255,0.45);
+  font-family: 'Lato', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ca__nav-link:hover { color: #f0e6ff; }
+.ca__nav-link--active {
+  color: #c084fc;
+  border-color: rgba(192, 132, 252, 0.3);
+}
+
+/* ── Main ── */
+.ca__main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+
+/* ── Confetti ── */
+.ca__confetti {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ca__confetti-pieza {
+  position: absolute;
+  top: -10px;
+  border-radius: 2px;
+  animation: ca-caer 4s ease-in infinite;
+  opacity: 0.7;
+}
+@keyframes ca-caer {
+  0%   { transform: translateY(-10px) rotate(0deg);   opacity: 0.8; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── Carta ── */
+.ca__carta {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  position: relative;
+}
+.ca__carta--visible { opacity: 1; transform: translateY(0); }
+
+.ca__carta-paper {
+  background: #140e1f;
+  border: 1px solid rgba(192, 132, 252, 0.2);
+  padding: 3.5rem 4rem;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 40px rgba(192,132,252,0.05);
+}
+.ca__carta-paper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #c084fc, #f472b6, transparent);
+}
+.ca__carta-globos {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  animation: ca-bounce 1s ease infinite alternate;
+}
+@keyframes ca-bounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6px); }
+}
+
+.ca__carta-fecha {
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: rgba(192,132,252,0.6);
+  text-transform: uppercase;
+  margin: 0 0 2rem;
+}
+.ca__carta-saludo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 400;
+  font-style: italic;
+  color: #f0e6ff;
+  margin: 0 0 2rem;
+  line-height: 1.4;
+}
+.ca__carta-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.ca__carta-cuerpo p {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: rgba(240,230,255,0.8);
+  margin: 0;
+}
+.ca__carta-especial {
+  font-family: 'Playfair Display', serif !important;
+  font-style: italic !important;
+  font-size: 1.2rem !important;
+  color: #c084fc !important;
+  margin-top: 0.5rem !important;
+}
+.ca__carta-firma {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: rgba(192,132,252,0.8);
+  margin: 2.5rem 0 0;
+  text-align: right;
+}
+.ca__carta-decoracion {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.ca__carta-decoracion span {
+  color: rgba(244,114,182,0.5);
+  font-size: 0.7rem;
+  animation: ca-pulse 2s ease-in-out infinite alternate;
+}
+@keyframes ca-pulse { from { opacity: 0.2; } to { opacity: 1; } }
+
+/* ── Section title ── */
+.ca__section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  font-style: italic;
+  color: #f0e6ff;
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+
+/* ── Momentos ── */
+.ca__momentos { text-align: center; }
+.ca__momentos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(192,132,252,0.1);
+  margin-top: 2.5rem;
+}
+.ca__momento {
+  background: #0d0a12;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: background 0.2s;
+  animation: ca-fade 0.5s ease both;
+}
+@keyframes ca-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ca__momento:hover { background: #140e1f; }
+.ca__momento-emoji { font-size: 2rem; display: block; margin-bottom: 0.85rem; }
+.ca__momento-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #c084fc;
+  margin: 0 0 0.5rem;
+}
+.ca__momento-desc {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: rgba(240,230,255,0.55);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── Regalo ── */
+.ca__regalo { text-align: center; }
+
+.ca__caja-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.ca__caja {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 4rem;
+  background: #140e1f;
+  border: 2px dashed rgba(192,132,252,0.3);
+  cursor: pointer;
+  transition: all 0.25s;
+  animation: ca-pulse-box 2s ease infinite;
+}
+@keyframes ca-pulse-box {
+  0%, 100% { border-color: rgba(192,132,252,0.3); }
+  50%       { border-color: rgba(244,114,182,0.6); }
+}
+.ca__caja:hover {
+  background: #1a1228;
+  border-color: #c084fc;
+  transform: scale(1.03);
+}
+.ca__caja-emoji { font-size: 4rem; animation: ca-bounce 0.8s ease infinite alternate; }
+.ca__caja-hint {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(240,230,255,0.4);
+  margin: 0;
+}
+
+/* ── Regalo contenido ── */
+.ca__regalo-contenido {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.7s ease;
+  margin-top: 2rem;
+}
+.ca__regalo-contenido--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ca__regalo-mensaje {
+  background: #140e1f;
+  border: 1px solid rgba(192,132,252,0.2);
+  padding: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+.ca__regalo-mensaje p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(240,230,255,0.85);
+  line-height: 1.8;
+  margin: 0 0 1rem;
+}
+.ca__regalo-mensaje p:first-child {
+  font-size: 1.3rem;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: #c084fc;
+}
+.ca__dedicatoria {
+  margin-top: 1.5rem !important;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(192,132,252,0.15);
+  color: rgba(240,230,255,0.7) !important;
+}
+.ca__dedicatoria small {
+  font-size: 0.78rem;
+  color: rgba(240,230,255,0.4);
+  letter-spacing: 0.5px;
+}
+
+/* ── Input ── */
+.ca__input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+.ca__input-label {
+  font-size: 0.78rem;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(240,230,255,0.45);
+}
+.ca__input-row {
+  display: flex;
+  gap: 0;
+  width: 100%;
+  max-width: 420px;
+}
+.ca__input {
+  flex: 1;
+  padding: 0.85rem 1.2rem;
+  background: #0d0a12;
+  border: 1px solid rgba(192,132,252,0.3);
+  border-right: none;
+  color: #f0e6ff;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.ca__input:focus { border-color: #c084fc; }
+.ca__input::placeholder { color: rgba(240,230,255,0.25); }
+.ca__input-btn {
+  padding: 0.85rem 1.2rem;
+  background: #c084fc;
+  border: 1px solid #c084fc;
+  color: #0d0a12;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ca__input-btn:hover { background: #a855f7; border-color: #a855f7; }
+
+/* ── Alert modal ── */
+.ca__alert-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  backdrop-filter: blur(4px);
+  animation: ca-fade 0.2s ease;
+}
+.ca__alert-box {
+  background: #140e1f;
+  border: 1px solid rgba(192,132,252,0.3);
+  padding: 3rem 2.5rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 60px rgba(192,132,252,0.1);
+  animation: ca-pop 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+}
+.ca__alert-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #c084fc, #f472b6, transparent);
+}
+@keyframes ca-pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+.ca__alert-confetti-mini {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.ca__alert-confetti-mini span {
+  animation: ca-bounce 0.6s ease infinite alternate;
+}
+.ca__alert-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #c084fc;
+  margin: 0 0 1.25rem;
+}
+.ca__alert-mensaje {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: rgba(240,230,255,0.85);
+  line-height: 1.9;
+  margin: 0 0 2rem;
+  white-space: pre-line;
+}
+.ca__alert-btn {
+  padding: 0.7rem 2rem;
+  background: none;
+  border: 1px solid #c084fc;
+  color: #c084fc;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ca__alert-btn:hover { background: #c084fc; color: #0d0a12; }
+
+@media (max-width: 600px) {
+  .ca__carta-paper { padding: 2rem 1.5rem; }
+  .ca__nav { padding: 0.85rem 1.25rem; }
+  .ca__nav-link { padding: 0.35rem 0.6rem; font-size: 0.7rem; }
+  .ca__main { padding: 2.5rem 1.25rem 5rem; }
+  .ca__caja { padding: 2rem 2.5rem; }
+}
+
+/* ── Botón regalo dentro de carta ── */
+.ca__regalo-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0 1rem;
+}
+.ca__regalo-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 2.5rem;
+  background: none;
+  border: 1px solid rgba(192,132,252,0.3);
+  cursor: pointer;
+  transition: all 0.25s;
+  animation: ca-pulse-box 2.5s ease infinite;
+}
+.ca__regalo-btn:hover {
+  border-color: #c084fc;
+  background: rgba(192,132,252,0.08);
+  transform: scale(1.04);
+}
+.ca__regalo-emoji {
+  font-size: 2.5rem;
+  animation: ca-bounce 0.9s ease infinite alternate;
+  display: block;
+}
+.ca__regalo-label {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(192,132,252,0.7);
+}
+
+/* ── Input dentro del modal ── */
+.ca__input-row {
+  display: flex;
+  width: 100%;
+}
+.ca__input {
+  flex: 1;
+  padding: 0.85rem 1.2rem;
+  background: #0d0a12;
+  border: 1px solid rgba(192,132,252,0.3);
+  border-right: none;
+  color: #f0e6ff;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.ca__input:focus { border-color: #c084fc; }
+.ca__input::placeholder { color: rgba(240,230,255,0.25); }
+.ca__input-btn {
+  padding: 0.85rem 1.2rem;
+  background: #c084fc;
+  border: 1px solid #c084fc;
+  color: #0d0a12;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ca__input-btn:hover { background: #a855f7; border-color: #a855f7; }

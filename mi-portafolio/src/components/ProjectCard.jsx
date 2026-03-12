@@ -1,8 +1,11 @@
 // src/components/ProjectCard.jsx
+// Al hacer click navega a /proyectos/:id (página de detalle).
+// La prop onOpen ya no abre modal — redirige con useNavigate.
+
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ProjectCard.css';
 
-// Mapeo de categorías a colores y etiquetas
 const CAT_META = {
   electric:  { label: '⚡ Electricidad',    color: '#ffe066' },
   ttl:       { label: '◈ TTL Digital',      color: '#ff6ef7' },
@@ -26,47 +29,40 @@ const DIFF_META = {
 };
 
 const STATUS_META = {
-  pendiente:    { label: '○ Pendiente',     cls: 'status-pendiente'   },
-  'en-progreso':{ label: '◑ En progreso',  cls: 'status-progreso'    },
-  completado:   { label: '● Completado',    cls: 'status-completado'  },
+  pendiente:     { label: '○ Pendiente',    cls: 'status-pendiente'   },
+  'en-progreso': { label: '◑ En progreso', cls: 'status-progreso'    },
+  completado:    { label: '● Completado',   cls: 'status-completado'  },
 };
 
-export const ProjectCard = ({ project, onOpen }) => {
-  const cat   = CAT_META[project.cat]  || { label: project.cat,      color: '#00ff9f' };
-  const diff  = DIFF_META[project.diff] || { label: project.diff,     cls: 'diff-basico' };
+export const ProjectCard = ({ project }) => {
+  const navigate = useNavigate();
+  const cat    = CAT_META[project.cat]    || { label: project.cat,    color: '#00ff9f' };
+  const diff   = DIFF_META[project.diff]  || { label: project.diff,   cls: 'diff-basico' };
   const status = STATUS_META[project.status] || STATUS_META['pendiente'];
+
+  const handleClick = () => navigate(`/proyectos/${project.id}`);
 
   return (
     <article
       className="pcard"
       style={{ '--accent': cat.color }}
-      onClick={() => onOpen(project)}
+      onClick={handleClick}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && onOpen(project)}
-      aria-label={`Ver detalles de ${project.title}`}
+      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
+      aria-label={`Ver detalle de ${project.title}`}
     >
-      {/* Barra de acento superior — aparece en hover */}
       <div className="pcard__bar" />
 
-      {/* Cabecera */}
       <header className="pcard__head">
         <span className="pcard__icon" aria-hidden="true">{project.icon}</span>
         <span className={`pcard__diff ${diff.cls}`}>{diff.label}</span>
       </header>
 
-      {/* Categoría */}
-      <span className="pcard__cat" style={{ color: cat.color }}>
-        {cat.label}
-      </span>
-
-      {/* Título */}
+      <span className="pcard__cat" style={{ color: cat.color }}>{cat.label}</span>
       <h3 className="pcard__title">{project.title}</h3>
-
-      {/* Descripción corta */}
       <p className="pcard__short">{project.short}</p>
 
-      {/* Tags */}
       <div className="pcard__tags">
         {project.tags.slice(0, 3).map((tag) => (
           <span key={tag} className="pcard__tag">{tag}</span>
@@ -76,7 +72,6 @@ export const ProjectCard = ({ project, onOpen }) => {
         )}
       </div>
 
-      {/* Footer */}
       <footer className="pcard__footer">
         <span className="pcard__hw">⌁ {project.hw.split('+')[0].trim()}</span>
         <div className="pcard__meta">

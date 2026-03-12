@@ -1,6 +1,7 @@
 // src/components/ProjectModal.jsx
 import React, { useEffect } from 'react';
 import './ProjectModal.css';
+import { MathText } from './MathText';
 
 const CAT_META = {
   electric:  { label: '⚡ Electricidad',    color: '#ffe066' },
@@ -27,12 +28,10 @@ const DIFF_META = {
 export const ProjectModal = ({ project, onClose }) => {
   const isOpen = !!project;
 
-  // Cerrar con Escape
   useEffect(() => {
     if (!isOpen) return;
     const handler = (e) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', handler);
-    // Bloquear scroll del body
     document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', handler);
@@ -58,41 +57,33 @@ export const ProjectModal = ({ project, onClose }) => {
         style={{ '--accent': cat.color }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Barra de acento */}
         <div className="pmodal__topbar" />
-
-        {/* Botón cerrar */}
         <button className="pmodal__close" onClick={onClose} aria-label="Cerrar">✕</button>
 
-        {/* Icono */}
         <div className="pmodal__icon" aria-hidden="true">{project.icon}</div>
 
-        {/* Eyebrow */}
         <div className="pmodal__eye">
           <span style={{ color: cat.color }}>{cat.label}</span>
           <span className={`pmodal__diff ${diff.cls}`}>{diff.label}</span>
         </div>
 
-        {/* Título */}
         <h2 className="pmodal__title">{project.title}</h2>
 
-        {/* Descripción */}
-        <p className="pmodal__desc">{project.desc}</p>
+        <p className="pmodal__desc">
+          <MathText text={project.desc} />
+        </p>
 
-        {/* Costo */}
         {project.cost && (
           <span className="pmodal__cost">Costo estimado: {project.cost}</span>
         )}
 
-        {/* Pasos */}
         <p className="pmodal__section-label">Pasos del Proyecto</p>
         <ul className="pmodal__steps">
           {project.steps.map((step, i) => (
-            <li key={i}>{step}</li>
+            <li key={i}><MathText text={step} /></li>
           ))}
         </ul>
 
-        {/* Skills */}
         <p className="pmodal__section-label">Skills que aprenderás</p>
         <div className="pmodal__skills">
           {project.skills.map((skill) => (
@@ -100,25 +91,26 @@ export const ProjectModal = ({ project, onClose }) => {
           ))}
         </div>
 
-        {/* Hardware */}
         <div className="pmodal__hw">
           <p className="pmodal__hw-label">Hardware necesario</p>
           <p className="pmodal__hw-value">{project.hw}</p>
         </div>
 
-        {/* Concepto clave (solo si existe) */}
         {project.concept && (
           <div className="pmodal__concept">
             <p className="pmodal__concept-label">⚡ Concepto Clave</p>
-            <p className="pmodal__concept-value">{project.concept}</p>
+            <p className="pmodal__concept-value">
+              <MathText text={project.concept} />
+            </p>
           </div>
         )}
 
-        {/* Insight (solo si existe) */}
         {project.insight && (
           <div className="pmodal__insight">
             <p className="pmodal__insight-label">💡 Insight</p>
-            <p className="pmodal__insight-value">{project.insight}</p>
+            <p className="pmodal__insight-value">
+              <MathText text={project.insight} />
+            </p>
           </div>
         )}
       </div>

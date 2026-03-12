@@ -1,31 +1,89 @@
 /* src/views/ProjectsSection.css */
 
-/* ─────────────────────────────────────────────
-   Variables globales — ponlas en App.css o :root
-   si ya tienes otras variables definidas allí
-   ───────────────────────────────────────────── */
+/* ══════════════════════════════════════════
+   MODO OSCURO (default de esta sección)
+══════════════════════════════════════════ */
 .psection {
-  --bg:      #030507;
-  --bg2:     #070a10;
-  --s1:      #090e18;
-  --b1:      #101c2c;
-  --b2:      #162438;
-  --g:       #00ff9f;
-  --t:       #cce4ff;
-  --m:       #2d4a6a;
-  --m2:      #0e1e30;
-  --ttl:     #ff6ef7;
+  --bg:  #030507;
+  --bg2: #070a10;
+  --s1:  #090e18;
+  --b1:  #101c2c;
+  --b2:  #162438;
+  --g:   #00ff9f;
+  --t:   #cce4ff;
+  --m:   #2d4a6a;
+  --m2:  #0e1e30;
+  --ttl: #ff6ef7;
 
-  /* Layout */
   min-height: 100vh;
   background: var(--bg);
   color: var(--t);
   padding: 7rem 1.75rem 5rem;
   max-width: 1300px;
   margin: 0 auto;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
-/* Grid background sutil */
+/* ══════════════════════════════════════════
+   MODO CLARO — activado por [data-theme="light"]
+   o cuando NO existe data-theme en el html
+══════════════════════════════════════════ */
+html:not([data-theme="dark"]) .psection {
+  --bg:  #f0f2f5;
+  --bg2: #ffffff;
+  --s1:  #f8fafc;
+  --b1:  #e2e8f0;
+  --b2:  #cbd5e1;
+  --g:   #16a34a;
+  --t:   #0f172a;
+  --m:   #64748b;
+  --m2:  #94a3b8;
+  --ttl: #7c3aed;
+}
+
+/* Sin grid de puntos en modo claro */
+html:not([data-theme="dark"]) .psection::before {
+  display: none;
+}
+
+/* Sin neón en modo claro */
+html:not([data-theme="dark"]) .psection__title-plain,
+html:not([data-theme="dark"]) .psection__title-accent {
+  text-shadow: none;
+}
+
+html:not([data-theme="dark"]) .psection__eyebrow,
+html:not([data-theme="dark"]) .psection__subtitle,
+html:not([data-theme="dark"]) .psection__count {
+  color: var(--m) !important;
+  text-shadow: none !important;
+}
+
+html:not([data-theme="dark"]) .psection__count strong {
+  color: var(--g) !important;
+  text-shadow: none !important;
+}
+
+html:not([data-theme="dark"]) .psection__filter {
+  color: var(--m) !important;
+  border-color: var(--b2) !important;
+  background: var(--bg2) !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html:not([data-theme="dark"]) .psection__filter:hover:not(.psection__filter--active) {
+  color: var(--g) !important;
+  border-color: var(--g) !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html:not([data-theme="dark"]) .psection__filter--active {
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3) !important;
+}
+
+/* ── Grid sutil (solo dark) ── */
 .psection::before {
   content: '';
   position: fixed;
@@ -38,7 +96,6 @@
   z-index: 0;
 }
 
-/* Todo el contenido por encima del grid */
 .psection > * { position: relative; z-index: 1; }
 
 /* ── HEADER ── */
@@ -62,7 +119,6 @@
   font-size: clamp(2.2rem, 7vw, 5rem);
   font-weight: 900;
   line-height: 0.95;
-  width: 100%;
   letter-spacing: -1px;
   margin: 0 0 1.1rem;
 }
@@ -84,7 +140,6 @@
   justify-content: center;
   gap: 1rem;
 }
-
 .psection__divider::before,
 .psection__divider::after {
   content: '';
@@ -92,7 +147,6 @@
   width: 80px;
   background: var(--b2);
 }
-
 .psection__divider-icon {
   color: var(--g);
   font-size: 0.8rem;
@@ -121,19 +175,16 @@
   align-items: center;
   gap: 0.4rem;
 }
-
 .psection__filter:hover {
   border-color: var(--g);
   color: var(--g);
 }
-
 .psection__filter--active {
   border-color: var(--g);
   background: var(--g);
   color: var(--bg);
   box-shadow: 0 0 12px rgba(0, 255, 159, 0.25);
 }
-
 .psection__filter-count {
   font-size: 0.45rem;
   background: rgba(0, 0, 0, 0.25);
@@ -149,17 +200,14 @@
   letter-spacing: 1px;
   margin-bottom: 1.5rem;
 }
+.psection__count strong { color: var(--g); }
 
-.psection__count strong {
-  color: var(--g);
-}
-
-/* ── GRID DE TARJETAS ── */
+/* ── GRID ── */
 .psection__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2px;
-  background: var(--b1);   /* el gap muestra este color → líneas de separación */
+  background: var(--b1);
   border: 1px solid var(--b2);
 }
 
@@ -174,12 +222,7 @@
   border: 1px solid var(--b2);
   color: var(--m);
 }
-
-.psection__empty span {
-  font-size: 2.5rem;
-  opacity: 0.3;
-}
-
+.psection__empty span { font-size: 2.5rem; opacity: 0.3; }
 .psection__empty p {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
@@ -188,73 +231,49 @@
   margin: 0;
 }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 640px) {
-  .psection {
-    padding: 5.5rem 1rem 4rem;
-  }
-
-  .psection__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .psection__filters {
-    gap: 0.25rem;
-  }
+/* ══════════════════════════════════════════
+   ✨ NEÓN — solo activo en modo oscuro
+══════════════════════════════════════════ */
+[data-theme="dark"] .psection__title-plain {
+  text-shadow:
+    0 0 15px rgba(204, 228, 255, 0.3),
+    0 0 30px rgba(204, 228, 255, 0.1);
 }
-
-/* =========================================================
-   ✨ EFECTO NEÓN / GAMER PARA LA SECCIÓN DE PROYECTOS ✨
-   ========================================================= */
-
-/* 1. Brillo para la palabra "Engineering" (Blanco azulado) */
-.psection__title-plain {
-  text-shadow: 0 0 15px rgba(204, 228, 255, 0.3), 
-               0 0 30px rgba(204, 228, 255, 0.1);
+[data-theme="dark"] .psection__title-accent {
+  text-shadow:
+    0 0 12px rgba(0, 255, 159, 0.8),
+    0 0 25px rgba(0, 255, 159, 0.4),
+    0 0 40px rgba(0, 255, 159, 0.2);
 }
-
-/* 2. Brillo intenso para la palabra "Lab" (Verde Neón) */
-.psection__title-accent {
-  text-shadow: 0 0 12px rgba(0, 255, 159, 0.8), 
-               0 0 25px rgba(0, 255, 159, 0.4),
-               0 0 40px rgba(0, 255, 159, 0.2);
+[data-theme="dark"] .psection__filter--active {
+  box-shadow:
+    0 0 15px rgba(0, 255, 159, 0.6),
+    0 0 30px rgba(0, 255, 159, 0.3) !important;
 }
-
-/* 3. Filtro activo (el botón verde) con resplandor radiactivo */
-.psection__filter--active {
-  box-shadow: 0 0 15px rgba(0, 255, 159, 0.6), 
-              0 0 30px rgba(0, 255, 159, 0.3) !important;
-  border-color: #00ff9f !important;
-}
-
-/* Opcional: Que los filtros inactivos brillen un poco al pasar el mouse */
-.psection__filter:hover:not(.psection__filter--active) {
+[data-theme="dark"] .psection__filter:hover:not(.psection__filter--active) {
   box-shadow: inset 0 0 10px rgba(0, 255, 159, 0.2);
   text-shadow: 0 0 8px rgba(0, 255, 159, 0.6);
 }
-
-/* =========================================================
-   ✨ ILUMINACIÓN DE TEXTOS SECUNDARIOS (Subtítulos y Filtros) ✨
-   ========================================================= */
-
-/* 1. Encender el texto pequeñito de arriba, el subtítulo y el contador */
-.psection__eyebrow,
-.psection__subtitle,
-.psection__count {
-  color: #a5b4fc !important; /* Un azul claro/lila mucho más brillante */
+[data-theme="dark"] .psection__eyebrow,
+[data-theme="dark"] .psection__subtitle,
+[data-theme="dark"] .psection__count {
+  color: #a5b4fc !important;
   text-shadow: 0 0 8px rgba(165, 180, 252, 0.4) !important;
 }
-
-/* 2. Iluminar los botones de las categorías que no están seleccionadas */
-.psection__filter {
-  color: #e2e8f0 !important; /* Letra casi blanca para que se lea perfecto */
-  border-color: rgba(0, 255, 159, 0.3) !important; /* Borde verde oscuro tipo radar */
-  background: rgba(16, 28, 44, 0.6) !important; /* Fondo un poco más claro */
+[data-theme="dark"] .psection__filter {
+  color: #e2e8f0 !important;
+  border-color: rgba(0, 255, 159, 0.3) !important;
+  background: rgba(16, 28, 44, 0.6) !important;
 }
-
-/* 3. El número de los proyectos en color Neón intenso */
-.psection__count strong {
+[data-theme="dark"] .psection__count strong {
   color: #00ff9f !important;
   text-shadow: 0 0 10px rgba(0, 255, 159, 0.7) !important;
   font-size: 0.6rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .psection { padding: 5.5rem 1rem 4rem; }
+  .psection__grid { grid-template-columns: 1fr; }
+  .psection__filters { gap: 0.25rem; }
 }

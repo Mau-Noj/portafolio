@@ -1,0 +1,283 @@
+/* src/components/LogBlock.css */
+/* Usa las variables de Navbar.css: --text-main, --text-mid, --text-muted,
+   --border-color, --primary, --hover-bg, etc.                            */
+
+/* ── Base de todos los bloques ── */
+.lb {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.75;
+}
+
+/* ════════════════════════════════════════
+   PHASE — separador de sección
+════════════════════════════════════════ */
+.lb-phase {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2.5rem 0 1.25rem;
+}
+
+.lb-phase__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary, #2563eb);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px var(--primary-glow, rgba(37,99,235,.15));
+}
+
+.lb-phase__label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--primary, #2563eb);
+  white-space: nowrap;
+}
+
+.lb-phase__line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-color, rgba(148,163,184,.2));
+}
+
+/* ════════════════════════════════════════
+   TEXT
+════════════════════════════════════════ */
+.lb-text {
+  color: var(--text-mid, #475569);
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+/* ════════════════════════════════════════
+   FORMULA
+════════════════════════════════════════ */
+.lb-formula {
+  margin: 0.5rem 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--hover-bg, rgba(37,99,235,.06));
+  border: 1px solid var(--border-color, rgba(148,163,184,.2));
+  border-left: 4px solid var(--primary, #2563eb);
+  text-align: center;
+}
+
+.lb-formula__content {
+  font-size: 1.15rem;
+  color: var(--text-main, #0f172a);
+  overflow-x: auto;
+}
+
+/* KaTeX display override para que quepa en móvil */
+.lb-formula__content .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0;
+}
+
+.lb-formula__caption {
+  margin: 0.65rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted, #94a3b8);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* ════════════════════════════════════════
+   CODE
+════════════════════════════════════════ */
+.lb-code {
+  border: 1px solid var(--border-color, rgba(148,163,184,.2));
+  overflow: hidden;
+}
+
+.lb-code__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 1rem;
+  background: var(--toggle-bg, rgba(100,116,139,.1));
+  border-bottom: 1px solid var(--border-color, rgba(148,163,184,.2));
+}
+
+.lb-code__lang {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary, #2563eb);
+}
+
+.lb-code__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted, #94a3b8);
+}
+
+.lb-code__pre {
+  margin: 0;
+  padding: 1.15rem 1.25rem;
+  overflow-x: auto;
+  background: transparent;
+}
+
+.lb-code__pre code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--text-main, #0f172a);
+  white-space: pre;
+}
+
+/* Dark mode code block */
+[data-theme="dark"] .lb-code {
+  background: #060810;
+}
+[data-theme="dark"] .lb-code__pre code {
+  color: #cce4ff;
+}
+
+/* ════════════════════════════════════════
+   IMAGE
+════════════════════════════════════════ */
+.lb-image {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.lb-image__img {
+  width: 100%;
+  max-width: 680px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color, rgba(148,163,184,.2));
+  object-fit: cover;
+}
+
+.lb-image__caption {
+  font-size: 0.75rem;
+  color: var(--text-muted, #94a3b8);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ════════════════════════════════════════
+   RESULT
+════════════════════════════════════════ */
+.lb-result {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  background: rgba(16, 185, 129, 0.07);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-left: 4px solid #10b981;
+  color: var(--text-main, #0f172a);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.lb-result__icon {
+  color: #10b981;
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ════════════════════════════════════════
+   WARNING
+════════════════════════════════════════ */
+.lb-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  background: rgba(245, 158, 11, 0.07);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-left: 4px solid #f59e0b;
+  color: var(--text-mid, #475569);
+  font-size: 0.88rem;
+}
+
+.lb-warning__icon {
+  color: #f59e0b;
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ════════════════════════════════════════
+   TIP
+════════════════════════════════════════ */
+.lb-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--hover-bg, rgba(37,99,235,.06));
+  border: 1px solid var(--border-color, rgba(148,163,184,.2));
+  border-left: 4px solid var(--primary, #2563eb);
+  color: var(--text-mid, #475569);
+  font-size: 0.88rem;
+}
+
+.lb-tip__icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ════════════════════════════════════════
+   TABLE
+════════════════════════════════════════ */
+.lb-table__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lb-table__tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+
+.lb-table__tbl th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-muted, #94a3b8);
+  padding: 0.6rem 1rem;
+  text-align: left;
+  border-bottom: 2px solid var(--border-color, rgba(148,163,184,.2));
+  background: var(--toggle-bg, rgba(100,116,139,.1));
+  white-space: nowrap;
+}
+
+.lb-table__tbl td {
+  padding: 0.55rem 1rem;
+  color: var(--text-mid, #475569);
+  border-bottom: 1px solid var(--border-color, rgba(148,163,184,.2));
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.lb-table__tbl tr:last-child td {
+  border-bottom: none;
+}
+
+.lb-table__tbl tr:hover td {
+  background: var(--hover-bg, rgba(37,99,235,.04));
+}
+
+/* ════════════════════════════════════════
+   DIVIDER
+════════════════════════════════════════ */
+.lb-divider {
+  height: 1px;
+  background: var(--border-color, rgba(148,163,184,.2));
+  margin: 0.5rem 0;
+}

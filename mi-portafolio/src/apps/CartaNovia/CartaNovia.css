@@ -1,0 +1,265 @@
+/* src/apps/CartaNovia/CartaNovia.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap');
+
+/* ── Wrap ── */
+.cn__wrap {
+  min-height: 100vh;
+  background: #0c0a08;
+  color: #e8e0d4;
+  font-family: 'Lato', sans-serif;
+}
+
+/* ── Navbar interna ── */
+.cn__nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 2rem;
+  background: rgba(12, 10, 8, 0.92);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+}
+.cn__nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #e8e0d4;
+  letter-spacing: 2px;
+}
+.cn__nav-logo span { color: #c9a96e; margin: 0 0.3rem; }
+
+.cn__nav-links { display: flex; gap: 0.25rem; }
+.cn__nav-link {
+  padding: 0.4rem 1rem;
+  background: none;
+  border: 1px solid transparent;
+  color: rgba(232,224,212,0.5);
+  font-family: 'Lato', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cn__nav-link:hover { color: #e8e0d4; }
+.cn__nav-link--active {
+  color: #c9a96e;
+  border-color: rgba(201,169,110,0.3);
+}
+
+/* ── Main ── */
+.cn__main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+
+/* ── Carta ── */
+.cn__carta {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.cn__carta--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cn__carta-paper {
+  background: #13110e;
+  border: 1px solid rgba(201,169,110,0.15);
+  padding: 3.5rem 4rem;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+}
+.cn__carta-paper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+}
+
+.cn__carta-fecha {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: rgba(201,169,110,0.6);
+  text-transform: uppercase;
+  margin: 0 0 2.5rem;
+}
+.cn__carta-saludo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  font-style: italic;
+  color: #e8e0d4;
+  margin: 0 0 2rem;
+}
+.cn__carta-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.cn__carta-cuerpo p {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: rgba(232,224,212,0.8);
+  margin: 0;
+}
+.cn__carta-especial {
+  font-family: 'Playfair Display', serif !important;
+  font-style: italic !important;
+  font-size: 1.2rem !important;
+  color: #c9a96e !important;
+  margin-top: 0.5rem !important;
+}
+.cn__carta-firma {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: rgba(201,169,110,0.8);
+  margin: 2.5rem 0 0;
+  text-align: right;
+}
+.cn__carta-decoracion {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.cn__carta-decoracion span {
+  color: rgba(201,169,110,0.4);
+  font-size: 0.7rem;
+  animation: cn-pulse 2s ease-in-out infinite alternate;
+}
+@keyframes cn-pulse {
+  from { opacity: 0.2; }
+  to   { opacity: 0.8; }
+}
+
+/* ── Section title ── */
+.cn__section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  font-style: italic;
+  color: #e8e0d4;
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+
+/* ── Momentos ── */
+.cn__momentos { text-align: center; }
+.cn__momentos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.04);
+  margin-top: 2.5rem;
+}
+.cn__momento {
+  background: #0c0a08;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: background 0.2s;
+  animation: cn-fade 0.5s ease both;
+}
+@keyframes cn-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cn__momento:hover { background: #13110e; }
+.cn__momento-emoji { font-size: 2rem; display: block; margin-bottom: 0.85rem; }
+.cn__momento-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #c9a96e;
+  margin: 0 0 0.5rem;
+}
+.cn__momento-desc {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: rgba(232,224,212,0.55);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── Promesas ── */
+.cn__promesas { text-align: center; }
+.cn__promesas-hint {
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(232,224,212,0.3);
+  margin: 0.5rem 0 2.5rem;
+}
+.cn__promesas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.04);
+  text-align: left;
+}
+.cn__promesa {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: #0c0a08;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: left;
+}
+.cn__promesa:hover { background: #13110e; }
+.cn__promesa--revelada { cursor: default; }
+.cn__promesa-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: rgba(201,169,110,0.4);
+  flex-shrink: 0;
+  min-width: 28px;
+}
+.cn__promesa-texto {
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(232,224,212,0.7);
+  letter-spacing: 0.3px;
+}
+.cn__promesa--revelada .cn__promesa-texto {
+  color: #e8e0d4;
+  font-weight: 400;
+}
+.cn__promesa--revelada .cn__promesa-num { color: #c9a96e; }
+
+.cn__promesas-final {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-top: 1px solid rgba(201,169,110,0.2);
+  animation: cn-fade 0.6s ease;
+}
+.cn__promesas-final p {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #c9a96e;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .cn__carta-paper { padding: 2rem 1.5rem; }
+  .cn__nav { padding: 0.85rem 1.25rem; }
+  .cn__nav-link { padding: 0.35rem 0.6rem; font-size: 0.7rem; }
+  .cn__main { padding: 2.5rem 1.25rem 5rem; }
+}
