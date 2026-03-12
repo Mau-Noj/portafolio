@@ -33,7 +33,7 @@ export const SOFTWARE_DATA = [
   id:         'cumpleanos-amiga',
   nombre:     'Cumpleaños de mi Amiga',
   tagline:    'Una sorpresa digital para celebrar a alguien especial',
-  screenshot: 'https://assets.mauricionoj.com/projects/sw-cumpleanos.jpg',
+  screenshot: 'https://assets.mauricionoj.com/projects/Cumple_1.png',
   estado:     'COMPLETADO',
   año:        2025,
   tags:       ['react', 'css', 'frontend-puro', 'personal'],

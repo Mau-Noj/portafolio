@@ -172,7 +172,7 @@ const SeccionCarta = () => {
 
         <div className="ca__carta-globos">🎈🎉🎈</div>
         <p className="ca__carta-fecha">
-          {new Date().toLocaleDateString('es-GT', { year:'numeric', month:'long', day:'numeric' })}
+          {new Date(2026, 2, 12).toLocaleDateString('es-GT', { year:'numeric', month:'long', day:'numeric' })}
         </p>
         <h2 className="ca__carta-saludo">
           Feliz cumpleaños,<br/>mi querida amiga del alma.
