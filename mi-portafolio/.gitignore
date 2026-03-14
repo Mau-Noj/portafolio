@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Variables de entorno — nunca subir al repo
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production
+.env.production.local

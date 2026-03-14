@@ -11,6 +11,7 @@ import './SoftwareApp.css';
 const APP_REGISTRY = {
   //'carta-novia':              lazy(() => import('../apps/CartaNovia')),
   'cumpleanos-amiga': lazy(() => import('../apps/CumpleañosAmiga')),
+  'quimica-analizador':   lazy(() => import('../apps/QuimicaAnalizador')),
   //'sistema-inventario-usac':  lazy(() => import('../apps/SistemaInventario')),
   // 'mi-nuevo-proyecto':     lazy(() => import('../apps/MiNuevoProyecto')),
 };

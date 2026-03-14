@@ -96,6 +96,174 @@ export const SOFTWARE_DATA = [
   },
 },
 
+// ── Analizador de Nomenclatura Química ─────────────────────────────────
+
+  {
+    id:         'quimica-analizador',
+    nombre:     'Analizador de Nomenclatura Química',
+    tagline:    'Parser ANTLR4 que clasifica y nombra compuestos químicos en tres sistemas de nomenclatura',
+    screenshot: 'https://assets.mauricionoj.com/projects/quimica-analizador.png',
+    estado:     'ACTIVO',
+    año:        2026,
+    tags:       ['java', 'spring-boot', 'antlr4', 'react', 'docker', 'compiladores'],
+
+    app: {
+      activa:       true,
+      tipo:         'fullstack-externo',
+      api_base_url: 'http://localhost:8080/api', // ← actualizar con URL Dokploy
+      componente:   'QuimicaAnalizador',
+    },
+
+    demo: {
+      youtube_id:  '', // ← agregar cuando grabes el demo
+      descripcion: 'Analizador con parser ANTLR4: ingresa una fórmula y obtén IUPAC, Stock y Tradicional.',
+    },
+
+    stack: {
+      frontend:   ['React', 'Vite', 'CSS Modules'],
+      backend:    ['Java 21', 'Spring Boot 3.2.3', 'ANTLR4 4.13.1'],
+      base_datos: [],
+      otros:      ['Docker', 'GitHub Actions', 'Docker Hub', 'Dokploy'],
+    },
+
+    descripcion: 'API REST con gramática ANTLR4 que tokeniza y parsea fórmulas químicas para clasificar compuestos (óxidos, hidróxidos, ácidos, sales) y generar nomenclatura IUPAC, Stock y Tradicional con pasos de razonamiento detallados.',
+    problema:    'Estudiantes de química tienen dificultad para convertir fórmulas a los distintos sistemas de nomenclatura y no cuentan con una herramienta que explique el razonamiento paso a paso.',
+    solucion:    'Parser formal con ANTLR4 que construye un árbol sintáctico de la fórmula, extrae átomos con un visitor y aplica reglas de nomenclatura con explicación del proceso.',
+
+    metodologia: {
+      nombre:      'RUP',
+      fase_actual: 'transicion',
+      iteraciones: 2,
+      duracion:    '3 semanas',
+      equipo:      1,
+      rol_autor:   'Diseñador de compiladores / Desarrollador fullstack',
+      descripcion: 'RUP con 2 iteraciones. Primera: gramática ANTLR4, visitor y servicio de nomenclatura. Segunda: API REST, CI/CD y frontend integrado al portafolio.',
+      fases: [
+        { fase: 'inicio',       completada: true, descripcion: 'Definición de gramática química: elementos, subíndices, paréntesis anidados.' },
+        { fase: 'elaboracion',  completada: true, descripcion: 'Diseño del visitor ANTLR4 y arquitectura del servicio de nomenclatura.' },
+        { fase: 'construccion', completada: true, descripcion: 'Implementación: gramáticas .g4, FormulaVisitor, NomenclaturService, QuizService, REST controllers, Dockerfile, CI/CD.' },
+        { fase: 'transicion',   completada: true, descripcion: 'Integración al portafolio como micro-frontend. GitHub Actions → Docker Hub.' },
+      ],
+    },
+
+    requerimientos: {
+      funcionales: [
+        { id: 'RF-001', nombre: 'Parseo ANTLR4',         descripcion: 'Tokenizar y parsear fórmulas usando gramática formal.',                  prioridad: 'Alta',  estado: 'Implementado' },
+        { id: 'RF-002', nombre: 'Análisis de fórmula',   descripcion: 'Clasificar compuesto y generar nombres IUPAC, Stock y Tradicional.',     prioridad: 'Alta',  estado: 'Implementado' },
+        { id: 'RF-003', nombre: 'Validación sintáctica',  descripcion: 'Detectar y reportar errores en fórmulas malformadas.',                  prioridad: 'Alta',  estado: 'Implementado' },
+        { id: 'RF-004', nombre: 'Pasos de razonamiento',  descripcion: 'Devolver explicación paso a paso del proceso de nomenclatura.',         prioridad: 'Media', estado: 'Implementado' },
+        { id: 'RF-005', nombre: 'Quiz interactivo',       descripcion: 'Generar preguntas y verificar respuestas de nomenclatura.',             prioridad: 'Media', estado: 'Implementado' },
+        { id: 'RF-006', nombre: 'API REST',               descripcion: 'Endpoints para analizar, validar y quiz consumibles desde el frontend.', prioridad: 'Alta',  estado: 'Implementado' },
+      ],
+      no_funcionales: [
+        { id: 'RNF-001', categoria: 'Portabilidad',   descripcion: 'Desplegable en cualquier entorno con Docker.',     criterio: 'docker run en una línea'     },
+        { id: 'RNF-002', categoria: 'CI/CD',          descripcion: 'Build y push automático en cada push a main.',     criterio: 'GitHub Actions < 5 min'      },
+        { id: 'RNF-003', categoria: 'Rendimiento',    descripcion: 'Respuesta del parser < 200ms por fórmula.',        criterio: 'Medición local con curl'      },
+        { id: 'RNF-004', categoria: 'Mantenibilidad', descripcion: 'Gramática extensible sin tocar la lógica Java.',   criterio: 'Agregar elemento solo en .g4' },
+      ],
+    },
+
+    trazabilidad: [
+      { rf_id: 'RF-001', caso_uso: 'CU-001', caso_prueba: 'CP-001', estado: 'Verificado' },
+      { rf_id: 'RF-002', caso_uso: 'CU-002', caso_prueba: 'CP-002', estado: 'Verificado' },
+      { rf_id: 'RF-003', caso_uso: 'CU-003', caso_prueba: 'CP-003', estado: 'Verificado' },
+      { rf_id: 'RF-004', caso_uso: 'CU-002', caso_prueba: 'CP-004', estado: 'Verificado' },
+      { rf_id: 'RF-005', caso_uso: 'CU-004', caso_prueba: 'CP-005', estado: 'Verificado' },
+      { rf_id: 'RF-006', caso_uso: 'CU-001', caso_prueba: 'CP-006', estado: 'Verificado' },
+    ],
+
+    diagramas: [
+      {
+        tipo: 'ARQUITECTURA', titulo: 'Arquitectura del Parser ANTLR4',
+        descripcion: 'Flujo de procesamiento de una fórmula química.',
+        mermaid: `
+flowchart LR
+  Input["Fórmula (ej: Ca3(PO4)2)"]
+  Lexer["QuimicaLexer .g4"]
+  Parser["QuimicaParser .g4"]
+  Visitor["FormulaVisitor (Java)"]
+  Service["NomenclaturService (Java)"]
+  Output["ResultadoAnalisis (JSON)"]
+  Input --> Lexer --> Parser --> Visitor --> Service --> Output
+        `, imagen: '',
+      },
+      {
+        tipo: 'CASOS_USO', titulo: 'CU — Analizador Químico',
+        descripcion: 'Casos de uso del sistema.',
+        mermaid: `
+graph TD
+  U([Estudiante]) --> CU1[Analizar fórmula]
+  U --> CU2[Validar fórmula]
+  U --> CU3[Responder quiz]
+  CU1 --> CU4[Ver pasos de razonamiento]
+  CU1 --> CU5[Ver nomenclatura IUPAC / Stock / Tradicional]
+        `, imagen: '',
+      },
+      {
+        tipo: 'CLASES', titulo: 'Diagrama de Clases — Backend',
+        descripcion: 'Clases principales del sistema.',
+        mermaid: `
+classDiagram
+  class QuimicaController  { +analizarFormula() +validarFormula() +obtenerPregunta() }
+  class FormulaVisitor     { +visitFormula() +visitGrupoParentesis() +visitElementoConSubindice() }
+  class NomenclaturService { +analizar(atomos, formula) ResultadoAnalisis }
+  class ElementosDB        { +esMetal() +esNoMetal() +getEstadosOxidacion() }
+  class ResultadoAnalisis  { +nombreIUPAC +nombreStock +nombreTradicional +pasos }
+  QuimicaController --> FormulaVisitor
+  QuimicaController --> NomenclaturService
+  NomenclaturService --> ElementosDB
+  NomenclaturService --> ResultadoAnalisis
+        `, imagen: '',
+      },
+    ],
+
+    arquitectura: {
+      patron: 'Compiler Pattern + REST API',
+      descripcion: 'ANTLR4 genera el lexer y parser desde gramáticas .g4. Un visitor recorre el árbol y produce un Map<String, Integer> de átomos que consume el servicio de nomenclatura. Spring Boot expone todo como REST API. El frontend React vive en el portafolio (Vercel) y hace fetch() a la API desplegada en Dokploy.',
+      mermaid: `
+graph TB
+  subgraph Vercel["Portafolio (Vercel)"]
+    React["React — QuimicaAnalizador"]
+  end
+  subgraph Dokploy["Servidor (Dokploy)"]
+    API["Spring Boot REST API"]
+    ANTLR["ANTLR4 Parser"]
+  end
+  subgraph CICD["CI/CD"]
+    GHA["GitHub Actions"]
+    DH["Docker Hub"]
+  end
+  React -->|fetch JSON| API
+  API --> ANTLR
+  GHA -->|push image| DH
+  DH -->|pull and deploy| Dokploy
+      `, imagen: '',
+      decisiones: [
+        { decision: 'ANTLR4 sobre parsing manual',  razon: 'Gramática formal extensible — agregar elementos solo requiere editar el .g4.',  alternativas: 'Regex, parser manual' },
+        { decision: 'Visitor pattern',              razon: 'Separación limpia entre gramática (ANTLR) y lógica de negocio (Java).',          alternativas: 'Listener pattern'     },
+        { decision: 'Sin base de datos',            razon: 'Todo en memoria — sin estado persistente, despliegue más simple.',               alternativas: 'H2, PostgreSQL'       },
+        { decision: 'Docker + GitHub Actions',      razon: 'Reproducibilidad y despliegue automático en cada push sin intervención manual.', alternativas: 'JAR manual'           },
+      ],
+    },
+
+    patrones: [
+      { nombre: 'Visitor',            categoria: 'Compiler Pattern', uso: 'Recorre el árbol ANTLR y extrae átomos sin modificar la gramática.'        },
+      { nombre: 'Builder',            categoria: 'Creacional',       uso: 'Construcción de ResultadoAnalisis y PreguntaQuiz sin Lombok.'               },
+      { nombre: 'Strategy implícita', categoria: 'Comportamental',   uso: 'NomenclaturService selecciona el algoritmo según tipo de compuesto.'        },
+      { nombre: 'Lazy Loading',       categoria: 'Performance',      uso: 'App cargada solo al navegar a /software/quimica-analizador/app.'            },
+    ],
+
+    ciclo_vida: {
+      descripcion: 'Desarrollo en 3 semanas con 2 iteraciones RUP.',
+      hitos: [
+        { fecha: '2026-02', fase: 'Inicio',       descripcion: 'Definición de gramática y alcance del parser.'     },
+        { fecha: '2026-02', fase: 'Elaboración',  descripcion: 'Gramáticas .g4, visitor y servicio de nomenclatura.' },
+        { fecha: '2026-03', fase: 'Construcción', descripcion: 'API REST, CI/CD con GitHub Actions y Docker Hub.'   },
+        { fecha: '2026-03', fase: 'Transición',   descripcion: 'Integración al portafolio como micro-frontend.'     },
+      ],
+    },
+  },
+  // ← aquí continúa el resto de SOFTWARE_DATA (cumpleanos-amiga, sistema-gestion-laboratorio...)
   // ── 2. Sistema de Gestión de Laboratorio ────────────────────────────────
   {
     id:         'sistema-gestion-laboratorio',

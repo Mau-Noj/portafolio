@@ -1,0 +1,768 @@
+/* ── Variables — hereda del portafolio pero es autosuficiente ──────────────── */
+.qa__wrap {
+  --qa-accent:  #00d4aa;
+  --qa-accent2: #0091ff;
+  --qa-danger:  #ff4d6d;
+  --qa-bg:      var(--color-bg,      #0a0e1a);
+  --qa-bg2:     var(--color-surface, #111827);
+  --qa-bg3:     var(--color-surface, #1a2235);
+  --qa-border:  var(--color-border,  #1e2d45);
+  --qa-text:    var(--color-text,    #e2e8f0);
+  --qa-text2:   var(--color-muted,   #7a8fa6);
+  --qa-mono:    'Space Mono', 'Courier New', monospace;
+  --qa-radius:  10px;
+
+  min-height: 100vh;
+  background: var(--qa-bg);
+  color: var(--qa-text);
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+}
+/* ── FAB Menu (Navegación Flotante) ────────────────────────────────────────── */
+.qa__fab-container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+  /* Subimos el z-index al máximo posible */
+  z-index: 99999; 
+}
+
+/* Opcional: Si quieres que el fondo general empiece más abajo */
+.qa__wrap {
+  /* ... tus otras variables ... */
+  padding-top: 20px; 
+}
+.qa__fab-main {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--qa-accent);
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 212, 170, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.qa__fab-main:hover { transform: scale(1.1); }
+.qa__fab-main-icon { font-size: 1.5rem; color: #0a0e1a; }
+
+.qa__fab-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.qa__fab--open .qa__fab-menu {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.qa__fab-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--qa-bg2);
+  border: 1px solid var(--qa-border);
+  padding: 8px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.qa__fab-item:hover {
+  background: var(--qa-bg3);
+  border-color: var(--qa-accent);
+  transform: translateX(-5px);
+}
+
+.qa__fab-item--active {
+  border-color: var(--qa-accent);
+  background: rgba(0, 212, 170, 0.1);
+}
+
+.qa__fab-label {
+  color: var(--qa-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.qa__fab-icon { font-size: 1.1rem; }
+
+/* Ocultar el nav viejo si quedaba algo */
+.qa__nav { display: none; }
+/* ── Main ──────────────────────────────────────────────────────────────────── */
+.qa__main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 100px 24px 100px;
+}
+
+/* ── Section ───────────────────────────────────────────────────────────────── */
+.qa__section-header { margin-bottom: 24px; }
+
+.qa__section-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--qa-text);
+  margin-bottom: 4px;
+}
+
+.qa__section-sub {
+  font-size: 0.88rem;
+  color: var(--qa-text2);
+}
+
+/* ── Chips de ejemplos ─────────────────────────────────────────────────────── */
+.qa__chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+
+.qa__chip {
+  background: var(--qa-bg3);
+  border: 1px solid var(--qa-border);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-family: var(--qa-mono);
+  font-size: 0.78rem;
+  color: var(--qa-text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.qa__chip:hover { border-color: var(--qa-accent); color: var(--qa-accent); }
+
+/* ── Input row ─────────────────────────────────────────────────────────────── */
+.qa__input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.qa__input {
+  flex: 1;
+  background: var(--qa-bg3);
+  border: 1px solid var(--qa-border);
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-family: var(--qa-mono);
+  font-size: 1rem;
+  color: var(--qa-text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.qa__input::placeholder { color: var(--qa-text2); }
+.qa__input:focus { border-color: var(--qa-accent); }
+
+.qa__btn-primary {
+  padding: 11px 22px;
+  border-radius: 8px;
+  border: none;
+  background: var(--qa-accent);
+  color: #0a0e1a;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qa__btn-primary:hover:not(:disabled) { filter: brightness(1.1); }
+.qa__btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Badges ────────────────────────────────────────────────────────────────── */
+.qa__badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-family: var(--qa-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.qa__badge--ok  { background: rgba(0,212,170,0.12); color: var(--qa-accent);  border: 1px solid rgba(0,212,170,0.3); }
+.qa__badge--err { background: rgba(255,77,109,0.12); color: var(--qa-danger);  border: 1px solid rgba(255,77,109,0.3); }
+.qa__badge--info{ background: rgba(0,145,255,0.12);  color: var(--qa-accent2); border: 1px solid rgba(0,145,255,0.3); }
+
+/* ── Resultado ─────────────────────────────────────────────────────────────── */
+.qa__resultado {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: qa-fadein 0.3s ease;
+}
+
+@keyframes qa-fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; } }
+
+.qa__result-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  background: var(--qa-bg2);
+  border: 1px solid var(--qa-border);
+  border-radius: var(--qa-radius);
+}
+
+.qa__formula-display {
+  font-family: var(--qa-mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--qa-accent);
+}
+
+.qa__uso {
+  font-size: 0.82rem;
+  color: var(--qa-text2);
+  padding: 0 4px;
+}
+
+/* ── Nomenclaturas ─────────────────────────────────────────────────────────── */
+.qa__nom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.qa__nom-card {
+  background: var(--qa-bg2);
+  border: 1px solid var(--qa-border);
+  border-radius: var(--qa-radius);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color 0.18s;
+}
+
+.qa__nom-card:hover { border-color: var(--qa-accent); }
+
+.qa__nom-label {
+  font-family: var(--qa-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--qa-text2);
+}
+
+.qa__nom-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--qa-text);
+}
+
+/* ── Elementos ─────────────────────────────────────────────────────────────── */
+.qa__elementos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px 20px;
+  background: var(--qa-bg2);
+  border: 1px solid var(--qa-border);
+  border-radius: var(--qa-radius);
+}
+
+.qa__elemento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--qa-bg3);
+  border: 1px solid var(--qa-border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  min-width: 64px;
+  transition: all 0.18s;
+}
+
+.qa__elemento:hover { border-color: var(--qa-accent2); transform: translateY(-2px); }
+
+.qa__elemento-simbolo {
+  font-family: var(--qa-mono);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--qa-accent2);
+}
+
+.qa__elemento-nombre,
+.qa__elemento-sub {
+  font-size: 0.7rem;
+  color: var(--qa-text2);
+  margin-top: 2px;
+}
+
+/* ── Pasos (details) ───────────────────────────────────────────────────────── */
+.qa__pasos {
+  background: var(--qa-bg2);
+  border: 1px solid var(--qa-border);
+  border-radius: var(--qa-radius);
+  overflow: hidden;
+}
+
+.qa__pasos-title {
+  padding: 12px 16px;
+  font-family: var(--qa-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--qa-text2);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.qa__pasos-title:hover { color: var(--qa-text); }
+
+.qa__pasos-body { padding: 0 16px 16px; }
+
+.qa__paso {
+  font-family: var(--qa-mono);
+  font-size: 0.8rem;
+  color: var(--qa-text2);
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  line-height: 1.6;
+}
+
+.qa__paso:last-child { border-bottom: none; }
+
+/* ── Error / Info ──────────────────────────────────────────────────────────── */
+.qa__error-box {
+  background: rgba(255,77,109,0.08);
+  border: 1px solid rgba(255,77,109,0.25);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: var(--qa-danger);
+  font-size: 0.84rem;
+}
+
+.qa__info-box {
+  background: rgba(0,212,170,0.06);
+  border: 1px solid rgba(0,212,170,0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.84rem;
+  color: var(--qa-text2);
+}
+
+/* ── Tabla ─────────────────────────────────────────────────────────────────── */
+.qa__tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--qa-mono);
+  font-size: 0.84rem;
+  background: var(--qa-bg2);
+  border: 1px solid var(--qa-border);
+  border-radius: var(--qa-radius);
+  overflow: hidden;
+}
+
+.qa__tabla th {
+  text-align: left;
+  padding: 10px 14px;
+  color: var(--qa-text2);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-bottom: 1px solid var(--qa-border);
+}
+
+.qa__tabla td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--qa-text);
+}
+
+.qa__tabla tr:last-child td { border-bottom: none; }
+.qa__tabla-simbolo { color: var(--qa-accent2); font-weight: 700; }
+
+/* ── Quiz ──────────────────────────────────────────────────────────────────── */
+.qa__score-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: var(--qa-bg2);
+  border: 1px solid var(--qa-border);
+  border-radius: var(--qa-radius);
+  margin-bottom: 20px;
+}
+
+.qa__score-num {
+  font-family: var(--qa-mono);
+  font-size: 1.4rem;
+  color: var(--qa-accent);
+  margin-right: 6px;
+}
+
+.qa__score-label { font-size: 0.8rem; color: var(--qa-text2); }
+
+.qa__quiz-card {
+  background: var(--qa-bg2);
+  border: 1px solid var(--qa-border);
+  border-radius: var(--qa-radius);
+  padding: 24px;
+}
+
+.qa__quiz-pregunta {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--qa-text);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.qa__opciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.qa__opcion {
+  background: var(--qa-bg3);
+  border: 1px solid var(--qa-border);
+  border-radius: 8px;
+  padding: 14px;
+  color: var(--qa-text);
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s;
+}
+
+.qa__opcion:hover:not(:disabled) {
+  border-color: var(--qa-accent2);
+  background: rgba(0,145,255,0.06);
+}
+
+.qa__opcion:disabled { cursor: default; }
+
+.qa__opcion--correcta  { border-color: var(--qa-accent) !important; background: rgba(0,212,170,0.1) !important; color: var(--qa-accent) !important; }
+.qa__opcion--incorrecta{ border-color: var(--qa-danger) !important; background: rgba(255,77,109,0.08) !important; color: var(--qa-danger) !important; }
+
+.qa__feedback { display: flex; flex-direction: column; gap: 12px; }
+
+.qa__btn-siguiente { align-self: flex-start; margin-top: 4px; }
+
+/* ── Spinner ───────────────────────────────────────────────────────────────── */
+.qa__spinner {
+  display: inline-block;
+  width: 15px; height: 15px;
+  border: 2px solid rgba(0,212,170,0.2);
+  border-top-color: var(--qa-accent);
+  border-radius: 50%;
+  animation: qa-spin 0.6s linear infinite;
+}
+
+@keyframes qa-spin { to { transform: rotate(360deg); } }
+
+.qa__loading-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.qa__errores-list { display: flex; flex-direction: column; gap: 8px; }
+
+/* ── Modo claro ────────────────────────────────────────────────────────────── */
+html:not([data-theme="dark"]) .qa__wrap {
+  --qa-bg:     #f8fafc;
+  --qa-bg2:    #ffffff;
+  --qa-bg3:    #f1f5f9;
+  --qa-border: #e2e8f0;
+  --qa-text:   #0f172a;
+  --qa-text2:  #64748b;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+/* ── Responsive Extendido ────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  /* Reducimos el espacio superior en móvil para no desperdiciar pantalla */
+  .qa__main { 
+    padding: 80px 16px 120px; 
+  }
+
+  .qa__section-title {
+    font-size: 1.2rem;
+  }
+
+  /* El teclado químico se vuelve muy difícil de usar si es muy pequeño, 
+     así que ensanchamos las teclas */
+  .qa__teclado-btns {
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .qa__key {
+    min-width: 42px; /* Más fáciles de tocar con el dedo */
+    height: 40px;
+    font-size: 0.9rem;
+  }
+
+  /* Ajustamos el FAB para que sea más pequeño y no tape el input */
+  .qa__fab-container {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .qa__fab-main {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* Las opciones del Quiz en una sola columna */
+  .qa__opciones { 
+    grid-template-columns: 1fr; 
+  }
+
+  /* Forzamos que la tabla de balance sea scrolleable horizontalmente */
+  .qa__pasos-body {
+    overflow-x: auto;
+  }
+
+  /* Las tarjetas de nomenclatura ocupan todo el ancho */
+  .qa__nom-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Los chips de ejemplos */
+  .qa__chips {
+    justify-content: center;
+  }
+}
+
+/* ── Agregar al final de QuimicaAnalizador.css ──────────────────────────────── */
+
+/* ── Vista previa fórmula estilo libro ──────────────────────────────────────── */
+.qa__formula-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--qa-bg2);
+  border: 1px solid var(--qa-border);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  animation: qa-fadein 0.2s ease;
+}
+
+.qa__formula-preview-label {
+  font-family: var(--qa-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--qa-text2);
+  white-space: nowrap;
+}
+
+.qa__formula-preview-value {
+  font-family: var(--qa-mono);
+  font-size: 1.3rem;
+  color: var(--qa-accent);
+  letter-spacing: 0.5px;
+}
+
+/* ── Teclado químico ─────────────────────────────────────────────────────────── */
+.qa__teclado {
+  background: var(--qa-bg2);
+  border: 1px solid var(--qa-border);
+  border-radius: var(--qa-radius);
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+.qa__teclado-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  color: var(--qa-text2);
+  font-family: var(--qa-mono);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.qa__teclado-toggle:hover { color: var(--qa-text); }
+
+.qa__teclado-body {
+  padding: 12px 16px 16px;
+  border-top: 1px solid var(--qa-border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.qa__teclado-row { display: flex; flex-direction: column; gap: 6px; }
+
+.qa__teclado-label {
+  font-family: var(--qa-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--qa-text2);
+}
+
+.qa__teclado-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* ── Teclas ───────────────────────────────────────────────────────────────────── */
+.qa__key {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--qa-border);
+  background: var(--qa-bg3);
+  font-family: var(--qa-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.12s;
+  min-width: 38px;
+  text-align: center;
+  line-height: 1;
+}
+
+.qa__key:hover { transform: translateY(-1px); }
+.qa__key:active { transform: translateY(0); }
+
+/* Elementos — color azul */
+.qa__key--elemento {
+  color: var(--qa-accent2);
+  border-color: rgba(0,145,255,0.2);
+}
+.qa__key--elemento:hover {
+  background: rgba(0,145,255,0.1);
+  border-color: var(--qa-accent2);
+}
+
+/* Números — color neutro */
+.qa__key--numero {
+  color: var(--qa-text);
+}
+.qa__key--numero:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: var(--qa-text2);
+}
+
+/* Grupos ( ) — color verde */
+.qa__key--grupo {
+  color: var(--qa-accent);
+  border-color: rgba(0,212,170,0.25);
+  font-size: 1rem;
+}
+.qa__key--grupo:hover {
+  background: rgba(0,212,170,0.1);
+  border-color: var(--qa-accent);
+}
+
+/* Acciones DEL / CLR — color rojo */
+.qa__key--accion {
+  color: var(--qa-danger);
+  border-color: rgba(255,77,109,0.25);
+}
+.qa__key--accion:hover {
+  background: rgba(255,77,109,0.1);
+  border-color: var(--qa-danger);
+}
+
+/* ── Formula display grande en resultado ─────────────────────────────────────── */
+.qa__formula-display {
+  font-family: var(--qa-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--qa-accent);
+  letter-spacing: 0.5px;
+}
+
+/* ── Modo claro — overrides ──────────────────────────────────────────────────── */
+html:not([data-theme="dark"]) .qa__teclado { background: #fff; }
+html:not([data-theme="dark"]) .qa__key { background: #f8fafc; }
+html:not([data-theme="dark"]) .qa__formula-preview { background: #fff; }
+
+/* ── Agregar al final de QuimicaAnalizador.css ──────────────────────────────── */
+
+/* ── Ecuación balanceada visual ──────────────────────────────────────────────── */
+.qa__ecuacion-balanceada {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-family: var(--qa-mono);
+  font-size: 1.4rem;
+}
+
+.qa__mol-bal {
+  display: inline-flex;
+  align-items: baseline;
+  color: var(--mol-color, var(--qa-text));
+}
+
+.qa__mol-coef {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--qa-text2);
+  margin-right: 1px;
+}
+
+.qa__bal-op {
+  color: var(--qa-text2);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 0 6px;
+}
+
+/* ── Texto plano de la ecuación ──────────────────────────────────────────────── */
+.qa__ec-texto {
+  display: inline-block;
+  font-family: var(--qa-mono);
+  font-size: 0.82rem;
+  color: var(--qa-text2);
+  background: var(--qa-bg3);
+  border: 1px solid var(--qa-border);
+  border-radius: 6px;
+  padding: 5px 12px;
+}
+
+.qa__btn-copy {
+  background: transparent;
+  border: 1px solid var(--qa-border);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-family: var(--qa-mono);
+  color: var(--qa-text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.qa__btn-copy:hover {
+  border-color: var(--qa-accent);
+  color: var(--qa-accent);
+}
+
+/* ── Tabla de verificación ───────────────────────────────────────────────────── */
+.qa__tabla-balance th { min-width: 54px; text-align: center; }
+.qa__tabla-balance td { text-align: center; }
+.qa__tabla-balance td:first-child { text-align: left; font-weight: 700; }
