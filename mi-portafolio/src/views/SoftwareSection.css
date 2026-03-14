@@ -5,6 +5,8 @@
   min-height: 100vh;
   background: #f5f4f0;
   transition: background 0.3s;
+  overflow-x: hidden;
+  width: 100%;
 }
 [data-theme="dark"] .sw-wrap { background: #080807; }
 
@@ -23,6 +25,7 @@
   padding: calc(68px + 3rem) 2rem 6rem;
   font-family: 'Plus Jakarta Sans', sans-serif;
   color: var(--ink);
+  overflow-x: hidden;
 }
 [data-theme="dark"] .sw {
   --ink:   #eae9e3;
@@ -33,7 +36,7 @@
   --rule:  #252420;
 }
 
-/* Header */
+/* ── Header ── */
 .sw__header {
   display: flex;
   justify-content: space-between;
@@ -56,6 +59,9 @@
   line-height: 0.92;
   letter-spacing: -2px;
   margin: 0 0 1.25rem;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 .sw__title em {
   font-style: normal;
@@ -87,7 +93,7 @@
 }
 .sw__legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
-/* Stats */
+/* ── Stats ── */
 .sw__stats {
   display: flex;
   align-items: center;
@@ -115,7 +121,7 @@
 }
 .sw__stat-sep { width: 1px; height: 28px; background: var(--rule); }
 
-/* Controles */
+/* ── Controles ── */
 .sw__controls {
   display: flex;
   gap: 1rem;
@@ -154,7 +160,7 @@
   min-width: 150px;
 }
 
-/* Tags */
+/* ── Tags ── */
 .sw__tags {
   display: flex;
   flex-wrap: wrap;
@@ -175,13 +181,13 @@
 .sw__tag-btn:hover { color: var(--acc); border-color: var(--acc); }
 .sw__tag-btn--active { background: var(--acc); border-color: var(--acc); color: #fff; }
 
-/* Grid */
+/* ── Grid ── */
 .sw__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
+  gap: 1.5rem;
+  background: transparent;
+  border: none;
 }
 .sw__card {
   background: var(--paper);
@@ -190,6 +196,7 @@
   animation: sw-fade 0.4s ease both;
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--rule);
 }
 @keyframes sw-fade {
   from { opacity: 0; transform: translateY(10px); }
@@ -286,35 +293,21 @@
   color: var(--ink3); border: 1px solid var(--rule);
 }
 
-@media (max-width: 640px) {
-  .sw { padding: calc(68px + 2rem) 1.25rem 4rem; }
-  .sw__header { flex-direction: column; }
-  .sw__grid { grid-template-columns: 1fr; }
-}
-/* ── MOBILE FIXES ─────────────────────────────────────────────────────────── */
-
-/* Evitar desbordamiento horizontal global */
-.sw-wrap {
-  overflow-x: hidden;
-  width: 100%;
-}
-
+/* ── RESPONSIVE ── */
 @media (max-width: 768px) {
 
   /* Contenedor */
   .sw {
     padding: calc(68px + 1.5rem) 1rem 4rem;
-    overflow-x: hidden;
   }
 
-  /* Título — evitar que se salga */
+  /* Título */
   .sw__title {
-    font-size: clamp(2rem, 12vw, 3.2rem);
+    font-size: clamp(2rem, 10vw, 3.2rem);
     letter-spacing: -1px;
-    word-break: break-word;
   }
 
-  /* Header — apilado */
+  /* Header apilado */
   .sw__header {
     flex-direction: column;
     gap: 1.25rem;
@@ -322,19 +315,24 @@
   .sw__header-left { width: 100%; }
   .sw__header-right { width: 100%; }
 
-  /* Stats — scroll horizontal si no caben */
+  /* Stats: wrap 2×2, sin scroll oculto */
   .sw__stats {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: 1rem;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    gap: 0.75rem 1.25rem;
+    justify-content: center;
     padding: 1rem 0;
-    scrollbar-width: none;
   }
-  .sw__stats::-webkit-scrollbar { display: none; }
-  .sw__stat { min-width: 60px; }
+  .sw__stat-sep {
+    display: none;
+  }
+  .sw__stat {
+    min-width: 70px;
+    text-align: center;
+  }
   .sw__stat-n { font-size: 1.3rem; }
 
-  /* Controles — apilados */
+  /* Controles apilados */
   .sw__controls {
     flex-direction: column;
     gap: 0.6rem;
@@ -344,7 +342,7 @@
     min-width: unset;
   }
 
-  /* Tags — scroll horizontal */
+  /* Tags: scroll horizontal */
   .sw__tags {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -356,7 +354,7 @@
   .sw__tags::-webkit-scrollbar { display: none; }
   .sw__tag-btn { white-space: nowrap; flex-shrink: 0; }
 
-  /* Grid — 1 columna */
+  /* Grid: 1 columna */
   .sw__grid {
     grid-template-columns: 1fr;
   }
@@ -365,8 +363,10 @@
 @media (max-width: 480px) {
   .sw__title {
     font-size: clamp(1.8rem, 10vw, 2.6rem);
+    letter-spacing: -0.5px;
   }
   .sw__subtitle {
     font-size: 0.82rem;
+    max-width: 100%;
   }
 }

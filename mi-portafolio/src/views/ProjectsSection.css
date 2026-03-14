@@ -22,6 +22,8 @@
   max-width: 1300px;
   margin: 0 auto;
   transition: background 0.35s ease, color 0.35s ease;
+  overflow-x: hidden;
+  width: 100%;  
 }
 
 /* ══════════════════════════════════════════
@@ -121,6 +123,9 @@ html:not([data-theme="dark"]) .psection__filter--active {
   line-height: 0.95;
   letter-spacing: -1px;
   margin: 0 0 1.1rem;
+  word-break: break-word;     
+  overflow-wrap: break-word;  
+  max-width: 100%;   
 }
 
 .psection__title-plain  { color: var(--t); }
@@ -206,9 +211,9 @@ html:not([data-theme="dark"]) .psection__filter--active {
 .psection__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2px;
-  background: var(--b1);
-  border: 1px solid var(--b2);
+  gap: 1.5rem;
+  background: transparent;
+  border: none;
 }
 
 /* ── EMPTY STATE ── */

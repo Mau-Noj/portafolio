@@ -1,0 +1,257 @@
+/* src/components/ProjectCard.css */
+
+/* ─────────────────────────────────────────
+   La card hereda las variables de .psection
+   (--bg, --bg2, --b1, --b2, --g, --t, --m, --ttl)
+   No necesita definirlas de nuevo.
+───────────────────────────────────────── */
+
+.pcard {
+  background: var(--bg2);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid var(--b2);
+  transition: border-color 0.18s ease, background 0.18s ease;
+  animation: pcard-in 0.35s ease both;
+  outline: none;
+}
+
+@keyframes pcard-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.pcard:hover,
+.pcard:focus-visible {
+  border-color: var(--g);
+  background: var(--s1, var(--bg2));
+}
+
+/* ── Imagen ── */
+.pcard__img {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  background: var(--b1);
+  flex-shrink: 0;
+}
+
+.pcard__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.pcard:hover .pcard__img img {
+  transform: scale(1.04);
+}
+
+/* Placeholder cuando no hay imagen */
+.pcard__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--b1);
+}
+
+.pcard__placeholder-icon {
+  font-size: 2.5rem;
+  opacity: 0.25;
+  filter: grayscale(1);
+  transition: opacity 0.2s;
+}
+
+.pcard:hover .pcard__placeholder-icon {
+  opacity: 0.5;
+}
+
+/* Badges superpuestos sobre la imagen */
+.pcard__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0.6rem 0.75rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+}
+
+.pcard__badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.48rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--badge-color, #64748b);
+  color: var(--badge-color, #64748b);
+  background: rgba(0, 0, 0, 0.5);
+  line-height: 1.4;
+}
+
+.pcard__cost {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.5px;
+}
+
+/* ── Body ── */
+.pcard__body {
+  padding: 1rem 1rem 0.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pcard__category {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.48rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--g);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pcard__cat-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--g);
+  flex-shrink: 0;
+}
+
+.pcard__title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--t);
+  margin: 0;
+  line-height: 1.35;
+  letter-spacing: -0.2px;
+}
+
+.pcard__desc {
+  font-size: 0.78rem;
+  color: var(--m);
+  margin: 0;
+  line-height: 1.65;
+  flex: 1;
+}
+
+/* Tags */
+.pcard__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+}
+
+.pcard__tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.45rem;
+  letter-spacing: 0.5px;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid var(--b2);
+  color: var(--m);
+  background: transparent;
+  line-height: 1.5;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.pcard:hover .pcard__tag {
+  border-color: rgba(0, 255, 159, 0.3);
+  color: var(--t);
+}
+
+.pcard__tag--more {
+  border-style: dashed;
+  opacity: 0.6;
+}
+
+/* Platform */
+.pcard__platform {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.48rem;
+  color: var(--m);
+  margin: 0.1rem 0 0;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+}
+
+/* ── Footer ── */
+.pcard__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  border-top: 1px solid var(--b2);
+  margin-top: 0.5rem;
+  transition: border-color 0.18s;
+}
+
+.pcard:hover .pcard__footer {
+  border-color: var(--g);
+}
+
+.pcard__status {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.48rem;
+  letter-spacing: 0.5px;
+  color: var(--status-color, #64748b);
+}
+
+.pcard__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--status-color, #64748b);
+  flex-shrink: 0;
+}
+
+/* Pulso cuando está "en progreso" */
+.pcard__status[style*="3b82f6"] .pcard__status-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.7); }
+}
+
+.pcard__cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  color: var(--g);
+  letter-spacing: 0.5px;
+  transition: letter-spacing 0.2s ease;
+}
+
+.pcard:hover .pcard__cta {
+  letter-spacing: 1.5px;
+}
+
+/* ── Neon hover (solo dark) ── */
+[data-theme="dark"] .pcard:hover {
+  box-shadow: 0 0 0 1px var(--g), 0 4px 24px rgba(0, 255, 159, 0.08);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .pcard__img { height: 160px; }
+  .pcard__title { font-size: 0.82rem; }
+}

@@ -102,7 +102,7 @@ export const SOFTWARE_DATA = [
     id:         'quimica-analizador',
     nombre:     'Analizador de Nomenclatura Química',
     tagline:    'Parser ANTLR4 que clasifica y nombra compuestos químicos en tres sistemas de nomenclatura',
-    screenshot: 'https://assets.mauricionoj.com/projects/quimica-analizador.png',
+    screenshot: 'https://assets.mauricionoj.com/projects/antlr_quimica_pro.png',
     estado:     'ACTIVO',
     año:        2026,
     tags:       ['java', 'spring-boot', 'antlr4', 'react', 'docker', 'compiladores'],
