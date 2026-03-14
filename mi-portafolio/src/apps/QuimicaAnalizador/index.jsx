@@ -1,32 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './QuimicaAnalizador.css';
 
-// ✅ Seguridad: la URL de la API viene exclusivamente de variables de entorno
-const DEFAULT_API = import.meta.env.VITE_API_URL;
+const DEFAULT_API = import.meta.env.VITE_API_URL || 'https://close-sapphire-mauricionoj-10f63b1b.koyeb.app/api';
 
 // ── Navbar interna ────────────────────────────────────────────────────────────
-const NavInterna = ({ seccionActiva, setSeccion }) => (
-  <nav className="qa__nav">
-    <div className="qa__nav-logo">⚗</div>
-    <div className="qa__nav-links">
-      {[
-        { id: 'analizador',  label: 'Analizador'  },
-        { id: 'validador',   label: 'Validador'   },
-        { id: 'balanceador', label: 'Balanceador' },
-        { id: 'quiz',        label: 'Quiz'         },
-      ].map(({ id, label }) => (
-        <button
-          key={id}
-          className={`qa__nav-link ${seccionActiva === id ? 'qa__nav-link--active' : ''}`}
-          onClick={() => setSeccion(id)}
-        >
-          {label}
-        </button>
-      ))}
-    </div>
-  </nav>
-);
+const NavInterna = ({ seccionActiva, setSeccion }) => {
+  const [abierto, setAbierto] = useState(false);
 
+  const menuItems = [
+    { id: 'analizador',  label: 'Analizador',  icon: '🔍' },
+    { id: 'validador',   label: 'Validador',   icon: '✅' },
+    { id: 'balanceador', label: 'Balanceador', icon: '⚖️' },
+    { id: 'quiz',        label: 'Quiz',        icon: '📝' },
+  ];
+
+  return (
+    <div className={`qa__fab-container ${abierto ? 'qa__fab--open' : ''}`}>
+      <div className="qa__fab-menu">
+        {menuItems.map((item) => (
+          <button
+            key={item.id}
+            className={`qa__fab-item ${seccionActiva === item.id ? 'qa__fab-item--active' : ''}`}
+            onClick={() => { setSeccion(item.id); setAbierto(false); }}
+          >
+            <span className="qa__fab-label">{item.label}</span>
+            <span className="qa__fab-icon">{item.icon}</span>
+          </button>
+        ))}
+      </div>
+      <button className="qa__fab-main" onClick={() => setAbierto(!abierto)}>
+        <span className="qa__fab-main-icon">{abierto ? '✕' : '⚗️'}</span>
+      </button>
+    </div>
+  );
+};
 // ── Notación libro: H2SO4 → H₂SO₄ con <sub> reales ──────────────────────────
 const FormulaLibro = ({ formula, className = '' }) => {
   if (!formula) return null;
@@ -626,9 +633,8 @@ const SeccionBalanceador = ({ api }) => {
         body:    JSON.stringify({ ecuacion: target }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || data.detalle || 'Error del servidor');
-      // El backend retorna valida:true cuando la ecuacion fue balanceada exitosamente
-      if (!data.valida) throw new Error(data.error || 'Ecuacion invalida o no se pudo balancear');
+      // ✅ FIX Bug 1: verificar ecuacionBalanceada en lugar de data.valida
+      if (!res.ok || !data.ecuacionBalanceada) throw new Error(data.error || 'No se pudo balancear');
       setResultado(data);
     } catch (e) {
       setError(e.message);
@@ -763,17 +769,6 @@ const SeccionBalanceador = ({ api }) => {
 const QuimicaAnalizador = ({ apiBaseUrl }) => {
   const api = apiBaseUrl || DEFAULT_API;
   const [seccion, setSeccion] = useState('analizador');
-
-  // ✅ Seguridad: si no hay URL configurada, mostrar error controlado
-  if (!api) {
-    return (
-      <div className="qa__wrap">
-        <div className="qa__error-box" style={{ margin: '40px auto', maxWidth: 400, textAlign: 'center' }}>
-          ⚠ API no configurada. Contacta al administrador.
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="qa__wrap">

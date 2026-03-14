@@ -110,7 +110,7 @@ export const SOFTWARE_DATA = [
     app: {
       activa:       true,
       tipo:         'fullstack-externo',
-      api_base_url: 'http://localhost:8080/api', // ← actualizar con URL Dokploy
+      api_base_url: import.meta.env.VITE_API_URL, 
       componente:   'QuimicaAnalizador',
     },
 
