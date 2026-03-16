@@ -253,5 +253,14 @@ export const materials = [
     thumbnail: "https://cdn-icons-png.flaticon.com/512/337/337946.png",
     tags: ["Documentación", "IEEE"],
     url: "https://docs.google.com/document/u/0/" 
-  }
+  },
+  {
+  id: 3,
+  type: "download",
+  title: "Plantilla Casos de Uso",
+  description: "Formato listo para documentar actores, relaciones include/extend y frontera del sistema. Basado en los estándares vistos en ADS.",
+  thumbnail: "https://cdn-icons-png.flaticon.com/512/337/337946.png",
+  tags: ["UML", "Casos de Uso", "Plantilla"],
+  url: "https://docs.google.com/document/d/1CjHqaQbH0hZnxzqDDupDX3zJPvir2x_U/edit?usp=sharing&ouid=116982530883423843408&rtpof=true&sd=true"
+},
 ];

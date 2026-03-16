@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
-import {
-  BiGridAlt, BiNews, BiLibrary, BiUser, BiMicrochip,
-  BiEnvelope, BiMoon, BiSun, BiSearch, BiMenu, BiX, BiCodeAlt
-} from "react-icons/bi";
+import { BiGridAlt, BiNews, BiLibrary, BiUser, BiMicrochip,
+  BiEnvelope, BiMoon, BiSun, BiSearch, BiMenu, BiX, BiCodeAlt,
+  BiCalculator } from "react-icons/bi";
 import { BiLogoGithub, BiLogoYoutube, BiLogoInstagram } from "react-icons/bi";
 import { Link, useLocation } from 'react-router-dom';
 import { SearchModal } from './SearchModal';
@@ -57,15 +56,15 @@ const SOCIAL = {
 };
 
 const NAV_LINKS = [
-  { to: '/blog',       label: 'Blog',                icon: BiNews,    desc: 'Notas del proceso'              },
-  { to: '/proyectos',  label: 'Proyectos',           icon: BiGridAlt, desc: '80+ proyectos de laboratorio'   },
-  { to: '/articulos',  label: 'Artículos',           icon: BiNews,    desc: 'Artículos técnicos'             },
-  { to: '/materiales', label: 'Materiales de Apoyo', icon: BiLibrary, desc: 'Recursos y plantillas'          },
-  { to: '/sobre-mi',   label: 'Sobre mí',            icon: BiUser,    desc: 'Trayectoria y stack técnico'    },
-  { to: '/componentes', label: 'Componentes', icon: BiMicrochip, desc: 'Fichas técnicas duales' },
-  { to: '/software', label: 'Software', icon: BiCodeAlt, desc: 'Análisis y diseño de sistemas' }
+  { to: '/blog',        label: 'Blog',                icon: BiNews,        desc: 'Notas del proceso'              },
+  { to: '/proyectos',   label: 'Proyectos',           icon: BiGridAlt,     desc: '80+ proyectos de laboratorio'   },
+  { to: '/articulos',   label: 'Artículos',           icon: BiNews,        desc: 'Artículos técnicos'             },
+  { to: '/materiales',  label: 'Materiales de Apoyo', icon: BiLibrary,     desc: 'Recursos y plantillas'          },
+  { to: '/sobre-mi',    label: 'Sobre mí',            icon: BiUser,        desc: 'Trayectoria y stack técnico'    },
+  { to: '/componentes', label: 'Componentes',         icon: BiMicrochip,   desc: 'Fichas técnicas duales'         },
+  { to: '/software',    label: 'Software',            icon: BiCodeAlt,     desc: 'Análisis y diseño de sistemas'  },
+  { to: '/lab',         label: 'Lab Cuantitativo',    icon: BiCalculator,  desc: 'Calculadoras & métodos numéricos' },
 ];
-
 /* ─── Hook: dark mode ──────────────────────────────────────── */
 const useDarkMode = () => {
   const [dark, setDark] = useState(() => {
