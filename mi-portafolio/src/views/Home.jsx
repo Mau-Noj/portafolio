@@ -50,7 +50,7 @@ const STACK = [
 
 const SOCIALS = [
   {
-    href: "https://linkedin.com/in/mauricionoj",
+    href: "https://www.linkedin.com/in/brandon-mauricio-noj-romero-38b4701b6/",
     neon: "#0a66c2",
     label: "LinkedIn",
     icon: (
@@ -737,7 +737,7 @@ export const Home = () => {
 
           <nav className="footer-socials">
             <a
-              href="https://linkedin.com/in/mauricionoj"
+              href="https://www.linkedin.com/in/brandon-mauricio-noj-romero-38b4701b6/"
               target="_blank"
               rel="noopener noreferrer"
               className="footer-contact-link"
