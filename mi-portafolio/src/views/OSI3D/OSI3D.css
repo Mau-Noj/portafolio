@@ -1,0 +1,300 @@
+/* ── Root ── */
+.osi3d-root {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 68px);
+  max-height: calc(100vh - 68px);
+  overflow: hidden;
+  background: #080b12;
+  font-family: var(--font, 'Segoe UI', system-ui, sans-serif);
+  color: #e8eaf0;
+  display: block;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+[data-theme]:not([data-theme="dark"]) .osi3d-root {
+  background: #0d1117;
+}
+
+.osi3d-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* ── Layer selector (derecha) ── */
+.osi3d-layers {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 152px;
+}
+
+.osi3d-layer-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm, 8px);
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: rgba(8, 11, 18, 0.65);
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+.osi3d-layer-item:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.12);
+}
+.osi3d-layer-item.active {
+  background: rgba(8, 11, 18, 0.92);
+  border-color: var(--layer-color);
+  box-shadow: 0 0 12px -3px var(--layer-color);
+}
+.osi3d-layer-item.hidden {
+  opacity: 0;
+  pointer-events: none;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+  border-width: 0;
+}
+
+.osi3d-layer-dot {
+  width: 9px; height: 9px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.osi3d-layer-item.active .osi3d-layer-dot { transform: scale(1.3); }
+
+.osi3d-layer-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+  transition: color 0.2s;
+  flex: 1;
+}
+.osi3d-layer-item.active .osi3d-layer-name {
+  color: #fff;
+  font-weight: 600;
+}
+
+.osi3d-layer-reset {
+  margin-left: auto;
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.osi3d-layer-reset:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+/* ── Tooltip ── */
+.osi3d-tooltip {
+  position: fixed;
+  pointer-events: none;
+  padding: 6px 11px;
+  background: rgba(8,11,18,0.95);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-sm, 8px);
+  font-size: 11px;
+  color: #fff;
+  z-index: 300;
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+/* ── Bottom bar unificada ── */
+.osi3d-bottombar {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 100;
+  background: rgba(8,11,18,0.90);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 14px;
+  padding: 8px 14px;
+  backdrop-filter: blur(18px);
+  white-space: nowrap;
+}
+
+.osi3d-model-tabs { display: flex; gap: 4px; }
+
+.osi3d-bottombar__sep {
+  width: 1px; height: 22px;
+  background: rgba(255,255,255,0.1);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+/* ── Model buttons ── */
+.osi3d-mbtn {
+  padding: 5px 13px;
+  border-radius: var(--radius-sm, 7px);
+  font-size: 12px; font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  transition: all 0.18s;
+  font-family: var(--font, system-ui);
+}
+.osi3d-mbtn.active {
+  background: var(--primary, #2563eb);
+  color: #fff;
+  border-color: var(--primary, #2563eb);
+}
+.osi3d-mbtn:hover:not(.active) {
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.06);
+}
+
+/* ── Camera buttons ── */
+.osi3d-cbtn {
+  padding: 5px 11px;
+  border-radius: var(--radius-sm, 7px);
+  font-size: 11px; font-weight: 500;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  transition: all 0.18s;
+  font-family: var(--font, system-ui);
+}
+.osi3d-cbtn:hover  { background: rgba(255,255,255,0.08); color: #fff; }
+.osi3d-cbtn.active {
+  background: rgba(37,99,235,0.18);
+  color: var(--primary-light, #3b82f6);
+  border-color: rgba(37,99,235,0.5);
+}
+
+/* ── Flow controls ── */
+.osi3d-flowctrl {
+  position: absolute;
+  bottom: 74px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  z-index: 100;
+  background: rgba(8,11,18,0.90);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 9px 16px;
+  backdrop-filter: blur(18px);
+}
+.osi3d-fbtn {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm, 7px);
+  font-size: 12px; font-weight: 600;
+  cursor: pointer; border: none;
+  transition: all 0.18s;
+  font-family: var(--font, system-ui);
+}
+.osi3d-fbtn--reset {
+  background: transparent;
+  color: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  font-size: 15px;
+}
+.osi3d-fbtn--prev {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+.osi3d-fbtn--next {
+  background: var(--primary, #2563eb);
+  color: #fff;
+}
+
+.osi3d-step-info {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  font-family: monospace;
+  min-width: 44px;
+  text-align: center;
+}
+
+/* ── Flow info text ── */
+.osi3d-flow-info {
+  position: absolute;
+  left: 50%;
+  bottom: 138px;
+  transform: translateX(-50%);
+  background: rgba(8,11,18,0.92);
+  border: 1px solid rgba(37,99,235,0.3);
+  border-radius: var(--radius-sm, 10px);
+  padding: 10px 20px;
+  font-size: 12px;
+  color: rgba(232,234,240,0.88);
+  z-index: 200;
+  text-align: center;
+  max-width: 560px;
+  width: max-content;
+  backdrop-filter: blur(14px);
+  animation: osi3d-fadein 0.22s ease;
+}
+
+/* ── Hint ── */
+.osi3d-hint {
+  position: absolute;
+  bottom: 70px;
+  left: 14px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ── Side panel ── */
+.osi-panel {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 360px;
+  background: rgba(8, 11, 18, 0.97);
+  border-left: 1px solid rgba(255,255,255,0.07);
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  z-index: 200;
+  overflow-y: auto;
+  backdrop-filter: blur(20px);
+}
+.osi-panel.open { transform: translateX(0); }
+
+@keyframes osi3d-fadein {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .osi3d-root      { height: calc(100vh - var(--navbar-height, 68px)); }
+  .osi3d-bottombar { padding: 7px 10px; gap: 4px; }
+  .osi3d-mbtn      { padding: 4px 9px; font-size: 11px; }
+  .osi3d-cbtn      { padding: 4px 8px; font-size: 10px; }
+  .osi3d-layers    { display: none; }
+  .osi3d-flow-info { width: calc(100vw - 28px); font-size: 11px; }
+  .osi-panel       { width: 100%; }
+}

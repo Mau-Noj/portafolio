@@ -19,11 +19,19 @@
   background: var(--bg);
   color: var(--t);
   padding: 7rem 1.75rem 5rem;
-  max-width: 1300px;
-  margin: 0 auto;
+  width: 100%;           /* ← ocupa todo el ancho de pantalla */
+  margin: 0;             /* ← sin margen auto aquí */
   transition: background 0.35s ease, color 0.35s ease;
   overflow-x: hidden;
-  width: 100%;  
+  box-sizing: border-box;
+}
+
+/* ── Wrapper interno que limita y centra el contenido ── */
+.psection__inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* ══════════════════════════════════════════
@@ -98,8 +106,6 @@ html:not([data-theme="dark"]) .psection__filter--active {
   z-index: 0;
 }
 
-.psection > * { position: relative; z-index: 1; }
-
 /* ── HEADER ── */
 .psection__header {
   text-align: center;
@@ -123,9 +129,9 @@ html:not([data-theme="dark"]) .psection__filter--active {
   line-height: 0.95;
   letter-spacing: -1px;
   margin: 0 0 1.1rem;
-  word-break: break-word;     
-  overflow-wrap: break-word;  
-  max-width: 100%;   
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .psection__title-plain  { color: var(--t); }

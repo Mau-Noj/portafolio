@@ -32,67 +32,74 @@ export const ProjectsSection = () => {
   return (
     <section className="psection">
 
-      {/* ── HEADER ── */}
-      <header className="psection__header">
-        <p className="psection__eyebrow">RPi5 · Arduino · TTL · IA · Maker</p>
-        <h1 className="psection__title">
-          <span className="psection__title-plain">Engineering</span>
-          <span className="psection__title-accent"> Lab</span>
-        </h1>
-        <p className="psection__subtitle">
-          Proyectos técnicos que iré completando. Cada uno calcula primero,
-          construye después y valida con hardware real.
-        </p>
-        <div className="psection__divider">
-          <span className="psection__divider-icon">◈</span>
-        </div>
-      </header>
+      {/* ── WRAPPER INTERNO — centra el contenido a max 1300px ── */}
+      <div className="psection__inner">
 
-      {/* ── FILTROS ── */}
-      <div className="psection__filters" role="group" aria-label="Filtrar proyectos">
-        {FILTERS.map((f) => (
-          <button
-            key={f.key}
-            className={`psection__filter ${activeFilter === f.key ? 'psection__filter--active' : ''}`}
-            onClick={() => setActiveFilter(f.key)}
-            aria-pressed={activeFilter === f.key}
-          >
-            {f.label}
-            {f.key === 'all' && (
-              <span className="psection__filter-count">{getAllProjects().length}</span>
-            )}
-          </button>
-        ))}
-      </div>
+        {/* ── HEADER ── */}
+        <header className="psection__header">
+          <p className="psection__eyebrow">RPi5 · Arduino · TTL · IA · Maker</p>
+          <h1 className="psection__title">
+            <span className="psection__title-plain">Engineering</span>
+            <span className="psection__title-accent"> Lab</span>
+          </h1>
+          <p className="psection__subtitle">
+            Proyectos técnicos que iré completando. Cada uno calcula primero,
+            construye después y valida con hardware real.
+          </p>
+          <div className="psection__divider">
+            <span className="psection__divider-icon">◈</span>
+          </div>
+        </header>
 
-      {/* ── CONTADOR ── */}
-      <p className="psection__count">
-        Mostrando <strong>{projects.length}</strong> proyecto{projects.length !== 1 ? 's' : ''}
-      </p>
-
-      {/* ── GRID ── */}
-      {projects.length > 0 ? (
-        <div className="psection__grid">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              onOpen={setSelectedProject}
-            />
+        {/* ── FILTROS ── */}
+        <div className="psection__filters" role="group" aria-label="Filtrar proyectos">
+          {FILTERS.map((f) => (
+            <button
+              key={f.key}
+              className={`psection__filter ${activeFilter === f.key ? 'psection__filter--active' : ''}`}
+              onClick={() => setActiveFilter(f.key)}
+              aria-pressed={activeFilter === f.key}
+            >
+              {f.label}
+              {f.key === 'all' && (
+                <span className="psection__filter-count">{getAllProjects().length}</span>
+              )}
+            </button>
           ))}
         </div>
-      ) : (
-        <div className="psection__empty">
-          <span>○</span>
-          <p>No hay proyectos en esta categoría aún.</p>
-        </div>
-      )}
 
-      {/* ── MODAL ── */}
+        {/* ── CONTADOR ── */}
+        <p className="psection__count">
+          Mostrando <strong>{projects.length}</strong> proyecto{projects.length !== 1 ? 's' : ''}
+        </p>
+
+        {/* ── GRID ── */}
+        {projects.length > 0 ? (
+          <div className="psection__grid">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                onOpen={setSelectedProject}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="psection__empty">
+            <span>○</span>
+            <p>No hay proyectos en esta categoría aún.</p>
+          </div>
+        )}
+
+      </div>
+      {/* ── FIN WRAPPER INTERNO ── */}
+
+      {/* ── MODAL — fuera del inner para que pueda ser fullscreen ── */}
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
       />
+
     </section>
   );
 };

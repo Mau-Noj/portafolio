@@ -1,0 +1,176 @@
+.db3d-root {
+  position: relative;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #06080f;
+  font-family: var(--font, 'Segoe UI', system-ui, sans-serif);
+  color: #e8eaf0;
+}
+.db3d-canvas {
+  position: absolute; top: 0; left: 0;
+  width: 100% !important; height: 100% !important;
+  display: block;
+}
+
+/* ── Layer selector ── */
+.db3d-layers {
+  position: absolute; right: 14px; top: 14px;
+  z-index: 100; display: flex; flex-direction: column;
+  gap: 4px; min-width: 210px;
+}
+.db3d-layer-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 10px; border-radius: 8px; cursor: pointer;
+  border: 1px solid transparent;
+  background: rgba(6,8,15,0.65); backdrop-filter: blur(12px);
+  transition: all 0.2s ease; overflow: hidden;
+}
+.db3d-layer-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+.db3d-layer-item.active {
+  background: rgba(6,8,15,0.92); border-color: var(--layer-color);
+  box-shadow: 0 0 12px -3px var(--layer-color);
+}
+.db3d-layer-item.hidden { opacity:0; pointer-events:none; max-height:0; padding:0; margin:0; border-width:0; }
+
+.db3d-layer-dot { width:8px; height:8px; border-radius:3px; flex-shrink:0; transition:transform 0.2s; }
+.db3d-layer-item.active .db3d-layer-dot { transform: scale(1.35); }
+
+.db3d-layer-badge {
+  font-size: 9px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em; flex-shrink: 0; opacity: 0.85;
+}
+.db3d-layer-name {
+  font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.5);
+  white-space: nowrap; flex: 1; transition: color 0.2s;
+}
+.db3d-layer-item.active .db3d-layer-name { color: #fff; font-weight: 600; }
+.db3d-layer-reset {
+  margin-left: auto; font-size: 10px; color: rgba(255,255,255,0.3);
+  padding: 1px 5px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);
+  background: transparent; cursor: pointer; transition: all 0.15s; flex-shrink: 0;
+}
+.db3d-layer-reset:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+/* ── Tooltip ── */
+.db3d-tooltip {
+  position: fixed; pointer-events: none;
+  padding: 6px 11px;
+  background: rgba(6,8,15,0.96); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px; font-size: 11px; color: #fff;
+  z-index: 300; font-family: 'JetBrains Mono', monospace; white-space: nowrap;
+}
+
+/* ── Hint ── */
+.db3d-hint {
+  position: absolute; bottom: 72px; left: 14px;
+  font-size: 10px; color: rgba(255,255,255,0.18);
+  pointer-events: none; z-index: 100; white-space: nowrap;
+}
+
+/* ── Bottom bar ── */
+.db3d-bottombar {
+  position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 5px;
+  z-index: 100; background: rgba(6,8,15,0.92);
+  border: 1px solid rgba(255,255,255,0.09); border-radius: 14px;
+  padding: 8px 14px; backdrop-filter: blur(18px); white-space: nowrap;
+}
+.db3d-mode-tabs { display: flex; gap: 4px; }
+.db3d-bottombar__sep { width:1px; height:22px; background:rgba(255,255,255,0.1); margin:0 4px; flex-shrink:0; }
+
+.db3d-mbtn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 11px; border-radius: 7px; font-size: 11px; font-weight: 600;
+  cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
+  background: transparent; color: rgba(255,255,255,0.5); transition: all 0.18s;
+  font-family: var(--font, system-ui);
+}
+.db3d-mbtn-icon {
+  font-size: 9px; font-family: 'JetBrains Mono', monospace;
+  background: rgba(255,255,255,0.08); padding: 1px 4px; border-radius: 3px;
+  color: rgba(255,255,255,0.5);
+}
+.db3d-mbtn.active { background: var(--primary, #2563eb); color:#fff; border-color:var(--primary,#2563eb); }
+.db3d-mbtn.active .db3d-mbtn-icon { background: rgba(255,255,255,0.2); color: #fff; }
+.db3d-mbtn:hover:not(.active) { color:rgba(255,255,255,0.85); background:rgba(255,255,255,0.06); }
+
+.db3d-cbtn {
+  padding: 5px 11px; border-radius: 7px; font-size: 11px; font-weight: 500;
+  cursor: pointer; border: 1px solid rgba(255,255,255,0.08);
+  background: transparent; color: rgba(255,255,255,0.5); transition: all 0.18s;
+}
+.db3d-cbtn:hover { background:rgba(255,255,255,0.08); color:#fff; }
+.db3d-cbtn.active { background:rgba(37,99,235,0.18); color:var(--primary-light,#3b82f6); border-color:rgba(37,99,235,0.4); }
+
+/* ── Step controls ── */
+.db3d-stepctrl {
+  position: absolute; bottom: 70px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 7px; align-items: center; z-index: 100;
+  background: rgba(6,8,15,0.92); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 9px 16px; backdrop-filter: blur(18px);
+}
+.db3d-fbtn {
+  padding: 6px 14px; border-radius: 7px;
+  font-size: 12px; font-weight: 600; cursor: pointer; border: none; transition: all 0.18s;
+  font-family: var(--font, system-ui);
+}
+.db3d-fbtn--reset { background:transparent; color:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.08)!important; font-size:15px; }
+.db3d-fbtn--prev  { background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.6); border:1px solid rgba(255,255,255,0.1)!important; }
+.db3d-fbtn--next  { background:var(--primary,#2563eb); color:#fff; }
+.db3d-step-info   { font-size:11px; color:rgba(255,255,255,0.4); font-family:monospace; min-width:40px; text-align:center; }
+
+/* ── Step info box ── */
+.db3d-stepinfo {
+  position: absolute; left:50%; bottom:132px; transform:translateX(-50%);
+  background:rgba(6,8,15,0.94); border:1px solid rgba(37,99,235,0.3);
+  border-radius:10px; padding:12px 18px; z-index:200;
+  max-width:580px; width:max-content; backdrop-filter:blur(14px);
+  animation: db3d-fadein 0.22s ease;
+}
+.db3d-stepinfo__sql {
+  font-family:'JetBrains Mono', monospace; font-size:11px;
+  color:#60a5fa; background:rgba(59,130,246,0.08);
+  padding:5px 9px; border-radius:5px; margin-bottom:8px;
+  border-left:2px solid #3b82f6;
+}
+.db3d-stepinfo__txt { font-size:12px; color:rgba(220,225,235,0.85); line-height:1.7; }
+
+/* ── Index vs Scan box ── */
+.db3d-scanbox {
+  position:absolute; left:50%; bottom:132px; transform:translateX(-50%);
+  background:rgba(6,8,15,0.95); border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px; padding:16px 20px; z-index:200;
+  min-width:420px; max-width:560px; backdrop-filter:blur(16px);
+  animation: db3d-fadein 0.22s ease;
+}
+.db3d-scantype {
+  font-size:13px; font-weight:700; margin-bottom:8px;
+  font-family:'JetBrains Mono', monospace;
+}
+.db3d-scantype.index { color:#22c55e; }
+.db3d-scantype.full  { color:#ef4444; }
+.db3d-scan-sql {
+  font-family:'JetBrains Mono', monospace; font-size:11px;
+  color:rgba(255,255,255,0.6); margin-bottom:10px; padding:6px 10px;
+  background:rgba(255,255,255,0.04); border-radius:5px;
+}
+.db3d-scan-stats { display:flex; gap:24px; margin-bottom:10px; }
+.db3d-scan-stat { display:flex; flex-direction:column; gap:2px; }
+.db3d-scan-stat-label { font-size:10px; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:0.06em; }
+.db3d-scan-stat-value { font-size:16px; font-weight:700; font-family:'JetBrains Mono', monospace; }
+.db3d-scan-bar-bg { height:6px; background:rgba(255,255,255,0.08); border-radius:3px; margin-bottom:10px; overflow:hidden; }
+.db3d-scan-bar-fill { height:100%; border-radius:3px; transition:width 0.6s ease; }
+.db3d-scan-desc { font-size:11px; color:rgba(220,225,235,0.65); line-height:1.65; }
+
+@keyframes db3d-fadein {
+  from { opacity:0; transform:translateX(-50%) translateY(6px); }
+  to   { opacity:1; transform:translateX(-50%) translateY(0); }
+}
+
+@media (max-width:860px) {
+  .db3d-layers    { display:none; }
+  .db3d-bottombar { gap:3px; padding:7px 10px; }
+  .db3d-mbtn      { padding:4px 8px; font-size:10px; }
+  .db3d-cbtn      { padding:4px 7px; font-size:10px; }
+  .db3d-scanbox   { min-width:calc(100vw - 28px); }
+}
