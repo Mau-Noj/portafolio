@@ -64,6 +64,7 @@ const NAV_LINKS = [
   { to: '/componentes', label: 'Componentes',         icon: BiMicrochip,   desc: 'Fichas técnicas duales'         },
   { to: '/software',    label: 'Software',            icon: BiCodeAlt,     desc: 'Análisis y diseño de sistemas'  },
   { to: '/lab',         label: 'Lab Cuantitativo',    icon: BiCalculator,  desc: 'Calculadoras & métodos numéricos' },
+  { to: '/db3d',        label: 'DB Engine 3D',        icon: BiMicrochip,   desc: 'Internals de MySQL/InnoDB' },
 ];
 /* ─── Hook: dark mode ──────────────────────────────────────── */
 const useDarkMode = () => {
@@ -235,31 +236,9 @@ export const Navbar = () => {
 
         <div className="drawer-sep" />
 
-        {/* Redes sociales */}
-        <div className="drawer-socials">
-          <p className="drawer-nav-label">Redes</p>
-          <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer" className="drawer-social">
-            <BiLogoGithub className="drawer-social-icon" />
-            <span>GitHub</span>
-            <span className="drawer-social-handle">@Mau-Noj</span>
-          </a>
-          <a href={SOCIAL.youtube} target="_blank" rel="noopener noreferrer" className="drawer-social drawer-social--yt">
-            <BiLogoYoutube className="drawer-social-icon" />
-            <span>YouTube</span>
-            <span className="drawer-social-handle">@programandoconpepito</span>
-          </a>
-          <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="drawer-social drawer-social--ig">
-            <BiLogoInstagram className="drawer-social-icon" />
-            <span>Instagram</span>
-            <span className="drawer-social-handle">@superpepitopro64</span>
-          </a>
-        </div>
-
-        <div className="drawer-sep" />
-
         {/* CTA inferior */}
         <div className="drawer-footer">
-          <p className="drawer-footer-note">brandonromero1964@gmail.com</p>
+          <p className="drawer-footer-note">superpepitopro0101@gmail.com</p>
         </div>
 
       </aside>

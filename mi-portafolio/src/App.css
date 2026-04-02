@@ -1,7 +1,8 @@
-html {
-  scroll-behavior: smooth; /* Esto hace que baje deslizándose suavemente */
+html, body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
 }
-/* -------------------------------- */
 
 :root {
   --bg-color: #f0f2f5;
@@ -10,12 +11,31 @@ html {
 }
 
 body {
-  margin: 0;
   background-color: var(--bg-color);
   font-family: 'Segoe UI', system-ui, sans-serif;
   color: var(--text-color);
 }
 
+[data-theme="dark"] body {
+  background-color: #080b12;
+}
+
+/* ── Compensar navbar fixed en TODAS las rutas ── */
+#root {
+  padding-top: 68px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ── OSI3D: cancela el padding, ocupa todo ── */
+#root:has(.osi3d-root) {
+  padding-top: 0 !important;
+  min-height: unset;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Resto de estilos ── */
 .coming-soon-container {
   display: flex;
   justify-content: center;
@@ -35,41 +55,23 @@ body {
   animation: fadeIn 1s ease-in;
 }
 
-.avatar-wrapper {
-  margin: 2rem 0;
-}
-
-/* En src/App.css */
+.avatar-wrapper { margin: 2rem 0; }
 
 .avatar-media {
   width: 200px;
   height: 200px;
   object-fit: cover;
-  object-position: center 1%; 
+  object-position: center 1%;
   border-radius: 50%;
   border: 4px solid var(--accent-color);
   box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  color: var(--text-color);
-}
-
-h2 {
-  font-size: 1.2rem;
-  font-weight: normal;
-  color: #666;
-  margin-bottom: 2rem;
-}
-
-p {
-  color: #888;
-  font-size: 0.9rem;
-}
+h1 { font-size: 2rem; margin-bottom: 0.5rem; color: var(--text-color); }
+h2 { font-size: 1.2rem; font-weight: normal; color: #666; margin-bottom: 2rem; }
+p  { color: #888; font-size: 0.9rem; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
