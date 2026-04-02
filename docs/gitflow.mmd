@@ -1,0 +1,20 @@
+gitGraph
+   commit id: "inicio"
+   branch develop
+   checkout develop
+   commit id: "setup-base"
+   branch feature/login
+   commit id: "login-form"
+   commit id: "login-auth"
+   checkout develop
+   merge feature/login
+   branch release/1.0
+   commit id: "bump-version"
+   checkout main
+   merge release/1.0 tag: "v1.0.0"
+   checkout develop
+   merge release/1.0
+   branch hotfix/crash
+   commit id: "fix-null-crash"
+   checkout main
+   merge hotfix/crash tag: "v1.0.1"
