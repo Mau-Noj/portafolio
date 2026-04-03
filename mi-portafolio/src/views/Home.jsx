@@ -706,7 +706,7 @@ export const Home = () => {
         >
           <span className="neon-purple">Ecos del</span>
           <div className="title-row-bottom">
-            <em className="font-script neon-teal">Sistema</em>
+            <em className="font-script neon-purple">Sistema</em>
           </div>
         </h2>
         <TestiCarousel items={TESTIMONIALS} />

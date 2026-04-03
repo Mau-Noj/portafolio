@@ -1,5 +1,6 @@
 # mi-portafolio
 
+> 🌐 **Demo en vivo:** [mauricionoj.com](https://mauricionoj.com)
 > 📖 **[Ver documentación completa](https://mau-noj.github.io/portafolio/)**
 
 Portafolio personal desarrollado con React + Vite. Incluye blog, proyectos, componentes documentados, materiales de apoyo y aplicaciones de software.
