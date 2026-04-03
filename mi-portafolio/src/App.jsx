@@ -19,6 +19,7 @@ import ArticulosSection from "./views/ArticulosSection";
 import Blog_Post from "./views/Blog_Post";
 import OSI3D from "./views/OSI3D/OSI3D";
 import DB3D from "./views/DB3D/DB3D";
+import { NotFoundView } from "./views/NotFoundView";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="*" element={<NotFoundView />} />
         <Route path="/blog" element={<BlogSection />} />
         <Route path="/blog/:id" element={<BlogPost />} />
         <Route path="/materiales" element={<MaterialsSection />} />
