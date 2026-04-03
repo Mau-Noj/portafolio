@@ -3,6 +3,10 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import VisitorCounter from "../components/VisitorCounter";
 import "./AboutSection.css";
 
+const CV_DRIVE_ID = "1Z7rinMrxAwtHzTYlIf9xqQBfB9F3umdf";
+const CV_PREVIEW_URL = `https://drive.google.com/file/d/${CV_DRIVE_ID}/preview`;
+const CV_DOWNLOAD_URL = `https://drive.google.com/uc?export=download&id=${CV_DRIVE_ID}`;
+
 // ── Colores neon por grupo ──────────────────────────────────
 const GROUP_COLOR = {
   Lenguajes: "#00f5ff",
@@ -14,10 +18,9 @@ const GROUP_COLOR = {
   Metodologías: "#ffe600",
 };
 
-// ── Iconos SVG por tecnología ───────────────────────────────
 const ICONS = {
   Java: (
-    <svg viewBox="0 0 24 24" fill="currentColor ">
+    <svg viewBox="0 0 24 24" fill="currentColor">
       <path d="M8.851 18.56s-.917.534.653.714c1.902.218 2.874.187 4.969-.211 0 0 .552.346 1.321.646-4.699 2.013-10.633-.118-6.943-1.149M8.276 15.933s-1.028.761.542.924c2.032.209 3.636.227 6.413-.308 0 0 .384.389.987.602-5.679 1.661-12.007.13-7.942-1.218M13.116 11.475c1.158 1.333-.304 2.533-.304 2.533s2.939-1.518 1.589-3.418c-1.261-1.772-2.228-2.652 3.007-5.688 0 0-8.216 2.051-4.292 6.573M19.33 20.504s.679.559-.747.991c-2.712.822-11.288 1.069-13.669.033-.856-.373.749-.89 1.254-.998.527-.114.828-.093.828-.093-.953-.671-6.156 1.317-2.643 1.887 9.58 1.553 17.462-.7 14.977-1.82M9.292 13.21s-4.362 1.036-1.544 1.412c1.189.159 3.561.123 5.77-.062 1.806-.152 3.618-.477 3.618-.477s-.637.272-1.098.587c-4.429 1.165-12.986.623-10.522-.568 2.082-1.006 3.776-.892 3.776-.892M17.116 17.584c4.503-2.34 2.421-4.589.968-4.285-.355.074-.515.138-.515.138s.132-.207.385-.297c2.875-1.011 5.086 2.981-.928 4.562 0 0 .07-.062.09-.118M14.401 0s2.494 2.494-2.365 6.33c-3.896 3.077-.888 4.832 0 6.836-2.274-2.053-3.943-3.858-2.824-5.539 1.644-2.469 6.197-3.665 5.189-7.627M9.734 23.924c4.322.277 10.959-.153 11.116-2.198 0 0-.302.775-3.572 1.391-3.688.694-8.239.613-10.937.168 0 0 .553.457 3.393.639" />
     </svg>
   ),
@@ -108,7 +111,7 @@ const ICONS = {
   ),
   AWS: (
     <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 01-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 01-.287-.375 6.18 6.18 0 01-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 01-.28.104.488.488 0 01-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 01.224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 011.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm13.109 3.501s.679.559-.747.991c-2.712.822-11.288 1.069-13.669.033-.856-.373.749-.89 1.254-.998.527-.114.828-.093.828-.093-.953-.671-6.156 1.317-2.643 1.887 9.58 1.553 17.462-.7 14.977-1.82" />
+      <path d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 01-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 01-.287-.375 6.18 6.18 0 01-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 01-.28.104.488.488 0 01-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 01.224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 011.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586z" />
     </svg>
   ),
   Terraform: (
@@ -183,8 +186,7 @@ const ICONS = {
   ),
 };
 
-// ── Datos de progreso temporal por tecnología ───────────────
-// points: [{year, level, label?}] — evolución real de dominio
+// ── Datos de progreso temporal (abreviado para brevedad, mismo que original) ──
 const TIMELINE_DATA = {
   Java: {
     desc: "OOP, estructuras de datos, APIs REST con Spring",
@@ -456,7 +458,6 @@ const TIMELINE_DATA = {
   },
 };
 
-// ── Temas concretos por tecnología (cara 2 de la carta) ─────
 const TOPICS_DATA = {
   Java: [
     { t: "POO / Clases", v: 75 },
@@ -724,7 +725,6 @@ const TOPICS_DATA = {
   ],
 };
 
-// ── Stack data ───────────────────────────────────────────────
 const STACK = [
   { name: "Java", level: 50, group: "Lenguajes" },
   { name: "JavaScript", level: 80, group: "Lenguajes" },
@@ -770,7 +770,6 @@ const GROUPS = [
   "Metodologías",
 ];
 
-// ── Timeline con iconos ─────────────────────────────────────
 const TIMELINE = [
   {
     year: "2014–2016",
@@ -862,7 +861,6 @@ const TIMELINE = [
   },
 ];
 
-// ── Educación con iconos ────────────────────────────────────
 const EDUCATION = [
   {
     year: "2018 — 2025",
@@ -925,7 +923,6 @@ const VALUES = [
   },
 ];
 
-// ── Logros y distinciones (3 seleccionados) ─────────────────
 const LOGROS = [
   {
     icon: (
@@ -962,7 +959,6 @@ const LOGROS = [
   },
 ];
 
-// ── Proyectos destacados del CV ──────────────────────────────
 const CV_PROJECTS = [
   {
     tag: "Compiladores",
@@ -990,435 +986,44 @@ const CV_PROJECTS = [
   },
 ];
 
-// ── Nombre neon ─────────────────────────────────────────────
-const NeonLine = ({ text, color }) => (
-  <span className="about__name-line" style={{ color, "--nl-color": color }}>
-    {text}
-  </span>
-);
-
-// ── Ring Chart animado ──────────────────────────────────────
-const RingChart = ({ pct, color, size = 64 }) => {
-  const svgRef = useRef(null),
-    circleRef = useRef(null);
-  const [display, setDisplay] = useState(0);
-  const r = (size - 10) / 2,
-    circ = 2 * Math.PI * r;
-  useEffect(() => {
-    const svg = svgRef.current,
-      el = circleRef.current;
-    if (!svg || !el) return;
-    el.style.transition = "none";
-    el.style.strokeDasharray = `0 ${circ}`;
-    setDisplay(0);
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (!e.isIntersecting) return;
-        obs.disconnect();
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => {
-            el.style.transition =
-              "stroke-dasharray 1.4s cubic-bezier(0.4,0,0.2,1)";
-            el.style.strokeDasharray = `${(pct / 100) * circ} ${circ}`;
-            const start = performance.now();
-            const tick = (now) => {
-              const p = Math.min((now - start) / 1400, 1);
-              setDisplay(Math.round((1 - Math.pow(1 - p, 2)) * pct));
-              if (p < 1) requestAnimationFrame(tick);
-            };
-            requestAnimationFrame(tick);
-          }),
-        );
-      },
-      { threshold: 0.25 },
-    );
-    obs.observe(svg);
-    return () => obs.disconnect();
-  }, [pct, circ]);
-  return (
-    <svg
-      ref={svgRef}
-      width={size}
-      height={size}
-      viewBox={`0 0 ${size} ${size}`}
-      className="as-ring"
-      style={{ overflow: "visible", flexShrink: 0 }}
-    >
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={r}
-        fill="none"
-        strokeWidth="5"
-        className="as-ring-track"
-      />
-      <circle
-        ref={circleRef}
-        cx={size / 2}
-        cy={size / 2}
-        r={r}
-        fill="none"
-        stroke={color}
-        strokeWidth="5"
-        strokeLinecap="round"
-        strokeDasharray={`0 ${circ}`}
-        transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        style={{ filter: `drop-shadow(0 0 6px ${color})` }}
-      />
-      <text
-        x={size / 2}
-        y={size / 2}
-        textAnchor="middle"
-        dominantBaseline="central"
-        fill={color}
-        fontSize="11"
-        fontFamily="'JetBrains Mono', monospace"
-        fontWeight="700"
-      >
-        {display}%
-      </text>
-    </svg>
-  );
-};
-
-// ── Gráfico de línea temporal SVG ──────────────────────────
-const LineChart = ({ points, color, width = 260, height = 110 }) => {
-  const pad = { t: 14, r: 14, b: 28, l: 28 };
-  const W = width - pad.l - pad.r;
-  const H = height - pad.t - pad.b;
-  const n = points.length;
-  if (n < 2) return null;
-
-  const xs = points.map((_, i) => pad.l + (i / (n - 1)) * W);
-  const ys = points.map((p) => pad.t + H - (p.level / 100) * H);
-
-  // Línea suave con bezier
-  const path = points
-    .map((_, i) => {
-      if (i === 0) return `M ${xs[0]} ${ys[0]}`;
-      const cpx = (xs[i - 1] + xs[i]) / 2;
-      return `C ${cpx} ${ys[i - 1]}, ${cpx} ${ys[i]}, ${xs[i]} ${ys[i]}`;
-    })
-    .join(" ");
-
-  // Área de relleno
-  const area = path + ` L ${xs[n - 1]} ${pad.t + H} L ${xs[0]} ${pad.t + H} Z`;
-
-  // Líneas de grid horizontales (25 / 50 / 75 / 100)
-  const gridLevels = [25, 50, 75, 100];
-
-  return (
-    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-      {/* Grid */}
-      {gridLevels.map((gl) => {
-        const gy = pad.t + H - (gl / 100) * H;
-        return (
-          <g key={gl}>
-            <line
-              x1={pad.l}
-              y1={gy}
-              x2={pad.l + W}
-              y2={gy}
-              stroke={color}
-              strokeOpacity="0.1"
-              strokeWidth="1"
-              strokeDasharray="3 3"
-            />
-            <text
-              x={pad.l - 4}
-              y={gy + 1}
-              textAnchor="end"
-              fontSize="6"
-              fontFamily="'JetBrains Mono',monospace"
-              fill={color}
-              fillOpacity="0.45"
-            >
-              {gl}
-            </text>
-          </g>
-        );
-      })}
-
-      {/* Área */}
-      <path d={area} fill={color} fillOpacity="0.12" />
-
-      {/* Línea */}
-      <path
-        d={path}
-        fill="none"
-        stroke={color}
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        style={{ filter: `drop-shadow(0 0 4px ${color})` }}
-      />
-
-      {/* Puntos + etiquetas */}
-      {points.map((p, i) => (
-        <g key={i}>
-          <circle
-            cx={xs[i]}
-            cy={ys[i]}
-            r="4"
-            fill={color}
-            style={{ filter: `drop-shadow(0 0 4px ${color})` }}
-          />
-          <text
-            x={xs[i]}
-            y={pad.t + H + 10}
-            textAnchor="middle"
-            fontSize="6.5"
-            fontFamily="'JetBrains Mono',monospace"
-            fill={color}
-            fillOpacity="0.7"
-          >
-            {p.year}
-          </text>
-          {p.label && (
-            <text
-              x={xs[i]}
-              y={ys[i] - 8}
-              textAnchor="middle"
-              fontSize="6"
-              fontFamily="'JetBrains Mono',monospace"
-              fill={color}
-              fillOpacity="0.85"
-            >
-              {p.label}
-            </text>
-          )}
-        </g>
-      ))}
-    </svg>
-  );
-};
-
-// ── Hover Preview card ──────────────────────────────────────
-const SkillPreview = ({ skill, color, icon }) => {
-  const data = TIMELINE_DATA[skill.name];
-  if (!data) return null;
-  const last = data.points[data.points.length - 1];
-
-  return (
-    <div className="sp-panel" style={{ "--sp-color": color }}>
-      <div className="sp-header">
-        <div className="sp-icon" style={{ color }}>
-          {icon}
-        </div>
-        <div>
-          <div className="sp-name" style={{ color }}>
-            {skill.name}
-          </div>
-          <div className="sp-desc">{data.desc}</div>
-        </div>
-      </div>
-      <div className="sp-chart-label">
-        <span>Progreso desde {data.points[0].year}</span>
-        <span style={{ color, fontWeight: 700 }}>{last.level}% actual</span>
-      </div>
-      <LineChart points={data.points} color={color} width={260} height={110} />
-    </div>
-  );
-};
-
-// ── Carta con volteo — modal centrado ──────────────────────
-const SkillModal = ({ skill, color, onClose }) => {
-  const [flipped, setFlipped] = useState(false);
-  const tlData = TIMELINE_DATA[skill.name];
-  const topics = TOPICS_DATA[skill.name];
-  const icon = ICONS[skill.name];
-  if (!tlData) return null;
-
-  const last = tlData.points[tlData.points.length - 1];
-
-  return (
-    <div className="sp-overlay" onClick={onClose}>
-      <div className="sp-card-scene" onClick={(e) => e.stopPropagation()}>
-        <div
-          className={`sp-card${flipped ? " sp-card--flipped" : ""}`}
-          style={{ "--sp-color": color }}
-        >
-          {/* ══ CARA FRONTAL: línea temporal ══ */}
-          <div className="sp-face sp-face--front">
-            <div className="sp-face-bar" />
-
-            {/* Botón cerrar */}
-            <button
-              className="sp-close-btn"
-              onClick={onClose}
-              aria-label="Cerrar"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              >
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-
-            <div className="sp-header">
-              <div className="sp-icon" style={{ color }}>
-                {icon}
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div className="sp-name" style={{ color }}>
-                  {skill.name}
-                </div>
-                <div className="sp-desc">{tlData.desc}</div>
-              </div>
-              <span
-                className="sp-level-badge"
-                style={{
-                  color,
-                  borderColor: `${color}44`,
-                  background: `${color}18`,
-                }}
-              >
-                {skill.level}%
-              </span>
-            </div>
-
-            <div className="sp-chart-label">
-              <span>Evolución desde {tlData.points[0].year}</span>
-              <span style={{ color, fontWeight: 700 }}>{last.level}% hoy</span>
-            </div>
-
-            <LineChart
-              points={tlData.points}
-              color={color}
-              width={310}
-              height={130}
-            />
-
-            <button className="sp-flip-btn" onClick={() => setFlipped(true)}>
-              Temas que domino
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
-          {/* ══ CARA TRASERA: temas con barras ══ */}
-          <div className="sp-face sp-face--back">
-            <div className="sp-face-bar" />
-
-            {/* Botón cerrar */}
-            <button
-              className="sp-close-btn"
-              onClick={onClose}
-              aria-label="Cerrar"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              >
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-
-            <div className="sp-header" style={{ marginBottom: "0.5rem" }}>
-              <div className="sp-icon" style={{ color }}>
-                {icon}
-              </div>
-              <div className="sp-name" style={{ color }}>
-                {skill.name} · Temas
-              </div>
-            </div>
-
-            <div className="sp-topics">
-              {(topics || []).map((tp, i) => (
-                <div key={i} className="sp-topic-row">
-                  <span className="sp-topic-label">{tp.t}</span>
-                  <div className="sp-topic-track">
-                    <div
-                      className="sp-topic-fill"
-                      style={{
-                        "--tw": `${tp.v}%`,
-                        "--tc": color,
-                        animationDelay: `${i * 0.06}s`,
-                      }}
-                    />
-                  </div>
-                  <span className="sp-topic-pct" style={{ color }}>
-                    {tp.v}%
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <button className="sp-flip-btn" onClick={() => setFlipped(false)}>
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-              Ver evolución
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const ChapterDivider = ({ title, color, icon, children }) => {
-  const [open, setOpen] = React.useState(false);
-  return (
-    <div className="ch-sep-wrap">
-      <button
-        className={`ch-sep${open ? " ch-sep--open" : ""}`}
-        style={{ "--ch-color": color }}
-        onClick={() => setOpen(!open)}
-      >
-        <div className="ch-line-l" />
-        <div className="ch-title-wrap">
-          <div className="ch-icon">{icon}</div>
-          <span className="ch-text">{title}</span>
-          <svg
-            className="ch-arrow"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </div>
-        <div className="ch-line-r" />
-      </button>
-      {children && (
-        <div className={`ch-content${open ? " ch-content--open" : ""}`}>
-          <p className="ch-content-inner">{children}</p>
-        </div>
-      )}
-    </div>
-  );
-};
+const CHAPTER_SECTIONS = [
+  {
+    key: "filosofia",
+    title: "Filosofía de trabajo",
+    color: "#d4420a",
+    body: "Calcular antes de encender. Las derrotas enseñan más que los éxitos. Construir desde cero porque quien construyó entiende. La limitación obliga a ser más ingeniero, no menos.",
+  },
+  {
+    key: "stack",
+    title: "Stack técnico",
+    color: "#00f5ff",
+    body: "Más de 30 tecnologías organizadas por área. Haz click en cada tarjeta para ver el gráfico de evolución real y los temas dominados.",
+  },
+  {
+    key: "trayectoria",
+    title: "Trayectoria",
+    color: "#4ade80",
+    body: "Del taller de mecánica a la consultoría de arquitectura de software. Un camino no lineal que conecta hardware, software y docencia.",
+  },
+  {
+    key: "educacion",
+    title: "Educación formal",
+    color: "#a78bfa",
+    body: "Dos ingenierías en USAC más formación técnica continua. La combinación de sistemas + ambiental define el foco: tecnología con impacto real.",
+  },
+  {
+    key: "logros",
+    title: "Logros y distinciones",
+    color: "#f472b6",
+    body: "Auxiliar de cátedra, intercambio internacional y reconocimientos en comunicación técnica.",
+  },
+  {
+    key: "proyectos",
+    title: "Proyectos destacados",
+    color: "#fb923c",
+    body: "Compiladores, DevOps, y el propio portafolio. Proyectos que aplican lo aprendido en contextos reales.",
+  },
+];
 
 const PERSONAL_TABS = [
   {
@@ -1520,24 +1125,608 @@ const PERSONAL_TABS = [
   },
 ];
 
+// ── Nombre neon ─────────────────────────────────────────────
+const NeonLine = ({ text, color }) => (
+  <span className="about__name-line" style={{ color, "--nl-color": color }}>
+    {text}
+  </span>
+);
+
+// ── Ring Chart animado ──────────────────────────────────────
+const RingChart = ({ pct, color, size = 64 }) => {
+  const svgRef = useRef(null),
+    circleRef = useRef(null);
+  const [display, setDisplay] = useState(0);
+  const r = (size - 10) / 2,
+    circ = 2 * Math.PI * r;
+  useEffect(() => {
+    const svg = svgRef.current,
+      el = circleRef.current;
+    if (!svg || !el) return;
+    el.style.transition = "none";
+    el.style.strokeDasharray = `0 ${circ}`;
+    setDisplay(0);
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        obs.disconnect();
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            el.style.transition =
+              "stroke-dasharray 1.4s cubic-bezier(0.4,0,0.2,1)";
+            el.style.strokeDasharray = `${(pct / 100) * circ} ${circ}`;
+            const start = performance.now();
+            const tick = (now) => {
+              const p = Math.min((now - start) / 1400, 1);
+              setDisplay(Math.round((1 - Math.pow(1 - p, 2)) * pct));
+              if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }),
+        );
+      },
+      { threshold: 0.25 },
+    );
+    obs.observe(svg);
+    return () => obs.disconnect();
+  }, [pct, circ]);
+  return (
+    <svg
+      ref={svgRef}
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      className="as-ring"
+      style={{ overflow: "visible", flexShrink: 0 }}
+    >
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={r}
+        fill="none"
+        strokeWidth="5"
+        className="as-ring-track"
+      />
+      <circle
+        ref={circleRef}
+        cx={size / 2}
+        cy={size / 2}
+        r={r}
+        fill="none"
+        stroke={color}
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeDasharray={`0 ${circ}`}
+        transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        style={{ filter: `drop-shadow(0 0 6px ${color})` }}
+      />
+      <text
+        x={size / 2}
+        y={size / 2}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fill={color}
+        fontSize="11"
+        fontFamily="'JetBrains Mono', monospace"
+        fontWeight="700"
+      >
+        {display}%
+      </text>
+    </svg>
+  );
+};
+
+// ── Gráfico de línea temporal SVG ──────────────────────────
+const LineChart = ({ points, color, width = 260, height = 110 }) => {
+  const pad = { t: 14, r: 14, b: 28, l: 28 };
+  const W = width - pad.l - pad.r,
+    H = height - pad.t - pad.b,
+    n = points.length;
+  if (n < 2) return null;
+  const xs = points.map((_, i) => pad.l + (i / (n - 1)) * W);
+  const ys = points.map((p) => pad.t + H - (p.level / 100) * H);
+  const path = points
+    .map((_, i) => {
+      if (i === 0) return `M ${xs[0]} ${ys[0]}`;
+      const cpx = (xs[i - 1] + xs[i]) / 2;
+      return `C ${cpx} ${ys[i - 1]}, ${cpx} ${ys[i]}, ${xs[i]} ${ys[i]}`;
+    })
+    .join(" ");
+  const area = path + ` L ${xs[n - 1]} ${pad.t + H} L ${xs[0]} ${pad.t + H} Z`;
+  return (
+    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+      {[25, 50, 75, 100].map((gl) => {
+        const gy = pad.t + H - (gl / 100) * H;
+        return (
+          <g key={gl}>
+            <line
+              x1={pad.l}
+              y1={gy}
+              x2={pad.l + W}
+              y2={gy}
+              stroke={color}
+              strokeOpacity="0.1"
+              strokeWidth="1"
+              strokeDasharray="3 3"
+            />
+            <text
+              x={pad.l - 4}
+              y={gy + 1}
+              textAnchor="end"
+              fontSize="6"
+              fontFamily="'JetBrains Mono',monospace"
+              fill={color}
+              fillOpacity="0.45"
+            >
+              {gl}
+            </text>
+          </g>
+        );
+      })}
+      <path d={area} fill={color} fillOpacity="0.12" />
+      <path
+        d={path}
+        fill="none"
+        stroke={color}
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        style={{ filter: `drop-shadow(0 0 4px ${color})` }}
+      />
+      {points.map((p, i) => (
+        <g key={i}>
+          <circle
+            cx={xs[i]}
+            cy={ys[i]}
+            r="4"
+            fill={color}
+            style={{ filter: `drop-shadow(0 0 4px ${color})` }}
+          />
+          <text
+            x={xs[i]}
+            y={pad.t + H + 10}
+            textAnchor="middle"
+            fontSize="6.5"
+            fontFamily="'JetBrains Mono',monospace"
+            fill={color}
+            fillOpacity="0.7"
+          >
+            {p.year}
+          </text>
+          {p.label && (
+            <text
+              x={xs[i]}
+              y={ys[i] - 8}
+              textAnchor="middle"
+              fontSize="6"
+              fontFamily="'JetBrains Mono',monospace"
+              fill={color}
+              fillOpacity="0.85"
+            >
+              {p.label}
+            </text>
+          )}
+        </g>
+      ))}
+    </svg>
+  );
+};
+
+// ── Carta con volteo — modal centrado ──────────────────────
+const SkillModal = ({ skill, color, onClose }) => {
+  const [flipped, setFlipped] = useState(false);
+  const tlData = TIMELINE_DATA[skill.name],
+    topics = TOPICS_DATA[skill.name],
+    icon = ICONS[skill.name];
+  if (!tlData) return null;
+  const last = tlData.points[tlData.points.length - 1];
+  return (
+    <div className="sp-overlay" onClick={onClose}>
+      <div className="sp-card-scene" onClick={(e) => e.stopPropagation()}>
+        <div
+          className={`sp-card${flipped ? " sp-card--flipped" : ""}`}
+          style={{ "--sp-color": color }}
+        >
+          <div className="sp-face sp-face--front">
+            <div className="sp-face-bar" />
+            <button
+              className="sp-close-btn"
+              onClick={onClose}
+              aria-label="Cerrar"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            <div className="sp-header">
+              <div className="sp-icon" style={{ color }}>
+                {icon}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="sp-name" style={{ color }}>
+                  {skill.name}
+                </div>
+                <div className="sp-desc">{tlData.desc}</div>
+              </div>
+              <span
+                className="sp-level-badge"
+                style={{
+                  color,
+                  borderColor: `${color}44`,
+                  background: `${color}18`,
+                }}
+              >
+                {skill.level}%
+              </span>
+            </div>
+            <div className="sp-chart-label">
+              <span>Evolución desde {tlData.points[0].year}</span>
+              <span style={{ color, fontWeight: 700 }}>{last.level}% hoy</span>
+            </div>
+            <LineChart
+              points={tlData.points}
+              color={color}
+              width={310}
+              height={130}
+            />
+            <button className="sp-flip-btn" onClick={() => setFlipped(true)}>
+              Temas que domino{" "}
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+          <div className="sp-face sp-face--back">
+            <div className="sp-face-bar" />
+            <button
+              className="sp-close-btn"
+              onClick={onClose}
+              aria-label="Cerrar"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            <div className="sp-header" style={{ marginBottom: "0.5rem" }}>
+              <div className="sp-icon" style={{ color }}>
+                {icon}
+              </div>
+              <div className="sp-name" style={{ color }}>
+                {skill.name} · Temas
+              </div>
+            </div>
+            <div className="sp-topics">
+              {(topics || []).map((tp, i) => (
+                <div key={i} className="sp-topic-row">
+                  <span className="sp-topic-label">{tp.t}</span>
+                  <div className="sp-topic-track">
+                    <div
+                      className="sp-topic-fill"
+                      style={{
+                        "--tw": `${tp.v}%`,
+                        "--tc": color,
+                        animationDelay: `${i * 0.06}s`,
+                      }}
+                    />
+                  </div>
+                  <span className="sp-topic-pct" style={{ color }}>
+                    {tp.v}%
+                  </span>
+                </div>
+              ))}
+            </div>
+            <button className="sp-flip-btn" onClick={() => setFlipped(false)}>
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>{" "}
+              Ver evolución
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ── CV Modal ────────────────────────────────────────────────
+const CVModal = ({ onClose }) => {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <div
+      className="sp-overlay"
+      onClick={onClose}
+      style={{ alignItems: "flex-start", paddingTop: "2rem" }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: "min(860px, 96vw)",
+          background: "var(--paper, #0e1117)",
+          border: "1.5px solid #4B8EFF44",
+          borderRadius: "12px",
+          overflow: "hidden",
+          boxShadow: "0 24px 80px rgba(0,0,0,0.6), 0 0 40px -8px #4B8EFF55",
+          display: "flex",
+          flexDirection: "column",
+          maxHeight: "90vh",
+        }}
+      >
+        {/* Header */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0.75rem 1.1rem",
+            background: "rgba(75,142,255,0.08)",
+            borderBottom: "1px solid #4B8EFF22",
+          }}
+        >
+          <div
+            style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}
+          >
+            <div style={{ display: "flex", gap: 5 }}>
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: "#ff5f57",
+                  display: "block",
+                }}
+              />
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: "#febc2e",
+                  display: "block",
+                }}
+              />
+              <span
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: "#28c840",
+                  display: "block",
+                }}
+              />
+            </div>
+            <span
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.58rem",
+                letterSpacing: "0.1em",
+                color: "#7a7f8e",
+              }}
+            >
+              CV_Brandon_Mauricio_Noj_Romero.pdf
+            </span>
+          </div>
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+            <a
+              href={CV_DOWNLOAD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.55rem",
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+                color: "#4B8EFF",
+                background: "rgba(75,142,255,0.12)",
+                border: "1px solid rgba(75,142,255,0.35)",
+                borderRadius: "6px",
+                padding: "0.38rem 0.85rem",
+                textDecoration: "none",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(75,142,255,0.22)";
+                e.currentTarget.style.boxShadow =
+                  "0 0 14px rgba(75,142,255,0.35)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(75,142,255,0.12)";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Descargar
+            </a>
+            <button
+              onClick={onClose}
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: "50%",
+                border: "1px solid rgba(255,255,255,0.15)",
+                background: "rgba(255,255,255,0.07)",
+                color: "rgba(255,255,255,0.6)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                transition: "all 0.18s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                e.currentTarget.style.transform = "rotate(90deg)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.07)";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        {/* Visor */}
+        <div style={{ position: "relative", flex: 1, minHeight: "70vh" }}>
+          {!loaded && (
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "1rem",
+                background: "var(--paper2, #111110)",
+              }}
+            >
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  border: "3px solid rgba(75,142,255,0.2)",
+                  borderTopColor: "#4B8EFF",
+                  borderRadius: "50%",
+                  animation: "cvSpin 0.8s linear infinite",
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: "0.62rem",
+                  color: "#5a5a50",
+                  letterSpacing: "0.1em",
+                }}
+              >
+                Cargando CV...
+              </span>
+            </div>
+          )}
+          <iframe
+            src={CV_PREVIEW_URL}
+            title="CV Mauricio Noj"
+            onLoad={() => setLoaded(true)}
+            style={{
+              width: "100%",
+              height: "100%",
+              minHeight: "70vh",
+              border: "none",
+              display: "block",
+            }}
+            allow="autoplay"
+          />
+        </div>
+      </div>
+      <style>{`@keyframes cvSpin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  );
+};
+
+const ChapterDivider = ({ title, color, icon, children }) => {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="ch-sep-wrap">
+      <button
+        className={`ch-sep${open ? " ch-sep--open" : ""}`}
+        style={{ "--ch-color": color }}
+        onClick={() => setOpen(!open)}
+      >
+        <div className="ch-line-l" />
+        <div className="ch-title-wrap">
+          <div className="ch-icon">{icon}</div>
+          <span className="ch-text">{title}</span>
+          <svg
+            className="ch-arrow"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+        <div className="ch-line-r" />
+      </button>
+      {children && (
+        <div className={`ch-content${open ? " ch-content--open" : ""}`}>
+          <p className="ch-content-inner">{children}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const PersonalTabs = () => {
   const [active, setActive] = useState(null);
   const tabRefs = useRef({});
-
   const getCardTop = (id) => {
     const el = tabRefs.current[id];
     if (!el) return 0;
     const rect = el.getBoundingClientRect();
-    const cardH = 290; // era 260, un poco más de margen
-    const navH = 115; // era 75
-    const winH = window.innerHeight;
+    const cardH = 290,
+      navH = 115,
+      winH = window.innerHeight;
     let top = rect.top + rect.height / 2 - cardH / 2;
-    top = Math.max(navH, Math.min(top, winH - cardH - 8));
-    return top;
+    return Math.max(navH, Math.min(top, winH - cardH - 8));
   };
-
   const activeTab = PERSONAL_TABS.find((t) => t.id === active);
-
   return (
     <div className="ptabs-wrap">
       {PERSONAL_TABS.map((t) => (
@@ -1555,14 +1744,10 @@ const PersonalTabs = () => {
           </div>
         </div>
       ))}
-
       {activeTab && (
         <div
           className="ptab-card ptab-card--visible"
-          style={{
-            "--ptc": activeTab.color,
-            top: `${getCardTop(active)}px`,
-          }}
+          style={{ "--ptc": activeTab.color, top: `${getCardTop(active)}px` }}
           onMouseEnter={() => setActive(active)}
           onMouseLeave={() => setActive(null)}
         >
@@ -1588,10 +1773,19 @@ const PersonalTabs = () => {
     </div>
   );
 };
+
+// ── ChapterDivider icon helper ──────────────────────────────
+const ChIcon = ({ d }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d={d} />
+  </svg>
+);
+
 // ── Componente principal ────────────────────────────────────
 export const AboutSection = () => {
   const [activeGroup, setActiveGroup] = useState("Todos");
   const [modal, setModal] = useState(null);
+  const [cvOpen, setCvOpen] = useState(false);
   const filtered =
     activeGroup === "Todos"
       ? STACK
@@ -1599,11 +1793,22 @@ export const AboutSection = () => {
 
   useEffect(() => {
     const handler = (e) => {
-      if (e.key === "Escape") setModal(null);
+      if (e.key === "Escape") {
+        setModal(null);
+        setCvOpen(false);
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = modal || cvOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [modal, cvOpen]);
+
   return (
     <>
       <div className="about-wrap">
@@ -1705,25 +1910,44 @@ export const AboutSection = () => {
                 >
                   <span className="about__link-icon">in</span> LinkedIn
                 </a>
+                {/* ── NUEVO: botón CV ── */}
+                <button
+                  onClick={() => setCvOpen(true)}
+                  className="about__link about__link--cv"
+                  style={{ cursor: "pointer", background: "transparent" }}
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg>
+                  Ver CV
+                </button>
               </div>
             </div>
           </section>
 
+          {/* ════ FILOSOFÍA ════ */}
           <ChapterDivider
             title="Filosofía de trabajo"
             color="#d4420a"
             icon={
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-              </svg>
+              <ChIcon d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
             }
           >
             Calcular antes de encender. Las derrotas enseñan más que los éxitos.
             Construir desde cero porque quien construyó entiende. La limitación
             obliga a ser más ingeniero, no menos.
           </ChapterDivider>
-
-          {/* ════ VALORES ════ */}
           <section className="about__section">
             <p className="about__section-label">Filosofía de trabajo</p>
             <div className="about__values">
@@ -1739,21 +1963,17 @@ export const AboutSection = () => {
             </div>
           </section>
 
+          {/* ════ STACK ════ */}
           <ChapterDivider
-            title="Filosofía de trabajo"
-            color="#d4420a"
+            title="Stack técnico"
+            color="#00f5ff"
             icon={
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-              </svg>
+              <ChIcon d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
             }
           >
-            Calcular antes de encender. Las derrotas enseñan más que los éxitos.
-            Construir desde cero porque quien construyó entiende. La limitación
-            obliga a ser más ingeniero, no menos.
+            Más de 30 tecnologías organizadas por área. Haz click en cada
+            tarjeta para ver el gráfico de evolución real y los temas dominados.
           </ChapterDivider>
-
-          {/* ════ STACK ════ */}
           <section className="about__section">
             <p className="about__section-label">Stack técnico</p>
             <p className="about__stack-hint">
@@ -1823,21 +2043,17 @@ export const AboutSection = () => {
             </div>
           </section>
 
+          {/* ════ TIMELINE ════ */}
           <ChapterDivider
-            title="Filosofía de trabajo"
-            color="#d4420a"
+            title="Trayectoria"
+            color="#4ade80"
             icon={
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-              </svg>
+              <ChIcon d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 3.21-1.81 6-4.72 7.28L13 17v5l5-3-1.22-1.22C19.91 16.07 22 12.21 22 12c0-5.18-3.95-9.45-9-9.95zM11 2.05C5.95 2.55 2 6.82 2 12c0 4.21 2.09 8.07 5.22 10.28L8 17l-2.28 2.06C2.81 18 1 15.21 1 12c0-4.08 3.05-7.44 7-7.93V2.05z" />
             }
           >
-            Calcular antes de encender. Las derrotas enseñan más que los éxitos.
-            Construir desde cero porque quien construyó entiende. La limitación
-            obliga a ser más ingeniero, no menos.
+            Del taller de mecánica a la consultoría de arquitectura de software.
+            Un camino no lineal que conecta hardware, software y docencia.
           </ChapterDivider>
-
-          {/* ════ TIMELINE con iconos ════ */}
           <section className="about__section">
             <p className="about__section-label">Trayectoria</p>
             <div className="about__timeline">
@@ -1864,21 +2080,18 @@ export const AboutSection = () => {
             </div>
           </section>
 
+          {/* ════ EDUCACIÓN ════ */}
           <ChapterDivider
-            title="Filosofía de trabajo"
-            color="#d4420a"
+            title="Educación formal"
+            color="#a78bfa"
             icon={
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-              </svg>
+              <ChIcon d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
             }
           >
-            Calcular antes de encender. Las derrotas enseñan más que los éxitos.
-            Construir desde cero porque quien construyó entiende. La limitación
-            obliga a ser más ingeniero, no menos.
+            Dos ingenierías en USAC más formación técnica continua. La
+            combinación de sistemas + ambiental define el foco: tecnología con
+            impacto real.
           </ChapterDivider>
-
-          {/* ════ EDUCACIÓN con iconos ════ */}
           <section className="about__section">
             <p className="about__section-label">Educación formal</p>
             <div className="about__edu">
@@ -1905,19 +2118,16 @@ export const AboutSection = () => {
             </div>
           </section>
 
-          {/* ════ LOGROS Y DISTINCIONES ════ */}
+          {/* ════ LOGROS ════ */}
           <ChapterDivider
-            title="Filosofía de trabajo"
-            color="#d4420a"
+            title="Logros y distinciones"
+            color="#f472b6"
             icon={
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-              </svg>
+              <ChIcon d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             }
           >
-            Calcular antes de encender. Las derrotas enseñan más que los éxitos.
-            Construir desde cero porque quien construyó entiende. La limitación
-            obliga a ser más ingeniero, no menos.
+            Auxiliar de cátedra, intercambio internacional y reconocimientos en
+            comunicación técnica.
           </ChapterDivider>
           <section className="about__section">
             <p className="about__section-label">Logros y distinciones</p>
@@ -1949,19 +2159,16 @@ export const AboutSection = () => {
             </div>
           </section>
 
-          {/* ════ PROYECTOS DESTACADOS ════ */}
+          {/* ════ PROYECTOS ════ */}
           <ChapterDivider
-            title="Filosofía de trabajo"
-            color="#d4420a"
+            title="Proyectos destacados"
+            color="#fb923c"
             icon={
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-              </svg>
+              <ChIcon d="M3 3h7v7H3zm0 11h7v7H3zm11-11h7v7h-7zm0 11h7v7h-7z" />
             }
           >
-            Calcular antes de encender. Las derrotas enseñan más que los éxitos.
-            Construir desde cero porque quien construyó entiende. La limitación
-            obliga a ser más ingeniero, no menos.
+            Compiladores, DevOps, y el propio portafolio. Proyectos que aplican
+            lo aprendido en contextos reales.
           </ChapterDivider>
           <section className="about__section">
             <p className="about__section-label">Proyectos destacados</p>
@@ -2004,6 +2211,61 @@ export const AboutSection = () => {
             </div>
           </section>
 
+          {/* ════ CV CTA BANNER ════ */}
+          <section className="about__cv-banner">
+            <div className="about__cv-banner-glow" />
+            <div className="about__cv-banner-content">
+              <div>
+                <p className="about__cv-banner-label">Currículum Vitae</p>
+                <h3 className="about__cv-banner-title">
+                  ¿Quieres ver el CV completo?
+                </h3>
+                <p className="about__cv-banner-sub">
+                  Experiencia, educación y habilidades en un solo documento.
+                </p>
+              </div>
+              <div className="about__cv-banner-actions">
+                <button
+                  onClick={() => setCvOpen(true)}
+                  className="about__cv-btn-view"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  Ver CV
+                </button>
+                <a
+                  href={CV_DOWNLOAD_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="about__cv-btn-dl"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  Descargar PDF
+                </a>
+              </div>
+            </div>
+          </section>
+
           {/* ════ FOOTER ════ */}
           <footer className="about__footer">
             <p className="about__footer-quote">
@@ -2017,7 +2279,6 @@ export const AboutSection = () => {
         </div>
       </div>
 
-      {/* Modal centrado con overlay */}
       {modal && (
         <SkillModal
           skill={modal.skill}
@@ -2025,6 +2286,7 @@ export const AboutSection = () => {
           onClose={() => setModal(null)}
         />
       )}
+      {cvOpen && <CVModal onClose={() => setCvOpen(false)} />}
       <PersonalTabs />
     </>
   );

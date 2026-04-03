@@ -1682,3 +1682,161 @@
     padding: 8px 6px;
   }
 }
+
+/* ════════════════════════════════════════
+   CV LINK en el hero
+════════════════════════════════════════ */
+.about__link--cv {
+  color: var(--acc);
+  border-color: color-mix(in srgb, var(--acc) 40%, transparent);
+  background: color-mix(in srgb, var(--acc) 6%, var(--paper)) !important;
+}
+.about__link--cv:hover {
+  color: var(--acc);
+  border-color: var(--acc);
+  background: color-mix(in srgb, var(--acc) 14%, var(--paper)) !important;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--acc) 30%, transparent);
+}
+
+/* ════════════════════════════════════════
+   CV BANNER CTA
+════════════════════════════════════════ */
+.about__cv-banner {
+  position: relative;
+  margin: 2rem 0 3rem;
+  border: 1.5px solid color-mix(in srgb, #4b8eff 30%, var(--rule));
+  border-radius: 10px;
+  padding: 2rem 2.5rem;
+  overflow: hidden;
+  background: color-mix(in srgb, #4b8eff 5%, var(--paper2));
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+.about__cv-banner:hover {
+  border-color: color-mix(in srgb, #4b8eff 55%, transparent);
+  box-shadow: 0 0 30px -8px rgba(75, 142, 255, 0.3);
+}
+[data-theme="dark"] .about__cv-banner:hover {
+  box-shadow: 0 0 40px -8px rgba(75, 142, 255, 0.45);
+}
+.about__cv-banner-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 80% 50%,
+    rgba(75, 142, 255, 0.12),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+.about__cv-banner-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.about__cv-banner-label {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #4b8eff;
+  margin: 0 0 0.5rem;
+}
+.about__cv-banner-title {
+  font-family: var(--display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.about__cv-banner-sub {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink2);
+  margin: 0;
+  line-height: 1.6;
+}
+.about__cv-banner-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+/* Botón "Ver CV" */
+.about__cv-btn-view {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #4b8eff;
+  background: rgba(75, 142, 255, 0.1);
+  border: 1.5px solid rgba(75, 142, 255, 0.45);
+  border-radius: 6px;
+  padding: 0.65rem 1.4rem;
+  cursor: pointer;
+  transition: all 0.22s;
+  white-space: nowrap;
+}
+.about__cv-btn-view:hover {
+  background: rgba(75, 142, 255, 0.2);
+  border-color: #4b8eff;
+  box-shadow: 0 0 18px rgba(75, 142, 255, 0.35);
+  transform: translateY(-2px);
+}
+[data-theme="dark"] .about__cv-btn-view:hover {
+  box-shadow: 0 0 24px rgba(75, 142, 255, 0.5);
+}
+
+/* Botón "Descargar PDF" */
+.about__cv-btn-dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink2);
+  background: transparent;
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.65rem 1.4rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.22s;
+  white-space: nowrap;
+}
+.about__cv-btn-dl:hover {
+  color: var(--acc2);
+  border-color: color-mix(in srgb, var(--acc2) 50%, transparent);
+  background: color-mix(in srgb, var(--acc2) 8%, transparent);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .about__cv-banner {
+    padding: 1.5rem 1.25rem;
+  }
+  .about__cv-banner-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .about__cv-banner-actions {
+    width: 100%;
+  }
+  .about__cv-btn-view,
+  .about__cv-btn-dl {
+    flex: 1;
+    justify-content: center;
+  }
+}
