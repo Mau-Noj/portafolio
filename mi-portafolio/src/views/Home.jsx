@@ -636,7 +636,7 @@ export const Home = () => {
       {/* ── HERO ── */}
       <div
         className="hero-bg-section"
-        style={{ "--hero-bg-image": `url('/inicio.png')` }}
+        style={{ "--hero-bg-image": `url('/inicio.webp')` }}
       >
         <section className="hero">
           <h1 className="hero-title">
