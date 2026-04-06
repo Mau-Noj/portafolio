@@ -5,13 +5,6 @@ import "./LabCuantitativo.css";
 import { LAB_TOOLS } from "../models/lab.data";
 import { useSEO } from "../hooks/useSEO";
 
-useSEO({
-  title: "Lab Cuantitativo",
-  description:
-    "Calculadoras y métodos numéricos para ingeniería — bisección, Newton-Raphson, interpolación y más.",
-  url: "https://mauricionoj.com/lab",
-});
-
 const API = import.meta.env.VITE_GO_API_URL || "http://localhost:8080/api/lab";
 
 /* ══════════════════════════════════════════════════════════
@@ -336,6 +329,13 @@ const CATEGORIES = [
 ];
 
 export const LabCuantitativo = () => {
+  useSEO({
+    title: "Lab Cuantitativo",
+    description:
+      "Calculadoras y métodos numéricos para ingeniería — bisección, Newton-Raphson, interpolación y más.",
+    url: "https://mauricionoj.com/lab",
+  });
+
   const [active, setActive] = useState("Todos");
   const [modal, setModal] = useState(null);
 

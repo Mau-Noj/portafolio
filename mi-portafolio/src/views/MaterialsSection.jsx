@@ -5,13 +5,6 @@ import { ArticleModal } from "../components/ArticleModal";
 import { BiChevronLeft, BiChevronRight, BiShow, BiHide } from "react-icons/bi";
 import { useSEO } from "../hooks/useSEO";
 
-useSEO({
-  title: "Materiales de Apoyo",
-  description:
-    "Recursos, plantillas y guías de estudio para ingeniería — UML, IEEE, casos de uso y más.",
-  url: "https://mauricionoj.com/materiales",
-});
-
 // --- COMPONENTE INTERNO PARA CADA CARTA ---
 const MaterialCard = ({ item, onRead }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -110,6 +103,13 @@ const MaterialCard = ({ item, onRead }) => {
 
 // --- COMPONENTE PRINCIPAL ---
 export const MaterialsSection = () => {
+  useSEO({
+    title: "Materiales de Apoyo",
+    description:
+      "Recursos, plantillas y guías de estudio para ingeniería — UML, IEEE, casos de uso y más.",
+    url: "https://mauricionoj.com/materiales",
+  });
+
   const [selectedMaterial, setSelectedMaterial] = useState(null);
   const scrollRef = useRef(null);
 

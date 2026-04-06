@@ -4,13 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useSEO } from "../hooks/useSEO";
 import "./BlogSection.css";
 
-useSEO({
-  title: "Blog",
-  description:
-    "Notas del proceso — hardware, IA, aprendizajes y experiencias construyendo proyectos reales.",
-  url: "https://mauricionoj.com/blog",
-});
-
 // ── Data de entradas ──────────────────────────────────────────
 const POSTS = [
   {
@@ -109,6 +102,12 @@ const STATUS_MAP = {
 
 // ── Componente ────────────────────────────────────────────────
 export const BlogSection = () => {
+  useSEO({
+    title: "Blog",
+    description:
+      "Notas del proceso — hardware, IA, aprendizajes y experiencias construyendo proyectos reales.",
+    url: "https://mauricionoj.com/blog",
+  });
   const [filter, setFilter] = useState("all");
   const navigate = useNavigate();
 

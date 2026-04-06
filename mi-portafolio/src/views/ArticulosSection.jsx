@@ -4,13 +4,6 @@ import { useEffect } from "react";
 import { useSEO } from "../hooks/useSEO";
 import "./ArticulosSection.css";
 
-useSEO({
-  title: "Artículos",
-  description:
-    "Artículos técnicos sobre ingeniería de software, análisis de sistemas y desarrollo web.",
-  url: "https://mauricionoj.com/articulos",
-});
-
 const ARTICULOS = [
   {
     slug: "arquitectura-informacion",
@@ -324,6 +317,12 @@ function useFadeIn() {
 
 // ── Main ──────────────────────────────────────────────────────
 export default function ArticulosSection() {
+  useSEO({
+    title: "Artículos",
+    description:
+      "Artículos técnicos sobre ingeniería de software, análisis de sistemas y desarrollo web.",
+    url: "https://mauricionoj.com/articulos",
+  });
   useFadeIn();
   const pub = ARTICULOS.filter((a) => a.publicado).length;
   const total = ARTICULOS.length;
