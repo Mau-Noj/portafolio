@@ -1,7 +1,15 @@
 // src/views/AboutSection.jsx
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import VisitorCounter from "../components/VisitorCounter";
+import { useSEO } from "../hooks/useSEO";
 import "./AboutSection.css";
+
+useSEO({
+  title: "Sobre mí",
+  description:
+    "Conoce mi trayectoria, stack técnico y filosofía como desarrollador full-stack e instructor universitario en USAC.",
+  url: "https://mauricionoj.com/sobre-mi",
+});
 
 const CV_DRIVE_ID = "1Z7rinMrxAwtHzTYlIf9xqQBfB9F3umdf";
 const CV_PREVIEW_URL = `https://drive.google.com/file/d/${CV_DRIVE_ID}/preview`;

@@ -3,6 +3,14 @@ import "./MaterialsSection.css";
 import { materials } from "../models/materials.data";
 import { ArticleModal } from "../components/ArticleModal";
 import { BiChevronLeft, BiChevronRight, BiShow, BiHide } from "react-icons/bi";
+import { useSEO } from "../hooks/useSEO";
+
+useSEO({
+  title: "Materiales de Apoyo",
+  description:
+    "Recursos, plantillas y guías de estudio para ingeniería — UML, IEEE, casos de uso y más.",
+  url: "https://mauricionoj.com/materiales",
+});
 
 // --- COMPONENTE INTERNO PARA CADA CARTA ---
 const MaterialCard = ({ item, onRead }) => {

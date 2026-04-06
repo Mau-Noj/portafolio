@@ -1,5 +1,6 @@
 // src/views/Home.jsx
 import React, { useEffect, useRef, useState } from "react";
+import { useSEO } from "../hooks/useSEO";
 import "./Home.css";
 
 /* ── DATA ── */
@@ -590,6 +591,12 @@ const PostCarousel = ({ items }) => {
 
 /* ── MAIN COMPONENT ── */
 export const Home = () => {
+  useSEO({
+    title: "Mauricio Noj · Desarrollador Web",
+    description:
+      "Portafolio de Brandon Mauricio Noj — desarrollador web full-stack desde Guatemala. React, Node.js, Docker, IoT.",
+    url: "https://mauricionoj.com",
+  });
   const blobRef = useRef(null);
   const [overlayOpen, setOverlayOpen] = useState(false);
 

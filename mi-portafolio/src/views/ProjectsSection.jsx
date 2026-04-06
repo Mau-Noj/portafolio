@@ -1,40 +1,44 @@
 // src/views/ProjectsSection.jsx
-import React, { useState } from 'react';
-import './ProjectsSection.css';
-import { getAllProjects, getProjectsByCategory } from '../models/projects.data';
-import { ProjectCard } from '../components/ProjectCard';
-import { ProjectModal } from '../components/ProjectModal';
+import React, { useState } from "react";
+import "./ProjectsSection.css";
+import { getAllProjects, getProjectsByCategory } from "../models/projects.data";
+import { ProjectCard } from "../components/ProjectCard";
+import { ProjectModal } from "../components/ProjectModal";
+import { useSEO } from "../hooks/useSEO";
 
 // Filtros disponibles — agrega/quita según las categorías que uses
 const FILTERS = [
-  { key: 'all',       label: 'Todos'          },
-  { key: 'electric',  label: '⚡ Electricidad' },
-  { key: 'ttl',       label: '◈ TTL Digital'   },
-  { key: 'expfis',    label: '🔬 Física Exp.'   },
-  { key: 'ia',        label: '🤖 IA / ML'       },
-  { key: 'maker',     label: '♻ Maker'          },
-  { key: 'compiler',  label: '⚙️ Compiladores'  },
-  { key: 'fintech',   label: '📈 Fintech'        },
-  { key: 'ambiental', label: '🌿 Ambiental'      },
-  { key: 'sistemas',  label: '💻 Sistemas'       },
-  { key: 'fisica',    label: '⚛ Física'          },
-  { key: 'quimica',   label: '🧪 Química'         },
-  { key: 'math',      label: '📐 Matemáticas'    },
-  { key: 'cyber',     label: '🔒 Cyber'           },
+  { key: "all", label: "Todos" },
+  { key: "electric", label: "⚡ Electricidad" },
+  { key: "ttl", label: "◈ TTL Digital" },
+  { key: "expfis", label: "🔬 Física Exp." },
+  { key: "ia", label: "🤖 IA / ML" },
+  { key: "maker", label: "♻ Maker" },
+  { key: "compiler", label: "⚙️ Compiladores" },
+  { key: "fintech", label: "📈 Fintech" },
+  { key: "ambiental", label: "🌿 Ambiental" },
+  { key: "sistemas", label: "💻 Sistemas" },
+  { key: "fisica", label: "⚛ Física" },
+  { key: "quimica", label: "🧪 Química" },
+  { key: "math", label: "📐 Matemáticas" },
+  { key: "cyber", label: "🔒 Cyber" },
 ];
 
 export const ProjectsSection = () => {
-  const [activeFilter, setActiveFilter] = useState('all');
+  useSEO({
+    title: "Proyectos",
+    description: "Catálogo de 80+ proyectos de laboratorio...",
+    url: "https://mauricionoj.com/proyectos",
+  });
+  const [activeFilter, setActiveFilter] = useState("all");
   const [selectedProject, setSelectedProject] = useState(null);
 
   const projects = getProjectsByCategory(activeFilter);
 
   return (
     <section className="psection">
-
       {/* ── WRAPPER INTERNO — centra el contenido a max 1300px ── */}
       <div className="psection__inner">
-
         {/* ── HEADER ── */}
         <header className="psection__header">
           <p className="psection__eyebrow">RPi5 · Arduino · TTL · IA · Maker</p>
@@ -52,17 +56,23 @@ export const ProjectsSection = () => {
         </header>
 
         {/* ── FILTROS ── */}
-        <div className="psection__filters" role="group" aria-label="Filtrar proyectos">
+        <div
+          className="psection__filters"
+          role="group"
+          aria-label="Filtrar proyectos"
+        >
           {FILTERS.map((f) => (
             <button
               key={f.key}
-              className={`psection__filter ${activeFilter === f.key ? 'psection__filter--active' : ''}`}
+              className={`psection__filter ${activeFilter === f.key ? "psection__filter--active" : ""}`}
               onClick={() => setActiveFilter(f.key)}
               aria-pressed={activeFilter === f.key}
             >
               {f.label}
-              {f.key === 'all' && (
-                <span className="psection__filter-count">{getAllProjects().length}</span>
+              {f.key === "all" && (
+                <span className="psection__filter-count">
+                  {getAllProjects().length}
+                </span>
               )}
             </button>
           ))}
@@ -70,7 +80,8 @@ export const ProjectsSection = () => {
 
         {/* ── CONTADOR ── */}
         <p className="psection__count">
-          Mostrando <strong>{projects.length}</strong> proyecto{projects.length !== 1 ? 's' : ''}
+          Mostrando <strong>{projects.length}</strong> proyecto
+          {projects.length !== 1 ? "s" : ""}
         </p>
 
         {/* ── GRID ── */}
@@ -90,7 +101,6 @@ export const ProjectsSection = () => {
             <p>No hay proyectos en esta categoría aún.</p>
           </div>
         )}
-
       </div>
       {/* ── FIN WRAPPER INTERNO ── */}
 
@@ -99,7 +109,6 @@ export const ProjectsSection = () => {
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
       />
-
     </section>
   );
 };

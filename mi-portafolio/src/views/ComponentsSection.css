@@ -1,47 +1,51 @@
 /* src/views/ComponentsSection.css */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&display=swap");
 
 .cs-wrap {
   min-height: 100vh;
   background: #f5f4f0;
   transition: background 0.3s;
 }
-[data-theme="dark"] .cs-wrap { background: #080807; }
+[data-theme="dark"] .cs-wrap {
+  background: #080807;
+}
 
 .cs {
-  --ink:   #0d0d0b;
-  --ink2:  #4a4a42;
-  --ink3:  #9a9a8e;
+  --ink: #0d0d0b;
+  --ink2: #4a4a42;
+  --ink3: #9a9a8e;
   --paper: #f5f4f0;
-  --paper2:#eceae2;
-  --rule:  #d8d5cc;
-  --acc:   #2563eb;
-  --ok:    #16a34a;
-  --warn:  #f59e0b;
-  --err:   #dc2626;
-  --env:   #15803d;
+  --paper2: #eceae2;
+  --rule: #d8d5cc;
+  --acc: #2563eb;
+  --ok: #16a34a;
+  --warn: #f59e0b;
+  --err: #dc2626;
+  --env: #15803d;
 
   max-width: 1200px;
   margin: 0 auto;
   padding: calc(68px + 3rem) 2rem 6rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   color: var(--ink);
 }
 
 [data-theme="dark"] .cs {
-  --ink:   #eae9e3;
-  --ink2:  #9a9a8e;
-  --ink3:  #5a5a50;
+  --ink: #eae9e3;
+  --ink2: #9a9a8e;
+  --ink3: #5a5a50;
   --paper: #080807;
-  --paper2:#111110;
-  --rule:  #252420;
+  --paper2: #111110;
+  --rule: #252420;
 }
 
 /* ── Header ── */
-.cs__header { margin-bottom: 3rem; }
+.cs__header {
+  margin-bottom: 3rem;
+}
 
 .cs__kicker {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.55rem;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -50,11 +54,11 @@
 }
 
 .cs__title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-family: "Syne", sans-serif;
+  font-size: clamp(2rem, 8vw, 4.5rem);
   font-weight: 900;
-  line-height: 0.92;
-  letter-spacing: -2px;
+  line-height: 0.95;
+  letter-spacing: -1px;
   color: var(--ink);
   margin: 0 0 1.25rem;
 }
@@ -77,24 +81,27 @@
   align-items: center;
   gap: 1.5rem;
 }
-.cs__stat { text-align: center; }
+.cs__stat {
+  text-align: center;
+}
 .cs__stat-n {
   display: block;
-  font-family: 'Syne', sans-serif;
+  font-family: "Syne", sans-serif;
   font-size: 1.8rem;
   font-weight: 800;
   color: var(--ink);
   line-height: 1;
 }
 .cs__stat-l {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.5rem;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--ink3);
 }
 .cs__stat-sep {
-  width: 1px; height: 32px;
+  width: 1px;
+  height: 32px;
   background: var(--rule);
 }
 
@@ -114,32 +121,41 @@
   border: 1px solid var(--rule);
   background: var(--paper2);
 }
-.cs__search-icon { color: var(--ink3); font-size: 1rem; }
+.cs__search-icon {
+  color: var(--ink3);
+  font-size: 1rem;
+}
 .cs__search-input {
   flex: 1;
   border: none;
   background: transparent;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 0.85rem;
   color: var(--ink);
   outline: none;
   padding: 0.75rem 0;
 }
-.cs__search-input::placeholder { color: var(--ink3); }
+.cs__search-input::placeholder {
+  color: var(--ink3);
+}
 .cs__search-clear {
-  background: none; border: none;
-  color: var(--ink3); cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--ink3);
+  cursor: pointer;
   font-size: 0.75rem;
   padding: 0.25rem;
 }
-.cs__search-clear:hover { color: var(--err); }
+.cs__search-clear:hover {
+  color: var(--err);
+}
 
 .cs__sort {
   padding: 0.75rem 1rem;
   border: 1px solid var(--rule);
   background: var(--paper2);
   color: var(--ink);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.65rem;
   letter-spacing: 1px;
   outline: none;
@@ -165,7 +181,7 @@
   border: 1px solid var(--rule);
   background: transparent;
   color: var(--ink2);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 0.78rem;
   font-weight: 500;
   cursor: pointer;
@@ -181,7 +197,7 @@
   color: #fff;
 }
 .cs__cat-count {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.55rem;
   opacity: 0.7;
 }
@@ -203,11 +219,22 @@
   animation: cs-fade-in 0.4s ease both;
 }
 @keyframes cs-fade-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.cs__card:hover { background: var(--paper2); }
-.cs__card:hover .cs__card-arrow { opacity: 1; transform: translateX(0); }
+.cs__card:hover {
+  background: var(--paper2);
+}
+.cs__card:hover .cs__card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
 
 .cs__card-img {
   position: relative;
@@ -215,15 +242,31 @@
   background: var(--paper2);
   overflow: hidden;
 }
+
 .cs__card-img img {
-  width: 100%; height: 100%;
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 1.5rem;
   transition: transform 0.3s ease;
 }
-.cs__card:hover .cs__card-img img { transform: scale(1.04); }
+.cs__card:hover .cs__card-img img {
+  transform: scale(1.06);
+}
+/* Imagen hero del detalle */
+.cd__hero-img img,          /* ajusta el selector a tu clase real */
+.component-detail__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(0.78);
+  transition: transform 0.3s ease;
+  padding: 1rem;
+}
 
 .cs__card-placeholder {
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,12 +276,14 @@
 
 .cs__card-badges {
   position: absolute;
-  top: 0.75rem; right: 0.75rem;
+  top: 0.75rem;
+  right: 0.75rem;
   display: flex;
   gap: 0.3rem;
 }
 .cs__badge {
-  width: 22px; height: 22px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -246,13 +291,21 @@
   font-size: 0.6rem;
   font-weight: 700;
 }
-.cs__badge--warn { background: #f59e0b; color: #fff; }
-.cs__badge--ok   { background: #16a34a; color: #fff; }
+.cs__badge--warn {
+  background: #f59e0b;
+  color: #fff;
+}
+.cs__badge--ok {
+  background: #16a34a;
+  color: #fff;
+}
 
-.cs__card-body { padding: 1.25rem 1.25rem 1rem; }
+.cs__card-body {
+  padding: 1.25rem 1.25rem 1rem;
+}
 
 .cs__card-cat {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.5rem;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -261,7 +314,7 @@
 }
 
 .cs__card-name {
-  font-family: 'Syne', sans-serif;
+  font-family: "Syne", sans-serif;
   font-size: 1rem;
   font-weight: 800;
   color: var(--ink);
@@ -285,10 +338,12 @@
   border-bottom: 1px solid var(--rule);
   margin-bottom: 0.75rem;
 }
-.cs__metric { text-align: center; }
+.cs__metric {
+  text-align: center;
+}
 .cs__metric-label {
   display: block;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.45rem;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -296,15 +351,19 @@
   margin-bottom: 0.2rem;
 }
 .cs__metric-val {
-  font-family: 'Syne', sans-serif;
+  font-family: "Syne", sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--ink);
 }
 
-.cs__card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.cs__card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
 .cs__tag {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.5rem;
   letter-spacing: 0.5px;
   padding: 0.2rem 0.5rem;
@@ -314,7 +373,8 @@
 
 .cs__card-arrow {
   position: absolute;
-  bottom: 1.25rem; right: 1.25rem;
+  bottom: 1.25rem;
+  right: 1.25rem;
   font-size: 1rem;
   color: var(--env);
   opacity: 0;
@@ -332,7 +392,13 @@
 }
 
 @media (max-width: 640px) {
-  .cs { padding: calc(68px + 2rem) 1.25rem 4rem; }
-  .cs__grid { grid-template-columns: 1fr; }
-  .cs__controls { flex-direction: column; }
+  .cs {
+    padding: calc(68px + 2rem) 1.25rem 4rem;
+  }
+  .cs__grid {
+    grid-template-columns: 1fr;
+  }
+  .cs__controls {
+    flex-direction: column;
+  }
 }

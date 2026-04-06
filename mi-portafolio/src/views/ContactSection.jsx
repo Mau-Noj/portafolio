@@ -4,7 +4,15 @@
 
 import React, { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
+import { useSEO } from "../hooks/useSEO";
 import "./ContactSection.css";
+
+useSEO({
+  title: "Contacto",
+  description:
+    "Escríbeme para consultoría técnica, colaboración en proyectos o cualquier pregunta. Respondo en menos de 48 horas.",
+  url: "https://mauricionoj.com/contacto",
+});
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;

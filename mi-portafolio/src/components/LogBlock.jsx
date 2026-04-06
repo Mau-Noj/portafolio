@@ -1,12 +1,8 @@
 // src/components/LogBlock.jsx
-// Renderiza un bloque individual según su type.
-// Importa este componente en ProjectDetail.jsx
+import React from "react";
+import { MathText } from "./MathText";
+import "./LogBlock.css";
 
-import React from 'react';
-import { MathText } from './MathText';
-import './LogBlock.css';
-
-// ── Bloque: separador de fase ──────────────────────────────────
 const PhaseBlock = ({ block }) => (
   <div className="lb lb-phase">
     <span className="lb-phase__dot" />
@@ -15,52 +11,63 @@ const PhaseBlock = ({ block }) => (
   </div>
 );
 
-// ── Bloque: texto libre con soporte LaTeX ──────────────────────
 const TextBlock = ({ block }) => (
   <div className="lb lb-text">
     <MathText text={block.content} />
   </div>
 );
 
-// ── Bloque: fórmula destacada ──────────────────────────────────
 const FormulaBlock = ({ block }) => (
   <div className="lb lb-formula">
     <div className="lb-formula__content">
       <MathText text={block.content} />
     </div>
-    {block.caption && (
-      <p className="lb-formula__caption">{block.caption}</p>
-    )}
+    {block.caption && <p className="lb-formula__caption">{block.caption}</p>}
   </div>
 );
 
-// ── Bloque: código con sintaxis highlight (sin librería) ────────
 const CodeBlock = ({ block }) => (
   <div className="lb lb-code">
     <div className="lb-code__header">
-      <span className="lb-code__lang">{block.lang ?? 'code'}</span>
+      <span className="lb-code__lang">{block.lang ?? "code"}</span>
       {block.label && <span className="lb-code__label">{block.label}</span>}
     </div>
-    <pre className="lb-code__pre"><code>{block.content}</code></pre>
+    <pre className="lb-code__pre">
+      <code>{block.content}</code>
+    </pre>
   </div>
 );
 
-// ── Bloque: imagen con caption ─────────────────────────────────
+// ── Imagen con formato APA 7 ───────────────────────────────────
 const ImageBlock = ({ block }) => (
   <figure className="lb lb-image">
     <img
       src={block.src}
-      alt={block.caption ?? ''}
+      alt={block.title ?? block.caption ?? ""}
       className="lb-image__img"
       loading="lazy"
     />
-    {block.caption && (
-      <figcaption className="lb-image__caption">{block.caption}</figcaption>
-    )}
+    <figcaption className="lb-image__caption">
+      {block.figureNum && (
+        <span className="lb-image__figure-num">
+          <em>Figura {block.figureNum}.</em>{" "}
+        </span>
+      )}
+      {block.title && <span className="lb-image__title">{block.title}</span>}
+      {/* Fallback: si usan caption en lugar de title (retrocompatible) */}
+      {!block.title && block.caption && (
+        <span className="lb-image__title">{block.caption}</span>
+      )}
+      {block.note && (
+        <span className="lb-image__note">
+          {" "}
+          <em>Nota.</em> {block.note}
+        </span>
+      )}
+    </figcaption>
   </figure>
 );
 
-// ── Bloque: resultado destacado ────────────────────────────────
 const ResultBlock = ({ block }) => (
   <div className="lb lb-result">
     <span className="lb-result__icon">✓</span>
@@ -68,7 +75,6 @@ const ResultBlock = ({ block }) => (
   </div>
 );
 
-// ── Bloque: advertencia ────────────────────────────────────────
 const WarningBlock = ({ block }) => (
   <div className="lb lb-warning">
     <span className="lb-warning__icon">⚠</span>
@@ -76,7 +82,6 @@ const WarningBlock = ({ block }) => (
   </div>
 );
 
-// ── Bloque: tip / consejo ──────────────────────────────────────
 const TipBlock = ({ block }) => (
   <div className="lb lb-tip">
     <span className="lb-tip__icon">💡</span>
@@ -84,16 +89,24 @@ const TipBlock = ({ block }) => (
   </div>
 );
 
-// ── Bloque: tabla de datos ─────────────────────────────────────
 const TableBlock = ({ block }) => (
   <div className="lb lb-table">
+    {/* Título de tabla APA 7 si existe */}
+    {block.tableNum && (
+      <p className="lb-table__num">
+        <em>Tabla {block.tableNum}</em>
+      </p>
+    )}
+    {block.title && <p className="lb-table__title">{block.title}</p>}
     <div className="lb-table__scroll">
       <table className="lb-table__tbl">
         {block.headers && (
           <thead>
             <tr>
               {block.headers.map((h, i) => (
-                <th key={i}><MathText text={h} /></th>
+                <th key={i}>
+                  <MathText text={h} />
+                </th>
               ))}
             </tr>
           </thead>
@@ -102,32 +115,35 @@ const TableBlock = ({ block }) => (
           {block.rows?.map((row, i) => (
             <tr key={i}>
               {row.map((cell, j) => (
-                <td key={j}><MathText text={String(cell)} /></td>
+                <td key={j}>
+                  <MathText text={String(cell)} />
+                </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
     </div>
+    {block.note && (
+      <p className="lb-table__note">
+        <em>Nota.</em> {block.note}
+      </p>
+    )}
   </div>
 );
 
-// ── Bloque: divisor visual ─────────────────────────────────────
-const DividerBlock = () => (
-  <div className="lb lb-divider" />
-);
+const DividerBlock = () => <div className="lb lb-divider" />;
 
-// ── Dispatcher principal ───────────────────────────────────────
 const BLOCK_MAP = {
-  phase:   PhaseBlock,
-  text:    TextBlock,
+  phase: PhaseBlock,
+  text: TextBlock,
   formula: FormulaBlock,
-  code:    CodeBlock,
-  image:   ImageBlock,
-  result:  ResultBlock,
+  code: CodeBlock,
+  image: ImageBlock,
+  result: ResultBlock,
   warning: WarningBlock,
-  tip:     TipBlock,
-  table:   TableBlock,
+  tip: TipBlock,
+  table: TableBlock,
   divider: DividerBlock,
 };
 

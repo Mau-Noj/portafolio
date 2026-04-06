@@ -1,0 +1,58 @@
+/* src/components/UMLDiagram.css */
+.uml-zoom-outer {
+  width: 100%;
+  background: #060c18;
+  border: 1px solid #1e293b;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+.uml-zoom-outer:active {
+  cursor: grabbing;
+}
+
+.uml-zoom-inner {
+  display: block;
+  will-change: transform;
+  transform-origin: 50% 50%;
+}
+.uml-zoom-inner svg {
+  display: block;
+}
+
+.uml-zoom-hint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.52rem;
+  letter-spacing: 1px;
+  color: #1e293b;
+  pointer-events: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+.uml-zoom-reset {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  background: #0d1117;
+  border: 1px solid #1e293b;
+  color: #64748b;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.5px;
+  transition: all 0.15s;
+}
+.uml-zoom-reset:hover {
+  color: #e2e8f0;
+  border-color: #334155;
+}
