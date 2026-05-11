@@ -1,22 +1,18 @@
 // src/views/ContactSection.jsx
-// EmailJS: REMOVED | REMOVED | REMOVED
-// Instalar: npm install @emailjs/browser
+// EmailJS: SERVICE_ID | TEMPLATE_ID | PUBLIC_KEY
+// reCAPTCHA v2: VITE_RECAPTCHA_SITE_KEY
+// Instalar: npm install @emailjs/browser react-google-recaptcha
 
 import React, { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
+import ReCAPTCHA from "react-google-recaptcha";
 import { useSEO } from "../hooks/useSEO";
 import "./ContactSection.css";
-
-useSEO({
-  title: "Contacto",
-  description:
-    "Escríbeme para consultoría técnica, colaboración en proyectos o cualquier pregunta. Respondo en menos de 48 horas.",
-  url: "https://mauricionoj.com/contacto",
-});
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const RECAPTCHA_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 const SOCIAL_LINKS = [
   {
@@ -53,15 +49,24 @@ const SUBJECTS = [
   "Otro",
 ];
 
-// Estado inicial del form
 const INIT = { name: "", email: "", subject: "", message: "" };
 
 export const ContactSection = () => {
+  useSEO({
+    title: "Contacto",
+    description:
+      "Escríbeme para consultoría técnica, colaboración en proyectos o cualquier pregunta. Respondo en menos de 48 horas.",
+    url: "https://mauricionoj.com/contacto",
+  });
+
   const formRef = useRef(null);
+  const captchaRef = useRef(null);
+
   const [fields, setFields] = useState(INIT);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | sending | success | error
   const [charCount, setChar] = useState(0);
+  const [captchaDone, setCaptchaDone] = useState(false);
 
   // ── Validación ─────────────────────────────────────────────
   const validate = () => {
@@ -74,6 +79,7 @@ export const ContactSection = () => {
     if (!fields.message.trim()) e.message = "Escribe tu mensaje.";
     else if (fields.message.trim().length < 20)
       e.message = "Mínimo 20 caracteres.";
+    if (!captchaDone) e.captcha = "Confirma que no eres un robot.";
     return e;
   };
 
@@ -109,15 +115,21 @@ export const ContactSection = () => {
       setStatus("success");
       setFields(INIT);
       setChar(0);
+      setCaptchaDone(false);
+      captchaRef.current?.reset();
     } catch (err) {
       console.error("EmailJS error:", err);
       setStatus("error");
+      setCaptchaDone(false);
+      captchaRef.current?.reset();
     }
   };
 
   const resetForm = () => {
     setStatus("idle");
     setErrors({});
+    setCaptchaDone(false);
+    captchaRef.current?.reset();
   };
 
   // ── Render ──────────────────────────────────────────────────
@@ -318,6 +330,24 @@ export const ContactSection = () => {
                 />
                 {errors.message && (
                   <span className="ct__err">{errors.message}</span>
+                )}
+              </div>
+
+              {/* ── reCAPTCHA ── */}
+              <div
+                className={`ct__field ${errors.captcha ? "ct__field--err" : ""}`}
+              >
+                <ReCAPTCHA
+                  ref={captchaRef}
+                  sitekey={RECAPTCHA_KEY}
+                  onChange={(token) => {
+                    setCaptchaDone(!!token);
+                    if (token) setErrors((er) => ({ ...er, captcha: "" }));
+                  }}
+                  onExpired={() => setCaptchaDone(false)}
+                />
+                {errors.captcha && (
+                  <span className="ct__err">{errors.captcha}</span>
                 )}
               </div>
 
