@@ -1,17 +1,15 @@
 // src/views/SoftwareApp.jsx
 // Shell que carga el componente de cada proyecto embebido
 
-import React, { Suspense, lazy } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getSoftwareById } from '../models/software.data';
-import './SoftwareApp.css';
+import React, { Suspense, lazy } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getSoftwareById } from "../models/software.data";
+import "./SoftwareApp.css";
 
 // ── Registro de apps ─────────────────────────────────────────────────────────
 // Agrega aquí cada nuevo proyecto con su componente lazy
 const APP_REGISTRY = {
-  //'carta-novia':              lazy(() => import('../apps/CartaNovia')),
-  'cumpleanos-amiga': lazy(() => import('../apps/CumpleañosAmiga')),
-  'quimica-analizador':   lazy(() => import('../apps/QuimicaAnalizador')),
+  "quimica-analizador": lazy(() => import("../apps/QuimicaAnalizador")),
   //'sistema-inventario-usac':  lazy(() => import('../apps/SistemaInventario')),
   // 'mi-nuevo-proyecto':     lazy(() => import('../apps/MiNuevoProyecto')),
 };
@@ -35,7 +33,9 @@ export const SoftwareApp = () => {
     return (
       <div className="sa__error">
         <p>Proyecto no encontrado.</p>
-        <button onClick={() => navigate('/software')}>← Volver a Software</button>
+        <button onClick={() => navigate("/software")}>
+          ← Volver a Software
+        </button>
       </div>
     );
   }
@@ -45,7 +45,9 @@ export const SoftwareApp = () => {
     return (
       <div className="sa__error">
         <p>Esta aplicación aún no está disponible.</p>
-        <button onClick={() => navigate(`/software/${id}`)}>← Ver documentación</button>
+        <button onClick={() => navigate(`/software/${id}`)}>
+          ← Ver documentación
+        </button>
       </div>
     );
   }
@@ -56,15 +58,18 @@ export const SoftwareApp = () => {
   if (!AppComponent) {
     return (
       <div className="sa__error">
-        <p>Componente de aplicación no registrado para: <code>{id}</code></p>
-        <button onClick={() => navigate(`/software/${id}`)}>← Ver documentación</button>
+        <p>
+          Componente de aplicación no registrado para: <code>{id}</code>
+        </p>
+        <button onClick={() => navigate(`/software/${id}`)}>
+          ← Ver documentación
+        </button>
       </div>
     );
   }
 
   return (
     <div className="sa__wrap">
-
       {/* ── Botón flotante "← Docs" ── */}
       <button
         className="sa__back-btn"
@@ -79,13 +84,12 @@ export const SoftwareApp = () => {
       <div className="sa__app-container">
         <Suspense fallback={<AppLoader />}>
           <AppComponent
-            apiBaseUrl={proyecto.app?.api_base_url || ''}
+            apiBaseUrl={proyecto.app?.api_base_url || ""}
             proyectoId={id}
             nombreProyecto={proyecto.nombre}
           />
         </Suspense>
       </div>
-
     </div>
   );
 };
