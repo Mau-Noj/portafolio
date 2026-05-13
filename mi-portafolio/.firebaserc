@@ -2,6 +2,17 @@
   "projects": {
     "default": "portafolio-mau"
   },
-  "targets": {},
+  "targets": {
+    "portafolio-mau": {
+      "hosting": {
+        "portafolio": [
+          "portafolio-mau"
+        ],
+        "proyectos": [
+          "mauricio-proyectos"
+        ]
+      }
+    }
+  },
   "etags": {}
 }

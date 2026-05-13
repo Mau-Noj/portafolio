@@ -70,9 +70,8 @@
   display: flex;
   align-items: center;
   height: var(--navbar-height);
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 20px;
+  width: 100%;
+  padding: 0 clamp(20px, 4vw, 80px);
   gap: 12px;
 }
 
