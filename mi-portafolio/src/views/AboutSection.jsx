@@ -4,7 +4,7 @@ import VisitorCounter from "../components/VisitorCounter";
 import { useSEO } from "../hooks/useSEO";
 import "./AboutSection.css";
 
-const CV_DRIVE_ID = "1Z7rinMrxAwtHzTYlIf9xqQBfB9F3umdf";
+const CV_DRIVE_ID = "18XXthNq9T4S9lzbHHgtNgJ-P1Wb-zwag";
 const CV_PREVIEW_URL = `https://drive.google.com/file/d/${CV_DRIVE_ID}/preview`;
 const CV_DOWNLOAD_URL = `https://drive.google.com/uc?export=download&id=${CV_DRIVE_ID}`;
 
@@ -1738,6 +1738,7 @@ const PersonalTabs = () => {
           style={{ "--ptc": t.color }}
           onMouseEnter={() => setActive(t.id)}
           onMouseLeave={() => setActive(null)}
+          onClick={() => setActive(active === t.id ? null : t.id)}
         >
           <div className="ptab-peel">
             <div className="ptab-icon">{t.icon}</div>

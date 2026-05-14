@@ -116,15 +116,15 @@
 /* ════ HERO ════ */
 .about__hero {
   display: grid;
-  grid-template-columns: 180px 1fr auto;
-  gap: 3rem;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
   align-items: start;
   padding-bottom: 4rem;
 }
 .about__avatar {
   position: relative;
-  width: 160px;
-  height: 160px;
+  width: 100px;
+  height: 100px;
   flex-shrink: 0;
   margin-top: 0.5rem;
 }
@@ -189,27 +189,24 @@
 }
 .about__bio {
   font-family: "Libre Baskerville", Georgia, serif;
-  font-size: 1.02rem;
+  font-size: 0.92rem;
   color: var(--ink2);
-  line-height: 2;
-  text-align: justify;
-  hyphens: auto;
+  line-height: 1.8;
+  text-align: left;
+  word-break: break-word;
   max-width: 1000px;
   margin: 0 0 2rem;
   letter-spacing: 0.01em;
 }
 
 .about__bio::first-letter {
-  font-size: 3.8rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 0.72;
-  float: left;
-  margin: 0.05em 0.1em 0 0;
+  float: none;
+  margin: 0;
   color: #00f5ff;
-  text-shadow:
-    0 0 10px #00f5ff,
-    0 0 30px #00f5ffaa,
-    0 0 60px #00f5ff55;
+  text-shadow: none;
   font-family: "Great Vibes", cursive; /* ← misma fuente cursiva del nombre */
 }
 
@@ -1331,8 +1328,8 @@
 /* ════ RESPONSIVE ════ */
 @media (max-width: 900px) {
   .about__hero {
-    grid-template-columns: 160px 1fr 110px;
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
   .about__numbers {
     flex-direction: row;
@@ -1345,10 +1342,10 @@
 }
 @media (max-width: 600px) {
   .about {
-    padding: calc(68px + 0.75rem) 1.25rem 5rem;
+    padding: calc(68px + 0.75rem) 1rem 5rem;
   }
   .about__name--neon {
-    font-size: clamp(2.4rem, 10vw, 3.5rem) !important;
+    font-size: clamp(2rem, 8vw, 3rem) !important;
   }
   .about__tl-item {
     grid-template-columns: 64px 42px 1fr;
@@ -1838,5 +1835,88 @@
   .about__cv-btn-dl {
     flex: 1;
     justify-content: center;
+  }
+}
+
+/* ════ MÓVIL: hero centrado ════ */
+@media (max-width: 600px) {
+  .about__hero {
+    justify-items: center;
+    text-align: center;
+  }
+  .about__avatar {
+    margin: 0 auto;
+  }
+  .about__kicker,
+  .about__role,
+  .about__bio {
+    text-align: left; /* bio sigue left para legibilidad */
+  }
+  .about__links {
+    justify-content: center;
+  }
+}
+
+/* ════ MÓVIL: personal tabs → FAB navbar inferior izquierda ════ */
+@media (max-width: 600px) {
+  .ptabs-wrap {
+    position: fixed;
+    right: auto;
+    left: 1rem;
+    bottom: 1.5rem;
+    top: auto;
+    transform: none;
+    flex-direction: row;
+    gap: 8px;
+    align-items: flex-end;
+    z-index: 9000;
+  }
+
+  .ptab-peel {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--ptc) 80%, #fff);
+    border-right: 2px solid color-mix(in srgb, var(--ptc) 80%, #fff);
+    padding: 0;
+    justify-content: center;
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--ptc) 45%, transparent);
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+  }
+  .ptab:hover .ptab-peel,
+  .ptab--on .ptab-peel {
+    width: 44px;
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px color-mix(in srgb, var(--ptc) 65%, transparent);
+  }
+
+  /* ocultar label en móvil, solo icono */
+  .ptab-label {
+    display: none;
+  }
+  .ptab-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* tarjeta aparece arriba del tab tocado */
+  .ptab-card {
+    position: fixed;
+    left: 1rem;
+    bottom: 5rem;
+    top: auto;
+    right: auto;
+    width: calc(100vw - 2rem);
+    max-width: 320px;
+    transform: translateY(8px);
+    border-radius: 12px;
+  }
+  .ptab-card--visible {
+    transform: translateY(0);
+  }
+  .ptab-card-bar {
+    border-radius: 12px 12px 0 0;
   }
 }
